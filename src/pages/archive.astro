@@ -6,25 +6,51 @@ const posts = await getCollection('posts');
 const sortedPosts = posts.sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+// 按年分组
+const postsByYear: Record<number, typeof sortedPosts> = {};
+for (const post of sortedPosts) {
+  const year = post.data.date.getFullYear();
+  if (!postsByYear[year]) postsByYear[year] = [];
+  postsByYear[year].push(post);
+}
+const years = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
 ---
 
 <BaseLayout title="归档">
   <section class="archive">
-    <header class="archive-header">
-      <h1>归档</h1>
+    <!-- 面包屑 -->
+    <nav class="breadcrumb">
+      <a href="/">首页</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">归档</span>
+    </nav>
+
+    <div class="archive-header">
+      <h1>全部内容</h1>
       <p>共 {sortedPosts.length} 篇文章</p>
-    </header>
-    <div class="archive-list">
-      {sortedPosts.map((post) => {
-        const slug = post.id.replace(/\.md$/, '');
-        return (
-          <a href={`/${slug}`} class="archive-item">
-            <time class="archive-date">{post.data.date.toISOString().split('T')[0]}</time>
-            <span class="archive-post-title">{post.data.title}</span>
-            <span class="archive-category">{post.data.categories || '未分类'}</span>
-          </a>
-        );
-      })}
+    </div>
+
+    <div class="archive-years">
+      {years.map((year) => (
+        <div class="year-group">
+          <h2 class="year-heading">{year}</h2>
+          <div class="year-posts">
+            {postsByYear[year].map((post) => {
+              const slug = post.id.replace(/\.md$/, '');
+              return (
+                <a href={`/${slug}`} class="archive-item">
+                  <time class="archive-date">{post.data.date.toISOString().split('T')[0]}</time>
+                  <span class="archive-post-title">{post.data.title}</span>
+                  <span class="archive-reading-time">{Math.ceil((post.body?.length || 500) / 400)} min</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 </BaseLayout>
@@ -33,38 +59,88 @@ const sortedPosts = posts.sort(
   .archive {
     max-width: 720px;
     margin: 0 auto;
-    padding: 48px 0 60px;
+    padding: 32px 0 60px;
   }
 
+  /* 面包屑 */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--primary);
+  }
+
+  .breadcrumb-sep {
+    color: var(--border);
+  }
+
+  .breadcrumb-current {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Header */
   .archive-header {
-    text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .archive-header h1 {
     font-size: 28px;
     font-weight: 700;
-    margin-bottom: 6px;
+    letter-spacing: -0.02em;
   }
 
   .archive-header p {
     font-size: 14px;
     color: var(--text-secondary);
+    margin-top: 6px;
   }
 
-  .archive-list {
+  /* Year groups */
+  .archive-years {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .year-group {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
 
+  .year-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .year-posts {
+    display: flex;
+    flex-direction: column;
+  }
+
   .archive-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 15px 20px;
-    border-radius: 10px;
-    transition: background 0.2s;
+    gap: 14px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    transition: background 0.15s;
   }
 
   .archive-item:hover {
@@ -72,11 +148,11 @@ const sortedPosts = posts.sort(
   }
 
   .archive-date {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-secondary);
     font-family: 'Fira Code', monospace;
     white-space: nowrap;
-    min-width: 90px;
+    min-width: 72px;
   }
 
   .archive-post-title {
@@ -89,25 +165,18 @@ const sortedPosts = posts.sort(
     color: var(--primary);
   }
 
-  .archive-category {
+  .archive-reading-time {
     font-size: 11px;
-    color: var(--primary);
-    background: var(--primary-bg);
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--text-secondary);
     flex-shrink: 0;
+    min-width: 40px;
+    text-align: right;
   }
 
   @media (max-width: 640px) {
-    .archive { padding: 32px 0; }
-    .archive-item {
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 12px 16px;
-    }
+    .archive { padding: 24px 0 40px; }
+    .archive-item { flex-wrap: wrap; gap: 4px; padding: 10px 12px; }
     .archive-date { min-width: auto; }
+    .archive-reading-time { min-width: auto; }
   }
 </style>

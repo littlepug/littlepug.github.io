@@ -12,16 +12,35 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// 计算阅读时间（中文约 400 字/分钟，英文约 200 词/分钟）
+const bodyText = post.body || '';
+const chineseChars = (bodyText.match(/[\u4e00-\u9fff]/g) || []).length;
+const englishWords = (bodyText.match(/[a-zA-Z]+/g) || []).length;
+const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200));
 ---
 
 <BaseLayout title={post.data.title}>
   <div class="article-layout">
     <!-- 正文区域 -->
     <article class="article">
+      <!-- 面包屑 -->
+      <nav class="breadcrumb">
+        <a href="/">首页</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/archive">归档</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">{post.data.title}</span>
+      </nav>
+
       <header class="article-header">
         <span class="article-category">{post.data.categories || '未分类'}</span>
         <h1 class="article-title">{post.data.title}</h1>
-        <time class="article-date">{post.data.date.toISOString().split('T')[0]}</time>
+        <div class="article-meta">
+          <time class="article-date">{post.data.date.toISOString().split('T')[0]}</time>
+          <span class="article-dot">&middot;</span>
+          <span class="article-reading-time">{readingMin} min</span>
+        </div>
       </header>
       <div class="article-body" id="article-body">
         <Content />
@@ -140,6 +159,39 @@ const { Content } = await post.render();
     min-width: 0;
   }
 
+  /* 面包屑 */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--primary);
+  }
+
+  .breadcrumb-sep {
+    color: var(--border);
+  }
+
+  .breadcrumb-current {
+    color: var(--text);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px;
+  }
+
   .article-header {
     margin-bottom: 40px;
     display: flex;
@@ -168,6 +220,15 @@ const { Content } = await post.render();
   }
 
   .article-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .article-dot {
+    color: var(--border);
+  }
+
+  .article-reading-time {
     font-size: 13px;
     color: var(--text-secondary);
   }
