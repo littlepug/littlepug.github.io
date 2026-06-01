@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d1fae5"/>
+      <stop offset="100%" stop-color="#6ee7b7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <text x="48" y="56" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#047857" letter-spacing="2">ELASTICSEARCH</text>
+  <text x="48" y="120" font-family="Noto Sans SC, sans-serif" font-size="34" font-weight="700" fill="#1e1e2f">Æ¤-ú Kibana</text>
+  <text x="48" y="168" font-family="Noto Sans SC, sans-serif" font-size="18" fill="#065f46">CentOS 7 · JVM  · ïÆ</text>
+  <circle cx="180" cy="310" r="48" fill="#fff" stroke="#10b981" stroke-width="3"/>
+  <text x="180" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#047857">ES</text>
+  <circle cx="400" cy="310" r="48" fill="#fff" stroke="#10b981" stroke-width="3"/>
+  <text x="400" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#047857">ES</text>
+  <circle cx="620" cy="310" r="48" fill="#fff" stroke="#10b981" stroke-width="3"/>
+  <text x="620" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#047857">ES</text>
+  <rect x="320" y="380" width="160" height="40" rx="8" fill="#fff" stroke="#059669" stroke-width="2"/>
+  <text x="400" y="406" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#047857">Kibana</text>
+</svg>
