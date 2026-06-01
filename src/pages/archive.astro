@@ -10,46 +10,59 @@ const sortedPosts = posts.sort(
 
 <BaseLayout title="归档">
   <section class="archive">
-    <h1 class="archive-title">归档</h1>
+    <header class="archive-header">
+      <h1>归档</h1>
+      <p>共 {sortedPosts.length} 篇文章</p>
+    </header>
     <div class="archive-list">
-      {sortedPosts.map((post) => (
-        <a href={`/${post.id.replace(/\.md$/, '')}`} class="archive-item">
-          <time class="archive-date">{post.data.date.toISOString().split('T')[0]}</time>
-          <span class="archive-post-title">{post.data.title}</span>
-          {post.data.categories && (
-            <span class="archive-category">{post.data.categories}</span>
-          )}
-        </a>
-      ))}
+      {sortedPosts.map((post) => {
+        const slug = post.id.replace(/\.md$/, '');
+        return (
+          <a href={`/${slug}`} class="archive-item">
+            <time class="archive-date">{post.data.date.toISOString().split('T')[0]}</time>
+            <span class="archive-post-title">{post.data.title}</span>
+            <span class="archive-category">{post.data.categories || '未分类'}</span>
+          </a>
+        );
+      })}
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .archive {
-    max-width: 700px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 60px 0;
+    padding: 48px 0 60px;
   }
 
-  .archive-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
+  .archive-header {
     text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .archive-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .archive-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
   }
 
   .archive-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
 
   .archive-item {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 14px 20px;
+    padding: 15px 20px;
     border-radius: 10px;
     transition: background 0.2s;
   }
@@ -72,20 +85,29 @@ const sortedPosts = posts.sort(
     flex: 1;
   }
 
+  .archive-item:hover .archive-post-title {
+    color: var(--primary);
+  }
+
   .archive-category {
     font-size: 11px;
     color: var(--primary);
-    background: #eef2ff;
+    background: var(--primary-bg);
     padding: 2px 10px;
     border-radius: 10px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    flex-shrink: 0;
   }
 
-  @media (max-width: 768px) {
-    .archive { padding: 40px 0; }
-    .archive-item { flex-wrap: wrap; gap: 8px; padding: 12px 16px; }
+  @media (max-width: 640px) {
+    .archive { padding: 32px 0; }
+    .archive-item {
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px 16px;
+    }
     .archive-date { min-width: auto; }
   }
 </style>
