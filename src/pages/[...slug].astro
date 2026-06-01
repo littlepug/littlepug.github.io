@@ -58,14 +58,19 @@ const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200
     </article>
 
     <!-- 目录侧边栏 -->
-    <aside class="toc-sidebar">
-      <div class="toc-sticky">
+    <aside class="toc-sidebar" id="toc-sidebar">
+      <div class="toc-inner">
         <h4 class="toc-title">目录</h4>
         <nav id="toc-nav" class="toc-nav">
           <p class="toc-empty">加载中…</p>
         </nav>
       </div>
     </aside>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="back-to-top" aria-label="回到顶部">
+      <i class="fas fa-arrow-up"></i>
+    </button>
   </div>
 </BaseLayout>
 
@@ -141,6 +146,29 @@ const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200
   document.addEventListener('DOMContentLoaded', () => {
     buildTOC();
     setupScrollSpy();
+
+    // 回到顶部按钮
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (window.scrollY > 400) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   });
 </script>
 
@@ -326,29 +354,40 @@ const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200
 
   /* ========== TOC 侧边栏 ========== */
   .toc-sidebar {
-    display: block;
+    display: none;
   }
 
-  .toc-sticky {
-    position: sticky;
-    top: calc(var(--header-height) + 24px);
+  @media (min-width: 1101px) {
+    .toc-sidebar {
+      display: block;
+      position: fixed;
+      /* 跟随 main 的 max-width，定位在内容区右侧 */
+      left: calc(50% + var(--max-width) / 2 - 200px - 24px);
+      top: calc(var(--header-height) + 32px);
+      width: 200px;
+      max-height: calc(100vh - var(--header-height) - 64px);
+      overflow-y: auto;
+      z-index: 50;
+    }
+  }
+
+  .toc-inner {
+    padding-left: 0;
   }
 
   .toc-title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .toc-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
+    gap: 2px;
   }
 
   .toc-nav a {
@@ -380,6 +419,41 @@ const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200
   .toc-empty {
     font-size: 12px;
     color: var(--text-secondary);
+  }
+
+  /* ========== 回到顶部按钮 ========== */
+  .back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+    z-index: 99;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .back-to-top.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
   }
 
   /* ========== Responsive ========== */
