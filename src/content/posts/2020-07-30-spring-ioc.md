@@ -1,9 +1,10 @@
 ---
 title: Spring—IOC（控制反转）
 categories: study
-tags: [study]
+tags: [spring, study]
 keywords: spring5
-excerpt: Spring5学习
+excerpt: Spring 5 IOC 容器原理：BeanFactory 与 ApplicationContext、依赖注入与 Bean 生命周期配置要点。
+cover: /images/covers/spring-ioc.svg
 date: 2020-07-30
 ---
 

@@ -1,9 +1,10 @@
 ---
 title: Elasticsearch 滚动重启
 categories: study
-tags: [study]
+tags: [elasticsearch, bigdata]
 keywords: elasticsearch
-excerpt: Elasticsearch 滚动重启
+excerpt: Elasticsearch 滚动重启流程：节点分组、逐台停用分片、升级与恢复，保证集群不停服。
+cover: /images/covers/es-rolling-restart.svg
 date: 2021-01-29
 ---
 

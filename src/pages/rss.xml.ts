@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { site } from '../site.config';
 
 export async function GET(context) {
   const posts = await getCollection('posts');
@@ -8,8 +9,8 @@ export async function GET(context) {
   );
 
   return rss({
-    title: "littlepug's blog",
-    description: 'Java & Big Data 技术博客 — 专注 Spring / Elasticsearch / Kafka',
+    title: site.title,
+    description: site.description,
     site: context.site!,
     items: sorted.map((post) => ({
       title: post.data.title,

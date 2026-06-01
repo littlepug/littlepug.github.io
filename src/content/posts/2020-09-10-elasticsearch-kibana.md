@@ -1,9 +1,10 @@
 ---
 title: Elasticsearch集群搭建与Kibana安装
 categories: study
-tags: [study]
+tags: [elasticsearch, bigdata]
 keywords: elasticsearch
-excerpt: Elasticsearch集群搭建Kibana安装
+excerpt: CentOS 7 上 Elasticsearch 集群部署、JVM 与系统参数调优，以及 Kibana 安装与验证步骤。
+cover: /images/covers/elasticsearch-kibana.svg
 date: 2020-09-10
 ---
 

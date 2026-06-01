@@ -1,9 +1,10 @@
 ---
 title: Kafka与Zookeeper集群搭建
 categories: study
-tags: [study]
+tags: [kafka, bigdata]
 keywords: bigdata
-excerpt: Kafka与Zookeeper集群搭建
+excerpt: Zookeeper 三节点集群与 Kafka 多 Broker 安装配置、myid 与 server 映射及启动验证。
+cover: /images/covers/kafka-zookeeper.svg
 date: 2020-09-11
 ---
 
@@ -67,11 +68,9 @@ echo “132” > /app/data/zookeeper/data/myid
 
 > `bin/zkServer.sh start`
 
-![图片](/assets/images/2020/kafka/kafka01.png)
+![jps 验证 Zookeeper 进程](/images/posts/2020/kafka/kafka01.svg)
 
-> 启动`jps`命令查看
-
-> 有QuorumPeerMain进程，说明就启动成功了
+> 启动后使用 `jps` 查看，出现 **QuorumPeerMain** 即表示 Zookeeper 启动成功。
 
 > 其他验证方式：
 

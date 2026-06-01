@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { site } from '../site.config';
+
+const faqs = [
+  {
+    q: '你是谁？',
+    a: `我是 ${site.author}，Java 后端开发者。这个站点主要记录 Spring、Elasticsearch、Kafka 等学习与实战笔记，方便自己回顾，也希望能帮到遇到同样问题的读者。`,
+  },
+  {
+    q: '博客主要写什么？',
+    a: '以 Java 生态与大数据组件为主，包括框架原理、集群搭建、运维操作等。可在归档页按年份浏览，或在标签页按主题筛选。',
+  },
+  {
+    q: '如何联系或合作？',
+    a: `欢迎通过 GitHub Issues / Discussions 交流，或前往我的 GitHub 主页：${site.github}`,
+  },
+  {
+    q: '如何订阅更新？',
+    a: '站点提供 RSS 订阅（页脚或 /rss.xml），也可在 GitHub 上关注我的开源项目。',
+  },
+];
+---
+
+<BaseLayout title="关于" description="关于 littlepug 与本站说明">
+  <section class="about">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于' }]} />
+
+    <header class="about-hero">
+      <img src={site.avatar} alt={site.author} width="72" height="72" class="about-avatar" />
+      <h1>关于</h1>
+      <p class="about-intro">{site.description}</p>
+      <div class="about-actions">
+        <a href={site.github} class="btn btn-primary" target="_blank" rel="noopener">GitHub</a>
+        <a href="/rss.xml" class="btn btn-ghost">RSS 订阅</a>
+      </div>
+    </header>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">常见问题</h2>
+      <div class="faq-list">
+        {
+          faqs.map((item) => (
+            <details class="faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 0 60px;
+  }
+
+  .about-hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .about-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--card-bg);
+    box-shadow: 0 4px 20px rgba(91, 91, 214, 0.2);
+    margin-bottom: 16px;
+  }
+
+  .about-hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .about-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .about-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 999px;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+  }
+
+  .faq h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .faq-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px 18px;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 0;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding-bottom: 16px;
+  }
+</style>

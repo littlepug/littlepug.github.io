@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const posts = await getCollection('posts');
+const tagMap = new Map<string, number>();
+
+for (const post of posts) {
+  for (const tag of post.data.tags ?? []) {
+    tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+  }
+}
+
+const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="标签" description="按标签浏览全部文章">
+  <section class="tags-page">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '标签' }]} />
+
+    <header class="tags-header">
+      <h1>标签</h1>
+      <p>共 {tags.length} 个标签</p>
+    </header>
+
+    <div class="tag-cloud">
+      {
+        tags.map(([tag, count]) => (
+          <a href={`/tags/${encodeURIComponent(tag)}`} class="tag-pill">
+            {tag}
+            <span class="tag-count">{count}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tags-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 0 60px;
+  }
+
+  .tags-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .tags-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    margin-bottom: 28px;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 14px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .tag-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .tag-count {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--primary-bg);
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+</style>

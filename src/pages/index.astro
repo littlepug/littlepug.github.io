@@ -1,89 +1,114 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { site } from '../site.config';
 
 const posts = await getCollection('posts');
 const sortedPosts = posts.sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+const postCount = sortedPosts.length;
+const tagSet = new Set<string>();
+for (const post of sortedPosts) {
+  post.data.tags?.forEach((t) => tagSet.add(t));
+}
+const tagCount = tagSet.size;
+const latestYear = sortedPosts[0]?.data.date.getFullYear() ?? new Date().getFullYear();
+const writingYears = latestYear - site.sinceYear + 1;
+
+let githubRepos: string | null = null;
+try {
+  const res = await fetch(`https://api.github.com/users/${site.githubUser}`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  });
+  if (res.ok) {
+    const data = await res.json();
+    githubRepos = String(data.public_repos ?? '');
+  }
+} catch {
+  /* 构建环境无网络时使用占位 */
+}
 ---
 
-<BaseLayout title="首页">
-  <!-- Hero — 带渐变背景 -->
+<BaseLayout>
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <img src="/images/avatar.jpg" alt="littlepug" class="hero-avatar" />
-      <h1>littlepug</h1>
-      <p class="hero-tagline">Java 后端开发 · 专注 Spring / 大数据 / 分布式</p>
+      <img
+        src={site.avatar}
+        alt={site.author}
+        class="hero-avatar"
+        width="88"
+        height="88"
+        loading="eager"
+      />
+      <p class="hero-eyebrow">Building useful notes.</p>
+      <h1>{site.author}</h1>
+      <p class="hero-tagline">
+        Java 后端开发，记录 Spring、Elasticsearch、Kafka 与分布式相关的实践笔记。
+      </p>
+      <ul class="hero-bullets">
+        <li>专注后端工程与大数据组件的搭建、运维与原理梳理</li>
+        <li>自 {site.sinceYear} 年起持续写作，欢迎通过 GitHub 交流</li>
+      </ul>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-number">{sortedPosts.length}</span>
+          <span class="stat-number">{postCount}</span>
           <span class="stat-label">篇文章</span>
         </div>
         <div class="stat">
-          <span class="stat-number">Java</span>
-          <span class="stat-label">主力语言</span>
+          <span class="stat-number">{tagCount}</span>
+          <span class="stat-label">个标签</span>
         </div>
         <div class="stat">
-          <span class="stat-number">Spring</span>
-          <span class="stat-label">核心框架</span>
+          <span class="stat-number">{writingYears}</span>
+          <span class="stat-label">年写作</span>
         </div>
         <div class="stat">
-          <span class="stat-number">2020</span>
-          <span class="stat-label">开始写作</span>
+          <span class="stat-number">{githubRepos ?? '—'}</span>
+          <span class="stat-label">GitHub 仓库</span>
         </div>
       </div>
-      <div class="hero-social">
-        <a href="https://github.com/littlepug" target="_blank" rel="noopener" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="/archive" aria-label="归档">
-          <i class="fas fa-archive"></i>
-        </a>
+      <div class="hero-cta">
+        <a href="/archive" class="btn btn-primary">浏览归档</a>
+        <a href={site.github} class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+        <a href="/about" class="btn btn-ghost">关于我</a>
       </div>
     </div>
   </section>
 
-  <!-- 文章列表 -->
   <section class="section-header">
     <h2>最近文章</h2>
     <a href="/archive" class="view-all">查看全部 &rarr;</a>
   </section>
 
   <section class="posts-grid">
-    {sortedPosts.map((post) => {
-      const slug = post.id.replace(/\.md$/, '');
-      const body = post.body || '';
-      const chineseChars = (body.match(/[\u4e00-\u9fff]/g) || []).length;
-      const englishWords = (body.match(/[a-zA-Z]+/g) || []).length;
-      const readingMin = Math.max(1, Math.ceil(chineseChars / 400 + englishWords / 200));
-      return (
-        <a href={`/${slug}`} class="post-card">
-          <div class="post-card-image">
-            <div class="post-card-placeholder">
-              <i class="fas fa-file-alt"></i>
-            </div>
-            <span class="post-card-category">{post.data.categories || '未分类'}</span>
-          </div>
-          <div class="post-card-body">
-            <time class="post-card-date">{post.data.date.toISOString().split('T')[0]}</time>
-            <h2 class="post-card-title">{post.data.title}</h2>
-            <p class="post-card-excerpt">{post.data.excerpt || '暂无摘要'}</p>
-            <span class="post-card-reading-time">{readingMin} min</span>
-          </div>
-        </a>
-      );
-    })}
+    {
+      sortedPosts.map((post) => {
+        const slug = post.id.replace(/\.md$/, '');
+        return (
+          <PostCard
+            slug={slug}
+            title={post.data.title}
+            date={post.data.date}
+            excerpt={post.data.excerpt}
+            categories={post.data.categories}
+            cover={post.data.cover}
+            body={post.body ?? ''}
+          />
+        );
+      })
+    }
   </section>
 </BaseLayout>
 
 <style>
-  /* ========== Hero ========== */
   .hero {
     position: relative;
     text-align: center;
-    padding: 72px 0 56px;
+    padding: 64px 0 52px;
     margin: 0 -24px;
     overflow: hidden;
   }
@@ -92,9 +117,9 @@ const sortedPosts = posts.sort(
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99, 102, 241, 0.08), transparent),
-      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(129, 140, 248, 0.06), transparent),
-      radial-gradient(ellipse 50% 40% at 20% 40%, rgba(99, 102, 241, 0.04), transparent);
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91, 91, 214, 0.1), transparent),
+      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(139, 139, 245, 0.07), transparent),
+      radial-gradient(ellipse 50% 40% at 20% 40%, rgba(91, 91, 214, 0.05), transparent);
     pointer-events: none;
   }
 
@@ -104,7 +129,9 @@ const sortedPosts = posts.sort(
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    max-width: 560px;
+    margin: 0 auto;
   }
 
   .hero-avatar {
@@ -112,13 +139,21 @@ const sortedPosts = posts.sort(
     height: 88px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 24px rgba(99, 102, 241, 0.2);
+    border: 3px solid var(--card-bg);
+    box-shadow: 0 4px 24px rgba(91, 91, 214, 0.22);
     transition: transform 0.3s ease;
   }
 
   .hero-avatar:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
+  }
+
+  .hero-eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--primary);
   }
 
   .hero h1 {
@@ -130,13 +165,43 @@ const sortedPosts = posts.sort(
   .hero-tagline {
     font-size: 15px;
     color: var(--text-secondary);
-    max-width: 420px;
+    line-height: 1.65;
+  }
+
+  .hero-bullets {
+    list-style: none;
+    text-align: left;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 0;
+    margin: 4px 0 0;
+    width: 100%;
+  }
+
+  .hero-bullets li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 6px;
+  }
+
+  .hero-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
   }
 
   .hero-stats {
     display: flex;
-    gap: 36px;
-    margin-top: 8px;
+    gap: 32px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .stat {
@@ -150,6 +215,7 @@ const sortedPosts = posts.sort(
     font-size: 26px;
     font-weight: 700;
     color: var(--primary);
+    font-variant-numeric: tabular-nums;
   }
 
   .stat-label {
@@ -159,33 +225,43 @@ const sortedPosts = posts.sort(
     letter-spacing: 0.06em;
   }
 
-  .hero-social {
-    margin-top: 8px;
+  .hero-cta {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
   }
 
-  .hero-social a {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    font-size: 15px;
-    color: var(--text-secondary);
+  .btn {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 999px;
     transition: all 0.2s;
   }
 
-  .hero-social a:hover {
-    color: var(--primary);
-    border-color: var(--primary);
-    transform: translateY(-2px);
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
   }
 
-  /* ========== Section Header ========== */
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+  }
+
+  .btn-ghost:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
   .section-header {
     display: flex;
     align-items: baseline;
@@ -202,135 +278,39 @@ const sortedPosts = posts.sort(
     font-size: 13px;
     color: var(--primary);
     font-weight: 500;
-    transition: opacity 0.2s;
   }
 
   .view-all:hover {
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
-  /* ========== Posts Grid ========== */
   .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 22px;
     padding-bottom: 60px;
   }
 
-  .post-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .post-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
-    border-color: transparent;
-  }
-
-  .post-card-image {
-    position: relative;
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-  }
-
-  .post-card-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--primary-bg), #f0f4ff);
-    font-size: 36px;
-    color: var(--primary-light);
-    transition: transform 0.4s ease;
-  }
-
-  .post-card:nth-child(2n) .post-card-placeholder {
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    color: #d97706;
-  }
-
-  .post-card:nth-child(3n) .post-card-placeholder {
-    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-    color: #059669;
-  }
-
-  .post-card:nth-child(5n) .post-card-placeholder {
-    background: linear-gradient(135deg, #fce7f3, #f9a8d4);
-    color: #db2777;
-  }
-
-  .post-card:hover .post-card-placeholder {
-    transform: scale(1.06);
-  }
-
-  .post-card-category {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(6px);
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-  }
-
-  .post-card-body {
-    padding: 18px 20px 22px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .post-card-date {
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-
-  .post-card-title {
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .post-card-excerpt {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .post-card-reading-time {
-    font-size: 11px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-  }
-
   @media (max-width: 768px) {
-    .hero { padding: 48px 0 40px; margin: 0; }
-    .hero h1 { font-size: 26px; }
-    .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
-    .stat-number { font-size: 22px; }
-    .posts-grid { grid-template-columns: 1fr; }
+    .hero {
+      padding: 44px 0 36px;
+      margin: 0;
+    }
+
+    .hero h1 {
+      font-size: 26px;
+    }
+
+    .hero-stats {
+      gap: 20px;
+    }
+
+    .stat-number {
+      font-size: 22px;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

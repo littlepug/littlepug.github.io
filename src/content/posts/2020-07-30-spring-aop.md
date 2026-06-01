@@ -1,9 +1,10 @@
 ---
 title: Spring-AOP概念及使用教程
 categories: study
-tags: [study]
+tags: [spring, study]
 keywords: spring5
-excerpt: Spring5学习
+excerpt: Spring AOP 概念与 JDK / CGLIB 动态代理、切点表达式与通知类型，附登录增强示例。
+cover: /images/covers/spring-aop.svg
 date: 2020-07-30
 ---
 
@@ -16,7 +17,7 @@ date: 2020-07-30
 
 >  3. 使用登录例子说明AOP
 
-![图片](/assets/images/2020/spring5/lizishuoming.png)
+![AOP 登录增强示意图](/images/posts/2020/spring5/lizishuoming.svg)
 
 ## 2.AOP（底层原里）
 
@@ -24,11 +25,11 @@ date: 2020-07-30
 
 >  第一种有接口情况，使用JDK动态代理；创建接口实现代理对象，增强类的方法
 
-![图片](/assets/images/2020/spring5/youjiekou.png)
+![JDK 动态代理（有接口）](/images/posts/2020/spring5/youjiekou.svg)
 
 >  第二种 没有接口情况，使用  CGLIB 动态代理；创建子类的代理对象，增强类的方法
 
-![图片](/assets/images/2020/spring5/wujiekou.png)
+![CGLIB 动态代理（无接口）](/images/posts/2020/spring5/wujiekou.svg)
 
 ## 3.AOP（JDK动态代理）
 
