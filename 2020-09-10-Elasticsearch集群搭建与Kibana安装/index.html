@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Java &#38; Big Data 技术博客"><title>Elasticsearch集群搭建与Kibana安装 - littlepug&#39;s blog</title><link rel="icon" href="/images/avatar.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--bg: #fafafa;--card-bg: #ffffff;--text: #1a1a2e;--text-secondary: #6b7280;--primary: #6366f1;--primary-light: #818cf8;--border: #e5e7eb;--shadow: 0 1px 3px rgba(0,0,0,.06);--shadow-hover: 0 8px 30px rgba(0,0,0,.12);--radius: 16px;--max-width: 1100px;--header-height: 64px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,Noto Sans SC,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:100;background:#ffffffd9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--header-height)}.header-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px}.logo-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--border)}.nav-links{display:flex;gap:24px;align-items:center;font-size:14px;color:var(--text-secondary)}.nav-links a:hover{color:var(--primary)}main{max-width:var(--max-width);margin:0 auto;padding:0 24px;min-height:calc(100vh - var(--header-height) - 300px)}.site-footer{margin-top:80px;padding:48px 24px 24px;border-top:1px solid var(--border);background:var(--card-bg)}.footer-inner{max-width:var(--max-width);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:40px}.footer-col{display:flex;flex-direction:column;gap:8px}.footer-col h4{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text);margin-bottom:4px}.footer-col a,.footer-col span{font-size:13px;color:var(--text-secondary)}.footer-col a:hover{color:var(--primary)}.footer-bottom{max-width:var(--max-width);margin:32px auto 0;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-secondary)}code{font-family:Fira Code,monospace;font-size:.9em;background:#f1f5f9;padding:2px 6px;border-radius:4px}pre{background:#1e293b;color:#e2e8f0;padding:20px;border-radius:var(--radius);overflow-x:auto;font-size:14px;line-height:1.6}pre code{background:none;padding:0;font-size:inherit}
+.article[data-astro-cid-fzx4jmue]{max-width:780px;margin:0 auto;padding:60px 0}.article-header[data-astro-cid-fzx4jmue]{text-align:center;margin-bottom:48px;display:flex;flex-direction:column;align-items:center;gap:12px}.article-date[data-astro-cid-fzx4jmue]{font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em}.article-title[data-astro-cid-fzx4jmue]{font-size:36px;font-weight:700;line-height:1.3;letter-spacing:-.02em}.article-category[data-astro-cid-fzx4jmue]{font-size:12px;background:var(--primary);color:#fff;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;font-weight:500}.article-body[data-astro-cid-fzx4jmue]{font-size:16px;line-height:1.85}.article-body[data-astro-cid-fzx4jmue] h2{font-size:24px;font-weight:600;margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}.article-body[data-astro-cid-fzx4jmue] h3{font-size:20px;font-weight:600;margin:32px 0 12px}.article-body[data-astro-cid-fzx4jmue] p{margin-bottom:16px}.article-body[data-astro-cid-fzx4jmue] ul,.article-body[data-astro-cid-fzx4jmue] ol{margin-bottom:16px;padding-left:24px}.article-body[data-astro-cid-fzx4jmue] li{margin-bottom:8px}.article-body[data-astro-cid-fzx4jmue] blockquote{border-left:3px solid var(--primary);padding:12px 20px;margin:20px 0;background:#f8fafc;border-radius:0 var(--radius) var(--radius) 0;color:var(--text-secondary)}.article-body[data-astro-cid-fzx4jmue] img{max-width:100%;border-radius:var(--radius);margin:20px 0}@media(max-width:768px){.article[data-astro-cid-fzx4jmue]{padding:40px 0}.article-title[data-astro-cid-fzx4jmue]{font-size:26px}}
+</style></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="logo"> <img src="/images/avatar.jpg" alt="avatar" class="logo-avatar"> <span class="logo-text">littlepug</span> </a> <nav class="nav-links"> <a href="/">首页</a> <a href="/archive">归档</a> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </nav> </div> </header> <main>  <article class="article" data-astro-cid-fzx4jmue> <header class="article-header" data-astro-cid-fzx4jmue> <time class="article-date" data-astro-cid-fzx4jmue>2020-09-10</time> <h1 class="article-title" data-astro-cid-fzx4jmue>Elasticsearch集群搭建与Kibana安装</h1> <span class="article-category" data-astro-cid-fzx4jmue>study</span> </header> <div class="article-body" data-astro-cid-fzx4jmue> <h2 id="elasticsearch集群搭建">Elasticsearch集群搭建</h2>
+<h3 id="一环境要求">一、环境要求</h3>
+<blockquote>
+<p>centos 7 64位</p>
+</blockquote>
+<blockquote>
+<p>Jdk 1.8+</p>
+</blockquote>
+<h3 id="二资源配置">二、资源配置</h3>
+<blockquote>
+<p>用于安装ES的集群，都要进行资源配置，确保有足够资原启动ES。</p>
+</blockquote>
+<h4 id="1修改没有做新增etcsecuritylimitsconf">1、修改（没有做新增）<code>/etc/security/limits.conf</code></h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>* soft nofile 65536</span></span>
+<span class="line"><span>* hard nofile 131072</span></span>
+<span class="line"><span>* soft nproc 65536</span></span>
+<span class="line"><span>* hard nproc 131072</span></span></code></pre>
+<h4 id="2修改没有做新增etcsysctlconf">2、修改（没有做新增）<code>/etc/sysctl.conf</code></h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="properties"><code><span class="line"><span style="color:#F97583">vm.max_map_count</span><span style="color:#E1E4E8">=262144</span></span></code></pre>
+<blockquote>
+<p>然后运行 <code>sysctl -p</code>  命令使得修改生效</p>
+</blockquote>
+<h4 id="3设置用户资源参数">3.设置用户资源参数</h4>
+<blockquote>
+<p>设置elk用户参数（在该文件下面添加一行）<code>/etc/security/limits.d/20-nproc.conf</code></p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>elasticsearch    soft    nproc     65536</span></span></code></pre>
+<h3 id="三配置文件详解">三、配置文件详解</h3>
+<blockquote>
+<p>解压tar包，并进行配置</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>tar -zxvf elasticsearch-7.2.0-linux-x86_64.tar.gz</span></span>
+<span class="line"><span>cd elasticsearch-7.2.0</span></span>
+<span class="line"><span>vim ./config/elasticsearch.yml</span></span></code></pre>
+<blockquote>
+<p>然后就可以对配置文件进行修改了</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D">## 这里指定的是集群名称</span></span>
+<span class="line"><span style="color:#85E89D">cluster.name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">my-cluster</span></span>
+<span class="line"><span style="color:#6A737D">#节点名称</span></span>
+<span class="line"><span style="color:#85E89D">node.name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">node-1</span></span>
+<span class="line"><span style="color:#6A737D">#数据目录</span></span>
+<span class="line"><span style="color:#85E89D">path.data</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">/app/data/elasticsearch/data</span></span>
+<span class="line"><span style="color:#85E89D">path.logs</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">/app/data/elasticsearch/logs</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#ES的监听地址，这样别的机器也可以访问</span></span>
+<span class="line"><span style="color:#85E89D">network.host</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.0.0.0</span></span>
+<span class="line"><span style="color:#85E89D">http.port</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">9200</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#集群发现（在写的时候要写成自己的IP）</span></span>
+<span class="line"><span style="color:#85E89D">discovery.seed_hosts</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"20.201.35.73:9300"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"20.201.35.134:9300"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"20.201.35.133:9300"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">#设置一系列符合主节点条件的节点的主机名或 IP 地址来引导启动集群</span></span>
+<span class="line"><span style="color:#85E89D">cluster.initial_master_nodes</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"10.25.1.114:9300"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"10.25.1.116:9300"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"10.25.1.117:9300"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#elasticsearch官网建议生产环境需要设置为true，提高性能</span></span>
+<span class="line"><span style="color:#6A737D">#需要修改/etc/security/limits.conf</span></span>
+<span class="line"><span style="color:#6A737D">#elasticsearch soft memlock unlimited</span></span>
+<span class="line"><span style="color:#6A737D">#elasticsearch hard memlock unlimited</span></span>
+<span class="line"><span style="color:#6A737D">#修改：/etc/sysctl.conf</span></span>
+<span class="line"><span style="color:#6A737D">#vm.swappiness=0</span></span>
+<span class="line"><span style="color:#6A737D">#之后重启机器</span></span>
+<span class="line"><span style="color:#85E89D">bootstrap.memory_lock</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#网关信息</span></span>
+<span class="line"><span style="color:#85E89D">gateway.recover_after_nodes</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#85E89D">gateway.recover_after_time</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">5m</span></span>
+<span class="line"><span style="color:#85E89D">gateway.expected_nodes</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">bootstrap.system_call_filter</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">false</span></span>
+<span class="line"><span style="color:#85E89D">http.cors.enabled</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#85E89D">http.cors.allow-origin</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"*"</span></span>
+<span class="line"><span style="color:#85E89D">http.max_content_length</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">100mb</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#tcp端口</span></span>
+<span class="line"><span style="color:#85E89D">transport.tcp.port</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">9300</span></span>
+<span class="line"><span style="color:#85E89D">transport.tcp.compress</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#6A737D">#声明是master节点</span></span>
+<span class="line"><span style="color:#85E89D">node.master</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#6A737D">#声明是数据节点</span></span>
+<span class="line"><span style="color:#85E89D">node.data</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span></code></pre>
+<h3 id="四集群启动">四、集群启动</h3>
+<blockquote>
+<p>上述步骤在集群的每一台机器上都进行配置之后，接下来就是启动运行集群了。</p>
+</blockquote>
+<blockquote>
+<p>Elasticsearch集群启动无法使用root用户启动，需要新建一个用户来启动elasticsearch。</p>
+</blockquote>
+<h4 id="1创建新用户">1.创建新用户</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>useradd elasticsearch         #创建用户elk</span></span>
+<span class="line"><span>groupadd elasticsearch        #创建组elk</span></span>
+<span class="line"><span>useradd elasticsearch -g elasticsearch  #将用户添加到组</span></span></code></pre>
+<h4 id="2创建数据目录和赋权">2.创建数据目录和赋权</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>mkdir -pv /app/data/elasticsearch/{data,logs} # 创建数据和日志目录(上述配置文件中配置的)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span># 修改文件所有者</span></span>
+<span class="line"><span>chown -R elasticsearch:elasticsearch /app/data/elasticsearch/</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>chown -R elasticsearch:elasticsearch /app/soft/ elasticsearch-7.2.0/</span></span></code></pre>
+<h4 id="3启动集群">3.启动集群</h4>
+<blockquote>
+<p>进入elastic search目录，使用nohup一台机器一台机器的启动elastic search。</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>su elasticsearch</span></span>
+<span class="line"><span>cd elasticsearch-7.2.0</span></span>
+<span class="line"><span>nohup ./bin/elasticsearch &#x26;</span></span></code></pre>
+<h4 id="4验证是否启动成功">4.验证是否启动成功</h4>
+<blockquote>
+<p>进入其中一台机器，访问：</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>curl localhost:9200/_cat/health?pretty</span></span></code></pre>
+<blockquote>
+<p>返回：</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>1599458694 06：04：54 my-cluster green 3 3 76 38 0 0 0 0 - 100.0%</span></span>
+<span class="line"><span>#代表集群状态为green，有三个节点</span></span></code></pre>
+<h3 id="五集群动态添加节点">五、集群动态添加节点</h3>
+<blockquote>
+<p>配置文件中有两个配置：</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">discovery.seed_hosts</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">cluster.initial_master_nodes</span><span style="color:#E1E4E8">:</span></span></code></pre>
+<blockquote>
+<p>这两个配置，是为了集群集中的节点可以相互发现和并选择主节点。</p>
+</blockquote>
+<blockquote>
+<p>前者的配置是为了提供服务发现，发现集群，并加入他们；后者是设置一系列符合主节点条件的节点的主机名或 IP 地址来引导启动集群。</p>
+</blockquote>
+<blockquote>
+<p>例如，现在存在一个主节点，<code>20.201.35.73 </code></p>
+</blockquote>
+<blockquote>
+<p>现在需要动态添加一个节点，</p>
+</blockquote>
+<blockquote>
+<p><code>discovery.seed_hosts</code> 需要设置成<code>20.201.35.73</code></p>
+</blockquote>
+<blockquote>
+<p><code>cluster.initial_master_nodes</code>则需要设置成集群的多个ip</p>
+</blockquote>
+<blockquote>
+<p>那么，新的节点就回自动的添加进来</p>
+</blockquote>
+<blockquote>
+<p>在向集群添加新的符合主节点条件的节点时不再需要任何特殊的仪式，只需配置新节点，让它们可以发现已有集群，并启动它们。当有新节点加入时，集群将会自动地调整选举配置。只要你没有同时停止一半或更多符合主节点条件的节点，即使移除节点也是安全的。如果你需要停止一半或更多符合主节点条件的节点，或者你有更复杂的伸缩和编排需求，可以使用 API 直接调整选举配置。</p>
+</blockquote>
+<h3 id="六集群节点说明及部署建议">六、集群节点说明及部署建议</h3>
+<blockquote>
+<p>默认情况下，elasticsearch集群中每个节点都有成为主节点的资格，也都存储数据，还可以提供查询服务。</p>
+</blockquote>
+<blockquote>
+<p>但是在生产中，如果不修改elasticsearch节点的角色信息，在高数据量，高并发的场景下集群容易出现脑裂等问题。</p>
+</blockquote>
+<blockquote>
+<p><code>node.master：</code>这个属性表示节点是否具有成为主节点的资格</p>
+</blockquote>
+<blockquote>
+<p><code>node.data：</code>这个属性表示节点是否存储数据。</p>
+</blockquote>
+<blockquote>
+<p>一个节点可以对应的，有四种配置，决定是否存储数据，是否有成为主节点的资格。</p>
+</blockquote>
+<blockquote>
+<p>建议：</p>
+</blockquote>
+<blockquote>
+<p>默认情况下<code>【node.master: true node.data: true】</code>，每个节点都有成为主节点的资格，也会存储数据，还会处理客户端的请求。</p>
+</blockquote>
+<blockquote>
+<p>建议集群中设置3台以上的节点作为master节点<code>【node.master: true node.data: false】</code>，这些节点只负责成为主节点，维护整个集群的状态。</p>
+</blockquote>
+<blockquote>
+<p>再根据数据量设置一批data节点<code>【node.master: false node.data: true】</code>，这些节点只负责存储数据，后期提供建立索引和查询索引的服务，这样的话如果用户请求比较频繁，这些节点的压力也会比较大。</p>
+</blockquote>
+<blockquote>
+<p>所以在集群中建议再设置一批client节点<code>【node.master: false  node.data: false】</code>，这些节点只负责处理用户请求，实现请求转发，负载均衡等功能。</p>
+</blockquote>
+<h2 id="kibana-搭建">Kibana 搭建</h2>
+<h3 id="一配置">一、配置</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>tar -zxvf kibana-7.2.0-linux-x86_64.tar.gz</span></span>
+<span class="line"><span>cd  kibana-7.2.0-linux-x86_64</span></span>
+<span class="line"><span>vim ./config/kibana.yml</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D">#修改或者添加下列参数</span></span>
+<span class="line"><span style="color:#85E89D">server.port</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5601</span></span>
+<span class="line"><span style="color:#6A737D">#kibana本机ip</span></span>
+<span class="line"><span style="color:#85E89D">server.host</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"20.201.35.73"</span></span>
+<span class="line"><span style="color:#6A737D">#es集群ip</span></span>
+<span class="line"><span style="color:#85E89D">elasticsearch.hosts</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"http://20.201.35.73:9200"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"http://20.201.35.134:9200"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"http://20.201.35.133:9200"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">#默认往es添加索引".kibana"</span></span>
+<span class="line"><span style="color:#85E89D">kibana.index</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">".kibana"</span></span>
+<span class="line"></span></code></pre>
+<h3 id="二启动">二、启动</h3>
+<blockquote>
+<p>与ES一样，<code>kibana</code>无法用root用户启动</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>su elasticsearch</span></span>
+<span class="line"><span>nohup ./bin/kibana &#x26;</span></span></code></pre>
+<blockquote>
+<p>验证下是否启动成功</p>
+</blockquote>
+<blockquote>
+<p>浏览器访问  20.201.35.73:5601</p>
+</blockquote>
+<blockquote>
+<p>出现页面就是启动成功了</p>
+</blockquote> </div> </article>  </main> <footer class="site-footer"> <div class="footer-inner"> <div class="footer-col"> <h4>导航</h4> <a href="/">首页</a> <a href="/archive">归档</a> </div> <div class="footer-col"> <h4>社交</h4> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </div> <div class="footer-col"> <h4>技术栈</h4> <span>Spring Boot</span> <span>Elasticsearch</span> <span>Kafka</span> <span>Java</span> </div> </div> <div class="footer-bottom"> <p>&copy; 2020 - 2026 littlepug. Built with Astro.</p> </div> </footer> </body></html> 

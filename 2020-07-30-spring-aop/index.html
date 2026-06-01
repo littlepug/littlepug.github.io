@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Java &#38; Big Data 技术博客"><title>Spring-AOP概念及使用教程 - littlepug&#39;s blog</title><link rel="icon" href="/images/avatar.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--bg: #fafafa;--card-bg: #ffffff;--text: #1a1a2e;--text-secondary: #6b7280;--primary: #6366f1;--primary-light: #818cf8;--border: #e5e7eb;--shadow: 0 1px 3px rgba(0,0,0,.06);--shadow-hover: 0 8px 30px rgba(0,0,0,.12);--radius: 16px;--max-width: 1100px;--header-height: 64px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,Noto Sans SC,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:100;background:#ffffffd9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--header-height)}.header-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px}.logo-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--border)}.nav-links{display:flex;gap:24px;align-items:center;font-size:14px;color:var(--text-secondary)}.nav-links a:hover{color:var(--primary)}main{max-width:var(--max-width);margin:0 auto;padding:0 24px;min-height:calc(100vh - var(--header-height) - 300px)}.site-footer{margin-top:80px;padding:48px 24px 24px;border-top:1px solid var(--border);background:var(--card-bg)}.footer-inner{max-width:var(--max-width);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:40px}.footer-col{display:flex;flex-direction:column;gap:8px}.footer-col h4{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text);margin-bottom:4px}.footer-col a,.footer-col span{font-size:13px;color:var(--text-secondary)}.footer-col a:hover{color:var(--primary)}.footer-bottom{max-width:var(--max-width);margin:32px auto 0;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-secondary)}code{font-family:Fira Code,monospace;font-size:.9em;background:#f1f5f9;padding:2px 6px;border-radius:4px}pre{background:#1e293b;color:#e2e8f0;padding:20px;border-radius:var(--radius);overflow-x:auto;font-size:14px;line-height:1.6}pre code{background:none;padding:0;font-size:inherit}
+.article[data-astro-cid-fzx4jmue]{max-width:780px;margin:0 auto;padding:60px 0}.article-header[data-astro-cid-fzx4jmue]{text-align:center;margin-bottom:48px;display:flex;flex-direction:column;align-items:center;gap:12px}.article-date[data-astro-cid-fzx4jmue]{font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em}.article-title[data-astro-cid-fzx4jmue]{font-size:36px;font-weight:700;line-height:1.3;letter-spacing:-.02em}.article-category[data-astro-cid-fzx4jmue]{font-size:12px;background:var(--primary);color:#fff;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;font-weight:500}.article-body[data-astro-cid-fzx4jmue]{font-size:16px;line-height:1.85}.article-body[data-astro-cid-fzx4jmue] h2{font-size:24px;font-weight:600;margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}.article-body[data-astro-cid-fzx4jmue] h3{font-size:20px;font-weight:600;margin:32px 0 12px}.article-body[data-astro-cid-fzx4jmue] p{margin-bottom:16px}.article-body[data-astro-cid-fzx4jmue] ul,.article-body[data-astro-cid-fzx4jmue] ol{margin-bottom:16px;padding-left:24px}.article-body[data-astro-cid-fzx4jmue] li{margin-bottom:8px}.article-body[data-astro-cid-fzx4jmue] blockquote{border-left:3px solid var(--primary);padding:12px 20px;margin:20px 0;background:#f8fafc;border-radius:0 var(--radius) var(--radius) 0;color:var(--text-secondary)}.article-body[data-astro-cid-fzx4jmue] img{max-width:100%;border-radius:var(--radius);margin:20px 0}@media(max-width:768px){.article[data-astro-cid-fzx4jmue]{padding:40px 0}.article-title[data-astro-cid-fzx4jmue]{font-size:26px}}
+</style></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="logo"> <img src="/images/avatar.jpg" alt="avatar" class="logo-avatar"> <span class="logo-text">littlepug</span> </a> <nav class="nav-links"> <a href="/">首页</a> <a href="/archive">归档</a> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </nav> </div> </header> <main>  <article class="article" data-astro-cid-fzx4jmue> <header class="article-header" data-astro-cid-fzx4jmue> <time class="article-date" data-astro-cid-fzx4jmue>2020-07-30</time> <h1 class="article-title" data-astro-cid-fzx4jmue>Spring-AOP概念及使用教程</h1> <span class="article-category" data-astro-cid-fzx4jmue>study</span> </header> <div class="article-body" data-astro-cid-fzx4jmue> <h2 id="1spring-aop基本概念">1.Spring-AOP基本概念</h2>
+<blockquote>
+<ol>
+<li>面向切面编程（方面），利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑之间的耦合度江都，提高程序的可重用性同事提高了开发的效率。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>通俗描述：不通过修改源代码，在主干功能里面添加新功能</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>使用登录例子说明AOP</li>
+</ol>
+</blockquote>
+<p><img src="/assets/images/2020/spring5/lizishuoming.png" alt="图片"></p>
+<h2 id="2aop底层原里">2.AOP（底层原里）</h2>
+<h3 id="aaop-底层使用动态代理-动态代理有两种情况">a）AOP 底层使用动态代理 ，动态代理有两种情况：</h3>
+<blockquote>
+<p>第一种有接口情况，使用JDK动态代理；创建接口实现代理对象，增强类的方法</p>
+</blockquote>
+<p><img src="/assets/images/2020/spring5/youjiekou.png" alt="图片"></p>
+<blockquote>
+<p>第二种 没有接口情况，使用  CGLIB 动态代理；创建子类的代理对象，增强类的方法</p>
+</blockquote>
+<p><img src="/assets/images/2020/spring5/wujiekou.png" alt="图片"></p>
+<h2 id="3aopjdk动态代理">3.AOP（JDK动态代理）</h2>
+<h3 id="1使用-jdk-动态代理使用-proxy-类里面的方法创建代理对象">1）使用 JDK 动态代理，使用 Proxy 类里面的方法创建代理对象</h3>
+<blockquote>
+<p>调用 newProxyInstance 方法，方法有三个参数：</p>
+</blockquote>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> static</span><span style="color:#E1E4E8"> Object </span><span style="color:#B392F0">newProxyInstance</span><span style="color:#E1E4E8">(ClassLoader loader,</span></span>
+<span class="line"><span style="color:#E1E4E8">Class</span><span style="color:#F97583">&#x3C;?></span><span style="color:#E1E4E8"> [] interfaces,</span></span>
+<span class="line"><span style="color:#E1E4E8">InvocationHandler h)</span></span></code></pre>
+<blockquote>
+<p>第一参数，类加载器
+第二参数，增强方法所在的类，这个类实现的接口，支持多个接口
+第三参数，实现这个接口 InvocationHandler，创建代理对象，写增强的部分</p>
+</blockquote>
+<hr>
+<p>​ ### 2）编写 JDK 动态代理代码</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//（1）创建接口，定义方法</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UserDao</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> int</span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">int</span><span style="color:#FFAB70"> a</span><span style="color:#E1E4E8">,</span><span style="color:#F97583">int</span><span style="color:#FFAB70"> b</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> String </span><span style="color:#B392F0">update</span><span style="color:#E1E4E8">(String </span><span style="color:#FFAB70">id</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//（2）创建接口实现类，实现方法</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserDaoImpl</span><span style="color:#F97583"> implements</span><span style="color:#B392F0"> UserDao</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> int</span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">int</span><span style="color:#FFAB70"> a</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">int</span><span style="color:#FFAB70"> b</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> a</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">b;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> String </span><span style="color:#B392F0">update</span><span style="color:#E1E4E8">(String </span><span style="color:#FFAB70">id</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> id;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//（3）使用 Proxy 类创建接口代理对象</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> JDKProxy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> static</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">String</span><span style="color:#E1E4E8">[] </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6A737D">    //创建接口实现类代理对象</span></span>
+<span class="line"><span style="color:#F97583">    Class</span><span style="color:#E1E4E8">[] interfaces </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {UserDao.class};</span></span>
+<span class="line"><span style="color:#E1E4E8">    UserDaoImpl userDao </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> UserDaoImpl</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#6A737D">/** 第一参数，类加载器</span></span>
+<span class="line"><span style="color:#6A737D">	第二参数，增强方法所在的类，这个类实现的接口，(支持多个接口)</span></span>
+<span class="line"><span style="color:#6A737D">	第三参数，实现这个接口 InvocationHandler，创建代理对象，写增强的部分     */</span></span>
+<span class="line"><span style="color:#E1E4E8">    UserDao dao </span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(UserDao)Proxy.</span><span style="color:#B392F0">newProxyInstance</span><span style="color:#E1E4E8">(JDKProxy.class.</span><span style="color:#B392F0">getClassLoader</span><span style="color:#E1E4E8">(), interfaces,</span></span>
+<span class="line"><span style="color:#F97583">					new</span><span style="color:#B392F0"> UserDaoProxy</span><span style="color:#E1E4E8">(userDao));</span></span>
+<span class="line"><span style="color:#F97583">    int</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> dao.</span><span style="color:#B392F0">add</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"result:"</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">result);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">//创建代理对象代码</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> UserDaoProxy</span><span style="color:#F97583"> implements</span><span style="color:#B392F0"> InvocationHandler</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    //1 把创建的是谁的代理对象，把谁传递过来</span></span>
+<span class="line"><span style="color:#6A737D">    //有参数构造传递</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#E1E4E8"> Object obj;</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#B392F0"> UserDaoProxy</span><span style="color:#E1E4E8">(Object </span><span style="color:#FFAB70">obj</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.obj </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> obj;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#6A737D">    //增强的逻辑</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> Object </span><span style="color:#B392F0">invoke</span><span style="color:#E1E4E8">(Object </span><span style="color:#FFAB70">proxy</span><span style="color:#E1E4E8">, Method </span><span style="color:#FFAB70">method</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">Object</span><span style="color:#E1E4E8">[] </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">throws</span><span style="color:#E1E4E8"> Throwable {</span></span>
+<span class="line"><span style="color:#6A737D">    //方法之前</span></span>
+<span class="line"><span style="color:#E1E4E8">    System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"方法之前执行...."</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">method.</span><span style="color:#B392F0">getName</span><span style="color:#E1E4E8">()</span><span style="color:#F97583">+</span><span style="color:#9ECBFF">" :传递的参数..."</span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> Arrays.</span><span style="color:#B392F0">toString</span><span style="color:#E1E4E8">(args));</span></span>
+<span class="line"><span style="color:#6A737D">    //被增强的方法执行</span></span>
+<span class="line"><span style="color:#E1E4E8">    Object res </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> method.</span><span style="color:#B392F0">invoke</span><span style="color:#E1E4E8">(obj, args);</span></span>
+<span class="line"><span style="color:#6A737D">    //方法之后</span></span>
+<span class="line"><span style="color:#E1E4E8">    System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"方法之后执行...."</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">obj);</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> res;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="4aop术语">4.AOP（术语）</h2>
+<blockquote>
+<ol>
+<li>连接点：类里面哪些方法可以被增强、这些方法被称为连接点</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>切入点：实际被真正增强的方法称为切入点</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>增强： 就是植入到目标类连接点上的一段程序代码，包括：前置增强；后置增强；环绕增强；异常增强；最终增强</li>
+<li>切面：把通知应用到切入点uoch</li>
+</ol>
+</blockquote>
+<h2 id="5aop操作">5.AOP操作</h2>
+<blockquote>
+<ol>
+<li>Spring框架一般都是基于AspectJ实现AOP操作，AspectJ不是Spring组成部分，独立AOP框架，一般把AspectJ和Spring框架一起使用，进行AOP操作</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>基于AspectJ和Spring框架一起使用，进行AOP操作：1）基于xml配置文件实现；2）基于注解方式实现（使用）</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>引入相关jar包</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>切入点表达式，如下</li>
+</ol>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>（1）切入点表达式作用：知道对哪个类里面的哪个方法进行增强</span></span>
+<span class="line"><span>（2）语法结构： execution([权限修饰符] [返回类型] [类全路径] [方法名称]([参数列表]) )</span></span>
+<span class="line"><span>（3）例子如下：</span></span>
+<span class="line"><span>          例 1：对 com.atguigu.dao.BookDao 类里面的 add 进行增强</span></span>
+<span class="line"><span>		execution(* com.atguigu.dao.BookDao.add(..))</span></span>
+<span class="line"><span>    	例 2：对 com.atguigu.dao.BookDao 类里面的所有的方法进行增强</span></span>
+<span class="line"><span>		execution(* com.atguigu.dao.BookDao.* (..))</span></span>
+<span class="line"><span>          例 3：对 com.atguigu.dao 包里面所有类，类里面所有方法进行增强</span></span>
+<span class="line"><span>		execution(* com.atguigu.dao.*.* (..))</span></span></code></pre>
+<h2 id="6aop操作aspectj注解">6.AOP操作（Aspectj注解）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//1、创建类，在类里面定义方法</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> User</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">    System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"add......."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">//2、创建增强类（编写增强逻辑）</span></span>
+<span class="line"><span style="color:#6A737D">//（1）在增强类里面，创建方法，让不同方法代表不同通知类型</span></span>
+<span class="line"><span style="color:#6A737D">//增强的类</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserProxy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> before</span><span style="color:#E1E4E8">() {</span><span style="color:#6A737D">//前置通知</span></span>
+<span class="line"><span style="color:#E1E4E8">    System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"before......"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#6A737D">&#x3C;!--3、进行通知的配置--></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;?</span><span style="color:#85E89D">xml</span><span style="color:#B392F0"> version</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"1.0"</span><span style="color:#B392F0"> encoding</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"UTF-8"</span><span style="color:#E1E4E8">?></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">beans</span><span style="color:#B392F0"> xmlns</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://www.springframework.org/schema/beans"</span></span>
+<span class="line"><span style="color:#B392F0">        xmlns:xsi</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://www.w3.org/2001/XMLSchema-instance"</span></span>
+<span class="line"><span style="color:#B392F0">        xmlns:context</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://www.springframework.org/schema/context"</span></span>
+<span class="line"><span style="color:#B392F0">        xmlns:aop</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://www.springframework.org/schema/aop"</span></span>
+<span class="line"><span style="color:#B392F0">        xsi:schemaLocation</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></span>
+<span class="line"><span style="color:#9ECBFF">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd</span></span>
+<span class="line"><span style="color:#9ECBFF">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#6A737D">           &#x3C;!-- 开启注解扫描 --></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">context:component-scan</span><span style="color:#B392F0"> base-package</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"com.atguigu.spring5.aopanno"</span><span style="color:#E1E4E8">> &#x3C;/</span><span style="color:#85E89D">context:component-scan</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- 开启Aspect生成代理对象--></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">aop:aspectj-autoproxy</span><span style="color:#E1E4E8">> &#x3C;/</span><span style="color:#85E89D">aop:aspectj-autoproxy</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">beans</span><span style="color:#E1E4E8">></span></span></code></pre>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//增强的类</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Component</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Aspect</span><span style="color:#6A737D">     //生成代理对象</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserProxy</span><span style="color:#E1E4E8"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">//被增强的类</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Component</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> User</span><span style="color:#E1E4E8"> {}</span></span></code></pre>
+<hr>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//4、配置不同类型的通知</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Component</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Aspect</span><span style="color:#6A737D">     //生成代理对象</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserProxy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    //相同切入点抽取</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Pointcut</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "execution(* com.atguigu.spring5.aopanno.User.add(..))"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> pointdemo</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    //前置通知</span></span>
+<span class="line"><span style="color:#6A737D">    //@Before注解表示作为前置通知</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Before</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "pointdemo()"</span><span style="color:#E1E4E8">)</span><span style="color:#6A737D">//相同切入点抽取使用！</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> before</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"before........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    //后置通知（返回通知）</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">AfterReturning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "execution(* com.atguigu.spring5.aopanno.User.add(..))"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> afterReturning</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"afterReturning........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    //最终通知</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">After</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "execution(* com.atguigu.spring5.aopanno.User.add(..))"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> after</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"after........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    //异常通知</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">AfterThrowing</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "execution(* com.atguigu.spring5.aopanno.User.add(..))"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> afterThrowing</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"afterThrowing........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    //环绕通知</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Around</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">value</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "execution(* com.atguigu.spring5.aopanno.User.add(..))"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> around</span><span style="color:#E1E4E8">(ProceedingJoinPoint </span><span style="color:#FFAB70">proceedingJoinPoint</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">throws</span><span style="color:#E1E4E8"> Throwable {</span></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"环绕之前........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">            //被增强的方法执行</span></span>
+<span class="line"><span style="color:#E1E4E8">            proceedingJoinPoint.</span><span style="color:#B392F0">proceed</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">            System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"环绕之后........."</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="1-有多个增强类对同一个方法进行增强设置增强类优先级">1. 有多个增强类对同一个方法进行增强，设置增强类优先级</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">//（1）在增强类上面添加注解 @Order(数字类型值)，数字类型值越小优先级越高</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Component</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Aspect</span></span>
+<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#F97583">Order</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> PersonProxy</span><span style="color:#E1E4E8">{ }</span></span></code></pre>
+<h2 id="8aop-操作aspectj-配置文件">8.AOP 操作（AspectJ 配置文件）</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#6A737D">&#x3C;!--1、创建两个类，增强类和被增强类，创建方法（同上一样）--></span></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!--2、在 spring 配置文件中创建两个类对象--></span></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!--创建对象--></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">bean</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"book"</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"com.atguigu.spring5.aopxml.Book"</span><span style="color:#E1E4E8">> &#x3C;/</span><span style="color:#85E89D">bean</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">bean</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"bookProxy"</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"com.atguigu.spring5.aopxml.BookProxy"</span><span style="color:#E1E4E8">> &#x3C;/</span><span style="color:#85E89D">bean</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!--3、在 spring 配置文件中配置切入点--></span></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!--配置 aop 增强--></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">aop:config</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#6A737D">    &#x3C;!--切入点--></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">aop:pointcut</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"p"</span><span style="color:#B392F0"> expression</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"execution(* com.atguigu.spring5.aopxml.Book.buy(..))"</span><span style="color:#E1E4E8">/></span></span>
+<span class="line"><span style="color:#6A737D">    &#x3C;!--配置切面--></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">aop:aspect</span><span style="color:#B392F0"> ref</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"bookProxy"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#6A737D">    &#x3C;!--增强作用在具体的方法上--></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">aop:before</span><span style="color:#B392F0"> method</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"before"</span><span style="color:#B392F0"> pointcut-ref</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"p"</span><span style="color:#E1E4E8">/></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">aop:aspect</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">aop:config</span><span style="color:#E1E4E8">></span></span></code></pre> </div> </article>  </main> <footer class="site-footer"> <div class="footer-inner"> <div class="footer-col"> <h4>导航</h4> <a href="/">首页</a> <a href="/archive">归档</a> </div> <div class="footer-col"> <h4>社交</h4> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </div> <div class="footer-col"> <h4>技术栈</h4> <span>Spring Boot</span> <span>Elasticsearch</span> <span>Kafka</span> <span>Java</span> </div> </div> <div class="footer-bottom"> <p>&copy; 2020 - 2026 littlepug. Built with Astro.</p> </div> </footer> </body></html> 

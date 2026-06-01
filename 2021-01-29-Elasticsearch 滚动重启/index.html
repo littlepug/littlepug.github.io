@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Java &#38; Big Data 技术博客"><title>Elasticsearch 滚动重启 - littlepug&#39;s blog</title><link rel="icon" href="/images/avatar.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root{--bg: #fafafa;--card-bg: #ffffff;--text: #1a1a2e;--text-secondary: #6b7280;--primary: #6366f1;--primary-light: #818cf8;--border: #e5e7eb;--shadow: 0 1px 3px rgba(0,0,0,.06);--shadow-hover: 0 8px 30px rgba(0,0,0,.12);--radius: 16px;--max-width: 1100px;--header-height: 64px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,Noto Sans SC,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:100;background:#ffffffd9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--header-height)}.header-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px}.logo-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--border)}.nav-links{display:flex;gap:24px;align-items:center;font-size:14px;color:var(--text-secondary)}.nav-links a:hover{color:var(--primary)}main{max-width:var(--max-width);margin:0 auto;padding:0 24px;min-height:calc(100vh - var(--header-height) - 300px)}.site-footer{margin-top:80px;padding:48px 24px 24px;border-top:1px solid var(--border);background:var(--card-bg)}.footer-inner{max-width:var(--max-width);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:40px}.footer-col{display:flex;flex-direction:column;gap:8px}.footer-col h4{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text);margin-bottom:4px}.footer-col a,.footer-col span{font-size:13px;color:var(--text-secondary)}.footer-col a:hover{color:var(--primary)}.footer-bottom{max-width:var(--max-width);margin:32px auto 0;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-secondary)}code{font-family:Fira Code,monospace;font-size:.9em;background:#f1f5f9;padding:2px 6px;border-radius:4px}pre{background:#1e293b;color:#e2e8f0;padding:20px;border-radius:var(--radius);overflow-x:auto;font-size:14px;line-height:1.6}pre code{background:none;padding:0;font-size:inherit}
+.article[data-astro-cid-fzx4jmue]{max-width:780px;margin:0 auto;padding:60px 0}.article-header[data-astro-cid-fzx4jmue]{text-align:center;margin-bottom:48px;display:flex;flex-direction:column;align-items:center;gap:12px}.article-date[data-astro-cid-fzx4jmue]{font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em}.article-title[data-astro-cid-fzx4jmue]{font-size:36px;font-weight:700;line-height:1.3;letter-spacing:-.02em}.article-category[data-astro-cid-fzx4jmue]{font-size:12px;background:var(--primary);color:#fff;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;font-weight:500}.article-body[data-astro-cid-fzx4jmue]{font-size:16px;line-height:1.85}.article-body[data-astro-cid-fzx4jmue] h2{font-size:24px;font-weight:600;margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}.article-body[data-astro-cid-fzx4jmue] h3{font-size:20px;font-weight:600;margin:32px 0 12px}.article-body[data-astro-cid-fzx4jmue] p{margin-bottom:16px}.article-body[data-astro-cid-fzx4jmue] ul,.article-body[data-astro-cid-fzx4jmue] ol{margin-bottom:16px;padding-left:24px}.article-body[data-astro-cid-fzx4jmue] li{margin-bottom:8px}.article-body[data-astro-cid-fzx4jmue] blockquote{border-left:3px solid var(--primary);padding:12px 20px;margin:20px 0;background:#f8fafc;border-radius:0 var(--radius) var(--radius) 0;color:var(--text-secondary)}.article-body[data-astro-cid-fzx4jmue] img{max-width:100%;border-radius:var(--radius);margin:20px 0}@media(max-width:768px){.article[data-astro-cid-fzx4jmue]{padding:40px 0}.article-title[data-astro-cid-fzx4jmue]{font-size:26px}}
+</style></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="logo"> <img src="/images/avatar.jpg" alt="avatar" class="logo-avatar"> <span class="logo-text">littlepug</span> </a> <nav class="nav-links"> <a href="/">首页</a> <a href="/archive">归档</a> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </nav> </div> </header> <main>  <article class="article" data-astro-cid-fzx4jmue> <header class="article-header" data-astro-cid-fzx4jmue> <time class="article-date" data-astro-cid-fzx4jmue>2021-01-29</time> <h1 class="article-title" data-astro-cid-fzx4jmue>Elasticsearch 滚动重启</h1> <span class="article-category" data-astro-cid-fzx4jmue>study</span> </header> <div class="article-body" data-astro-cid-fzx4jmue> <h2 id="滚动重启">滚动重启</h2>
+<blockquote>
+<p>elasticsearch版本升级、或者服务器自身的维护操作，都需要滚动重启。</p>
+<p>滚动重启支持Elasticsearch一次重启一个节点，因此重启不会中断服务。</p>
+<p>建议重启时讲集群的节点分为两个组，并按顺序升级组：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D">#符合master资格的节点</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/nodes/master:true?pretty"</span></span>
+<span class="line"><span style="color:#6A737D">#不符合master资格的节点，即其余节点</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/nodes/master:false?pretty"</span></span></code></pre>
+</blockquote>
+<h2 id="重启">重启</h2>
+<h3 id="1禁用分片分配">1.禁用分片分配</h3>
+<blockquote>
+<p>当关闭节点时，分配过程将等待<code>index.unassigned.node_left.delayed_timeout</code>分钟（默认是1分钟），然后再开始将该节点的分片复制到集群的其他节点，这kennel会涉及大量IO。由于该节点将不久后重启，因此该IO是不必要的。重启节点之前禁用副本分配：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D">#transient和persistent两种方式</span></span>
+<span class="line"><span style="color:#6A737D">#transient 临时：这些设置在集群重启之前一直会生效。一旦整个集群重启，这些设置就被清除</span></span>
+<span class="line"><span style="color:#6A737D">#persistent 永久：这些设置永久保存，除非再次被手动修改。是将修改持久化到文件中，重启之后也不影响。</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> PUT</span><span style="color:#9ECBFF"> "localhost:9200/_cluster/settings?pretty"</span><span style="color:#79B8FF"> -H</span><span style="color:#9ECBFF"> 'Content-Type: application/json'</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF">'</span></span>
+<span class="line"><span style="color:#9ECBFF">{</span></span>
+<span class="line"><span style="color:#9ECBFF">  "persistent": {</span></span>
+<span class="line"><span style="color:#9ECBFF">    "cluster.routing.allocation.enable": "primaries"</span></span>
+<span class="line"><span style="color:#9ECBFF">  }</span></span>
+<span class="line"><span style="color:#9ECBFF">}</span></span>
+<span class="line"><span style="color:#9ECBFF">'</span></span>
+<span class="line"></span>
+<span class="line"></span></code></pre>
+<ul>
+<li>all -（默认）允许为所有类型的分片分配分片。</li>
+<li>primaries -仅允许为主要分片分配分片。</li>
+<li>new_primaries -仅允许为新索引的主碎片分配碎片。</li>
+<li>none -不允许为任何索引分配任何类型的分片。</li>
+</ul>
+<p>重新启动节点时，此设置不会影响本地主分片的恢复。</p>
+<p>重新启动的节点，具有未分配的主分片副本的将立即恢复该主节点，前提是其分配ID与集群状态下的活跃分配ID之一匹配。</p>
+</blockquote>
+<h3 id="2停止索引编制并执行同步刷新">2.停止索引编制并执行同步刷新</h3>
+<blockquote>
+<p>可能的话，停止索引新数据。可以帮助提高恢复速度</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#9ECBFF"> "localhost:9200/_flush/synced?pretty"</span></span>
+<span class="line"><span style="color:#6A737D">#执行同步刷新时，请检查响应以确保没有失败。尽管请求本身仍返回200 OK状态，但响应主体中列出了由于挂起索引操作而失败的同步刷新操作。如果失败，请重新发出请求。</span></span>
+<span class="line"><span style="color:#6A737D">#将在8.0中将其删除</span></span></code></pre>
+<h3 id="3关闭单个节点">3.关闭单个节点</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#79B8FF">kill</span><span style="color:#E1E4E8"> ${cat pid}</span></span></code></pre>
+<h3 id="4执行任何需要的更改">4.执行任何需要的更改</h3>
+<h3 id="5启动单个节点">5.启动单个节点</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">nohup</span><span style="color:#9ECBFF"> ./bin/elasticsearch</span><span style="color:#E1E4E8"> &#x26;</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D">#确认节点是否加入集群</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/_cat/health?pretty"</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/_cat/nodes?pretty"</span></span>
+<span class="line"></span></code></pre>
+<h3 id="6重新启用分片分配">6.重新启用分片分配</h3>
+<blockquote>
+<p>节点加入集群之后，删除<code>cluster.routing.allocation.enable</code>设置以启动分片分配并开始使用节点。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> PUT</span><span style="color:#9ECBFF"> "localhost:9200/_cluster/settings?pretty"</span><span style="color:#79B8FF"> -H</span><span style="color:#9ECBFF"> 'Content-Type: application/json'</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF">'</span></span>
+<span class="line"><span style="color:#9ECBFF">{</span></span>
+<span class="line"><span style="color:#9ECBFF">  "persistent": {</span></span>
+<span class="line"><span style="color:#9ECBFF">    "cluster.routing.allocation.enable": null</span></span>
+<span class="line"><span style="color:#9ECBFF">  }</span></span>
+<span class="line"><span style="color:#9ECBFF">}</span></span>
+<span class="line"><span style="color:#9ECBFF">'</span></span>
+<span class="line"></span></code></pre>
+</blockquote>
+<h3 id="7等待节点恢复">7.等待节点恢复</h3>
+<blockquote>
+<p>在重启下一个节点之前，请等待集群完成分片分配</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D">#检查恢复进度</span></span>
+<span class="line"><span style="color:#6A737D">#等待status列切换到green。一旦该节点为green，就已经分配了所有主要和副本碎片。</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/_cat/health?v=true&#x26;pretty"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">#通过提交_cat/recovery请求来监视各个分片的恢复状态：</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/_cat/health?pretty"</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> GET</span><span style="color:#9ECBFF"> "localhost:9200/_cat/recovery?pretty"</span></span>
+<span class="line"></span></code></pre>
+</blockquote>
+<h3 id="8重复">8.重复</h3>
+<blockquote>
+<p>当节点已经恢复并且稳定后，对需要重启的节点重复这些步骤。</p>
+</blockquote> </div> </article>  </main> <footer class="site-footer"> <div class="footer-inner"> <div class="footer-col"> <h4>导航</h4> <a href="/">首页</a> <a href="/archive">归档</a> </div> <div class="footer-col"> <h4>社交</h4> <a href="https://github.com/littlepug" target="_blank" rel="noopener"> <i class="fab fa-github"></i> GitHub
+</a> </div> <div class="footer-col"> <h4>技术栈</h4> <span>Spring Boot</span> <span>Elasticsearch</span> <span>Kafka</span> <span>Java</span> </div> </div> <div class="footer-bottom"> <p>&copy; 2020 - 2026 littlepug. Built with Astro.</p> </div> </footer> </body></html> 
