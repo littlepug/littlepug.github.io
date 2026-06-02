@@ -1,0 +1,50 @@
+---
+/** 封面图：SVG 用 contain 完整展示，避免 object-fit:cover 裁切 */
+interface Props {
+  src: string;
+  alt: string;
+  variant?: 'card' | 'hero';
+}
+
+const { src, alt, variant = 'card' } = Astro.props;
+---
+
+<div class:list={['cover-image', variant]}>
+  <img src={src} alt={alt} loading={variant === 'card' ? 'lazy' : 'eager'} decoding="async" />
+</div>
+
+<style>
+  .cover-image {
+    width: 100%;
+    overflow: hidden;
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-image.card {
+    height: 180px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cover-image.hero {
+    margin-bottom: 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    max-height: 320px;
+  }
+
+  .cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  .cover-image.hero img {
+    height: auto;
+    max-height: 320px;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import CoverImage from '../components/CoverImage.astro';
 import { getCategoryLabel } from '../utils/categories';
 import { getReadingMinutes } from '../utils/reading-time';
 export async function getStaticPaths() {
@@ -37,9 +38,7 @@ const description = post.data.excerpt || post.data.title;
 
       {
         post.data.cover ? (
-          <div class="article-cover">
-            <img src={post.data.cover} alt="" loading="eager" />
-          </div>
+          <CoverImage src={post.data.cover} alt={post.data.title} variant="hero" />
         ) : null
       }
 
@@ -200,22 +199,6 @@ const description = post.data.excerpt || post.data.title;
     gap: 10px;
   }
 
-  .article-cover {
-    margin-bottom: 28px;
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    aspect-ratio: 16 / 9;
-    max-height: 280px;
-  }
-
-  .article-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
   .article-category {
     display: inline-block;
     align-self: flex-start;
@@ -294,9 +277,19 @@ const description = post.data.excerpt || post.data.title;
   }
 
   .article-body :global(img) {
+    display: block;
+    width: 100%;
     max-width: 100%;
+    height: auto;
     border-radius: var(--radius);
-    margin: 18px 0;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    box-sizing: border-box;
+  }
+
+  .article-body :global(p:has(img)) {
+    margin: 0;
   }
 
   .article-body :global(a) {
