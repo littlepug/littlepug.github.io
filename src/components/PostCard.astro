@@ -1,5 +1,4 @@
 ---
-import CoverImage from './CoverImage.astro';
 import { getCategoryLabel, getCardAccentIndex } from '../utils/categories';
 import { getReadingMinutes } from '../utils/reading-time';
 
@@ -24,7 +23,12 @@ const dateStr = date.toISOString().split('T')[0];
   <div class="post-card-image">
     {
       cover ? (
-        <CoverImage src={cover} alt={title} variant="card" />
+        <div
+          class="post-card-cover"
+          style={`background-image: url('${cover}')`}
+          role="img"
+          aria-label={title}
+        />
       ) : (
         <div class:list={['post-card-placeholder', `accent-${accent}`]}>
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -69,11 +73,18 @@ const dateStr = date.toISOString().split('T')[0];
     overflow: hidden;
   }
 
-  .post-card-image :global(.cover-image) {
+  .post-card-cover {
+    display: block;
+    width: 100%;
+    height: 180px;
+    background-color: var(--bg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     transition: transform 0.4s ease;
   }
 
-  .post-card:hover .post-card-image :global(.cover-image) {
+  .post-card:hover .post-card-cover {
     transform: scale(1.02);
   }
 
@@ -114,6 +125,7 @@ const dateStr = date.toISOString().split('T')[0];
     position: absolute;
     top: 10px;
     left: 10px;
+    z-index: 1;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(6px);
     padding: 3px 10px;

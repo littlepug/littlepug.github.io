@@ -1,50 +1,37 @@
 ---
-/** 封面图：SVG 用 contain 完整展示，避免 object-fit:cover 裁切 */
+/** 文章页顶部封面 */
 interface Props {
   src: string;
   alt: string;
-  variant?: 'card' | 'hero';
 }
 
-const { src, alt, variant = 'card' } = Astro.props;
+const { src, alt } = Astro.props;
 ---
 
-<div class:list={['cover-image', variant]}>
-  <img src={src} alt={alt} loading={variant === 'card' ? 'lazy' : 'eager'} decoding="async" />
-</div>
+<div
+  class="article-cover-banner"
+  style={`background-image: url('${src}')`}
+  role="img"
+  aria-label={alt}
+/>
 
 <style>
-  .cover-image {
+  .article-cover-banner {
+    display: block;
     width: 100%;
-    overflow: hidden;
-    background: var(--card-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cover-image.card {
-    height: 180px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .cover-image.hero {
+    height: 240px;
     margin-bottom: 28px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    max-height: 320px;
+    background-color: var(--bg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
-  .cover-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-  }
-
-  .cover-image.hero img {
-    height: auto;
-    max-height: 320px;
+  @media (max-width: 640px) {
+    .article-cover-banner {
+      height: 180px;
+    }
   }
 </style>
