@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" role="img" aria-label="AOP {Už::þ">
-  <rect width="720" height="320" rx="12" fill="#f8fafc"/>
-  <text x="360" y="36" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="16" font-weight="600" fill="#1e1e2f">{UA + AOP ž:î9Ÿ¡ã	</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300">
+  <rect width="720" height="300" rx="12" fill="#f8fafc"/>
+  <text x="360" y="36" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#1e1e2f">Login flow with AOP cross-cutting concerns</text>
   <rect x="40" y="80" width="120" height="56" rx="8" fill="#fff" stroke="#5b5bd6" stroke-width="2"/>
-  <text x="100" y="114" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="14" fill="#1e1e2f">(7÷B</text>
+  <text x="100" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14">User</text>
   <rect x="220" y="80" width="140" height="56" rx="8" fill="#fff" stroke="#5b5bd6" stroke-width="2"/>
-  <text x="290" y="114" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="14" fill="#1e1e2f">LoginService</text>
+  <text x="290" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14">LoginService</text>
   <rect x="420" y="60" width="160" height="96" rx="8" fill="#ededfc" stroke="#5b5bd6" stroke-width="2" stroke-dasharray="6 4"/>
-  <text x="500" y="100" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="14" fill="#5b5bd6">b @Before</text>
-  <text x="500" y="128" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="12" fill="#6b7280">å× / CP!Œ</text>
-  <rect x="620" y="80" width="80" height="56" rx="8" fill="#10b981" opacity="0.15" stroke="#059669" stroke-width="2"/>
-  <text x="660" y="114" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="13" fill="#047857">{U</text>
-  <path d="M160 108 H220 M360 108 H420 M580 108 H620" stroke="#94a3b8" stroke-width="2"/>
-  <text x="360" y="220" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="13" fill="#6b7280">(;r{U;‘Çe*sè¹MN&</text>
+  <text x="500" y="105" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#5b5bd6">@Before Aspect</text>
+  <text x="500" y="128" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#6b7280">logging / auth</text>
+  <rect x="620" y="80" width="80" height="56" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="660" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#047857">Login</text>
+  <line x1="160" y1="108" x2="220" y2="108" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="360" y1="108" x2="420" y2="108" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="580" y1="108" x2="620" y2="108" stroke="#94a3b8" stroke-width="2"/>
 </svg>

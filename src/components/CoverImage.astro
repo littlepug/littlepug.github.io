@@ -1,5 +1,4 @@
 ---
-/** 文章页顶部封面 */
 interface Props {
   src: string;
   alt: string;
@@ -8,30 +7,27 @@ interface Props {
 const { src, alt } = Astro.props;
 ---
 
-<div
+<img
   class="article-cover-banner"
-  style={`background-image: url('${src}')`}
-  role="img"
-  aria-label={alt}
+  src={src}
+  alt={alt}
+  width="800"
+  height="450"
+  loading="eager"
+  decoding="async"
 />
 
 <style>
   .article-cover-banner {
     display: block;
     width: 100%;
-    height: 240px;
+    max-height: 280px;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
     margin-bottom: 28px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    background-color: var(--bg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  @media (max-width: 640px) {
-    .article-cover-banner {
-      height: 180px;
-    }
+    background: var(--bg);
   }
 </style>

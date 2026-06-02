@@ -4,7 +4,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   spring: 'Spring',
   elasticsearch: 'Elasticsearch',
   kafka: 'Kafka',
-  elasticsearch: 'Elasticsearch',
 };
 
 export function getCategoryLabel(category?: string): string {

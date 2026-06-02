@@ -38,6 +38,9 @@
         "excerpt": {
           "type": "string"
         },
+        "cover": {
+          "type": "string"
+        },
         "$schema": {
           "type": "string"
         }
