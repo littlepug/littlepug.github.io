@@ -1,5 +1,6 @@
 ---
 import { getCategoryLabel, getCardAccentIndex } from '../utils/categories';
+import { resolveCover } from '../utils/covers';
 import { getReadingMinutes } from '../utils/reading-time';
 
 interface Props {
@@ -16,16 +17,17 @@ const { slug, title, date, excerpt, categories, cover, body } = Astro.props;
 const readingMin = getReadingMinutes(body);
 const categoryLabel = getCategoryLabel(categories);
 const accent = getCardAccentIndex(slug);
+const coverSrc = resolveCover(cover, categories);
 const dateStr = date.toISOString().split('T')[0];
 ---
 
 <a href={`/${slug}`} class="post-card">
   <div class="post-card-image">
     {
-      cover ? (
+      coverSrc ? (
         <img
           class="post-card-cover"
-          src={cover}
+          src={coverSrc}
           alt={title}
           width="800"
           height="450"
