@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { CATEGORY_META, getCategoryLabel } from '../utils/categories';
+
+const posts = await getCollection('posts');
+const countMap = new Map<string, number>();
+
+for (const post of posts) {
+  const cat = post.data.categories ?? 'uncategorized';
+  countMap.set(cat, (countMap.get(cat) ?? 0) + 1);
+}
+
+const categories = [...countMap.entries()]
+  .map(([slug, count]) => ({
+    slug,
+    count,
+    label: getCategoryLabel(slug),
+    description:
+      CATEGORY_META[slug]?.description ??
+      (slug === 'uncategorized' ? '未设置分类的文章' : ''),
+  }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<BaseLayout title="分类" description="按分类浏览博客文章">
+  <section class="categories-page">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '分类' }]} />
+
+    <header class="page-header">
+      <h1>分类</h1>
+      <p>共 {categories.length} 个分类</p>
+    </header>
+
+    <div class="category-grid">
+      {
+        categories.map(({ slug, label, description, count }) => (
+          <a href={slug === 'uncategorized' ? '/archive' : `/category/${slug}`} class="category-card">
+            <h2>{label}</h2>
+            {description && <p class="category-desc">{description}</p>}
+            <span class="category-count">{count} 篇</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .categories-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 0 60px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 6px 0 28px;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .category-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .category-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .category-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 500;
+  }
+</style>

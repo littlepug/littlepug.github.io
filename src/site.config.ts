@@ -1,7 +1,7 @@
 export const site = {
   title: "littlepug's blog",
   description:
-    'Java & Big Data 技术博客 — 专注 Spring、Elasticsearch、Kafka 与分布式系统实践笔记。',
+    'Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。',
   author: 'littlepug',
   url: 'https://littlepug.github.io',
   github: 'https://github.com/littlepug',

@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PostCard from '../../components/PostCard.astro';
+import {
+  CATEGORY_META,
+  getCategoryDescription,
+  getCategoryLabel,
+} from '../../utils/categories';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const catSet = new Set<string>();
+  for (const post of posts) {
+    if (post.data.categories) catSet.add(post.data.categories);
+  }
+  // 预置分类：即使暂无文章也可访问
+  Object.keys(CATEGORY_META).forEach((c) => catSet.add(c));
+
+  return [...catSet].map((category) => ({
+    params: { category },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const posts = await getCollection('posts');
+const filtered = posts
+  .filter((p) => p.data.categories === category)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const label = getCategoryLabel(category);
+const desc = getCategoryDescription(category);
+---
+
+<BaseLayout
+  title={`分类：${label}`}
+  description={desc || `${label} 下的 ${filtered.length} 篇文章`}
+>
+  <section class="category-posts">
+    <Breadcrumb
+      items={[
+        { label: '首页', href: '/' },
+        { label: '分类', href: '/categories' },
+        { label: label },
+      ]}
+    />
+
+    <header class="page-header">
+      <h1>{label}</h1>
+      {desc && <p class="page-desc">{desc}</p>}
+      <p class="page-count">{filtered.length} 篇文章</p>
+    </header>
+
+    {
+      filtered.length > 0 ? (
+        <div class="posts-grid">
+          {
+            filtered.map((post) => {
+              const slug = post.id.replace(/\.md$/, '');
+              return (
+                <PostCard
+                  slug={slug}
+                  title={post.data.title}
+                  date={post.data.date}
+                  excerpt={post.data.excerpt}
+                  categories={post.data.categories}
+                  cover={post.data.cover}
+                  body={post.body ?? ''}
+                />
+              );
+            })
+          }
+        </div>
+      ) : (
+        <p class="empty">该分类下暂无文章，敬请期待。</p>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .category-posts {
+    padding: 32px 0 60px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .page-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-top: 10px;
+    max-width: 560px;
+  }
+
+  .page-count {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    margin-bottom: 28px;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
+  }
+
+  .empty {
+    font-size: 15px;
+    color: var(--text-secondary);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
