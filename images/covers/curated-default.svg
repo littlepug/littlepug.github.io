@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#0369a1">CURATED</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#1e1e2f">Tech Picks</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#0c4a6e">Articles / Tools / Reads</text>
+  <rect x="480" y="220" width="240" height="140" rx="12" fill="#ffffff" opacity="0.85"/>
+  <circle cx="580" cy="278" r="7" fill="#0369a1"/>
+  <circle cx="600" cy="278" r="7" fill="#0369a1"/>
+  <circle cx="620" cy="278" r="7" fill="#0369a1"/>
+  <text x="600" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#64748b">Hand-picked</text>
+</svg>
