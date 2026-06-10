@@ -20,6 +20,7 @@
 |------|--------|----------|
 | briefing | 行业快讯 | AI/大模型/科技行业新闻、动态解读、短讯（你采集的新闻放这里） |
 | curated | 技术精选 | 精选外链文章、开源项目、工具、教程、阅读清单（你整理的技术收集放这里） |
+| draft | 草稿箱 | 未完成稿件；不出现在首页、归档、RSS，可通过链接或分类页预览 |
 | study | 学习笔记 | 框架原理、搭建教程、源码学习 |
 | bigdata | 大数据 | ES、Kafka 等 |
 
@@ -43,6 +44,7 @@ cover: /images/covers/文件名.svg
 4. cover 封面路径规则：
    - 行业快讯默认：`/images/covers/briefing-default.svg`（若我未提供专用图）
    - 技术精选默认：`/images/covers/curated-default.svg`
+   - 草稿箱默认：`/images/covers/draft-default.svg`
    - 或按主题：`/images/covers/自定义名.svg` / `.jpg`（须说明建议尺寸 800×450）
    - 正文插图：`/images/posts/2026/主题名/图1.png`，在文中用 `![说明文字](/images/posts/2026/主题名/图1.png)`
 
@@ -104,3 +106,4 @@ echo hello
 
 - **行业快讯** `briefing` — 时效性新闻、AI 动态
 - **技术精选** `curated` — 你筛选、点评的外部内容合集
+- **草稿箱** `draft` — 写作中稿件；定稿后改 categories 为 briefing / curated / study 等

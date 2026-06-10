@@ -26,6 +26,9 @@
         "categories": {
           "type": "string"
         },
+        "draft": {
+          "type": "boolean"
+        },
         "tags": {
           "type": "array",
           "items": {

@@ -11,6 +11,10 @@ export const CATEGORY_META: Record<
     label: '技术精选',
     description: '精选文章、开源项目、工具与阅读清单整理',
   },
+  draft: {
+    label: '草稿箱',
+    description: '未完成或待发布的文章，不出现在首页、归档与 RSS',
+  },
   study: {
     label: '学习笔记',
     description: '框架原理、集群搭建与实战操作记录',

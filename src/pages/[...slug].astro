@@ -5,6 +5,7 @@ import CoverImage from '../components/CoverImage.astro';
 import { getCategoryLabel } from '../utils/categories';
 import { resolveCover } from '../utils/covers';
 import { getReadingMinutes } from '../utils/reading-time';
+import { isDraft } from '../utils/posts';
 export async function getStaticPaths() {
   const { getCollection } = await import('astro:content');
   const posts = await getCollection('posts');
@@ -20,6 +21,7 @@ const readingMin = getReadingMinutes(post.body ?? '');
 const categoryLabel = getCategoryLabel(post.data.categories);
 const description = post.data.excerpt || post.data.title;
 const coverSrc = resolveCover(post.data.cover, post.data.categories);
+const draft = isDraft(post);
 ---
 
 <BaseLayout
@@ -27,6 +29,7 @@ const coverSrc = resolveCover(post.data.cover, post.data.categories);
   description={description}
   image={coverSrc}
   ogType="article"
+  noindex={draft}
 >
   <div class="article-layout">
     <article class="article">
@@ -37,6 +40,14 @@ const coverSrc = resolveCover(post.data.cover, post.data.categories);
           { label: post.data.title },
         ]}
       />
+
+      {
+        draft ? (
+          <p class="draft-notice" role="status">
+            草稿：本文未出现在首页、归档与 RSS。定稿后将 <code>categories</code> 改为正式分类即可发布。
+          </p>
+        ) : null
+      }
 
       {
         coverSrc ? (
@@ -199,6 +210,21 @@ const coverSrc = resolveCover(post.data.cover, post.data.categories);
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .draft-notice {
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--primary-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .draft-notice code {
+    font-size: 12px;
   }
 
   .article-category {

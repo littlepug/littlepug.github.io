@@ -4,6 +4,7 @@
 export const DEFAULT_COVERS: Record<string, string> = {
   briefing: '/images/covers/briefing-default.svg',
   curated: '/images/covers/curated-default.svg',
+  draft: '/images/covers/draft-default.svg',
 };
 
 export function resolveCover(cover?: string, category?: string): string | undefined {

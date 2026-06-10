@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import { getPublishedPosts } from '../utils/posts';
 
-const posts = await getCollection('posts');
+const posts = getPublishedPosts(await getCollection('posts'));
 const tagMap = new Map<string, number>();
 
 for (const post of posts) {
