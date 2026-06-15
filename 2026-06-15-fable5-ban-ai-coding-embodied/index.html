@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="6 月中旬 AI 领域剧烈震荡：美国政府紧急出口管制令迫使 Anthropic 切断 Claude Fable/Mythos 5 全球访问，AI 安全治理进入强监管时代；月之暗面开源 Kimi K2.7 Code 并上线 6 倍速版本，AI 编程模型竞争白热化；Google Cloud 发布 Open Knowledge Format，为 Agent 知识管理建立厂商中立标准；北京人形机器人创新中心具身智能数据训练基地曝光，超 120 款机器人、30+ 场景的数据基础设施浮出水面。"><title>Fable 5 被令下架与 AI 编程模型新变局 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-06-15-fable5-ban-ai-coding-embodied/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Fable 5 被令下架与 AI 编程模型新变局 - littlepug's blog"><meta property="og:description" content="6 月中旬 AI 领域剧烈震荡：美国政府紧急出口管制令迫使 Anthropic 切断 Claude Fable/Mythos 5 全球访问，AI 安全治理进入强监管时代；月之暗面开源 Kimi K2.7 Code 并上线 6 倍速版本，AI 编程模型竞争白热化；Google Cloud 发布 Open Knowledge Format，为 Agent 知识管理建立厂商中立标准；北京人形机器人创新中心具身智能数据训练基地曝光，超 120 款机器人、30+ 场景的数据基础设施浮出水面。"><meta property="og:url" content="https://littlepug.github.io/2026-06-15-fable5-ban-ai-coding-embodied/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Fable 5 被令下架与 AI 编程模型新变局 - littlepug's blog"><meta name="twitter:description" content="6 月中旬 AI 领域剧烈震荡：美国政府紧急出口管制令迫使 Anthropic 切断 Claude Fable/Mythos 5 全球访问，AI 安全治理进入强监管时代；月之暗面开源 Kimi K2.7 Code 并上线 6 倍速版本，AI 编程模型竞争白热化；Google Cloud 发布 Open Knowledge Format，为 Agent 知识管理建立厂商中立标准；北京人形机器人创新中心具身智能数据训练基地曝光，超 120 款机器人、30+ 场景的数据基础设施浮出水面。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>Fable 5 被令下架与 AI 编程模型新变局</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="Fable 5 被令下架与 AI 编程模型新变局" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>Fable 5 被令下架与 AI 编程模型新变局</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-06-15" data-astro-cid-fzx4jmue> 2026-06-15 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>7 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>6 月中旬，AI 行业在两条主线上同时经历剧烈变动。治理层面，美国政府史无前例的出口管制命令让最强 AI 编码模型之一在 72 小时内从发布到下架，AI 安全与开放之间的张力被拉到极限。技术与产业层面，国产 AI 编程模型加速追赶、Agent 知识管理标准首次成型、具身智能数据基础设施浮出水面——每个信号都在指向同一个结论：AI 正从能力竞赛进入基础设施与治理规则并重的新阶段。</p>
+<h2 id="发生了什么">发生了什么</h2>
+<ul>
+<li>美国商务部于 6 月 12 日向 Anthropic 发出紧急出口管制令，要求立即切断所有外国用户对 Claude Fable 5 和 Mythos 5 的访问，Anthropic 于 6 月 13 日执行，全球公网访问终止。</li>
+<li>月之暗面 6 月 12 日开源 Kimi K2.7 Code 编程模型，长程任务 token 消耗降低 30%；6 月 15 日上线 6 倍速高速版，输出速度约 180 Token/s。</li>
+<li>Google Cloud 6 月 12 日发布 Open Knowledge Format (OKF) v0.1，以 Markdown + YAML frontmatter 的厂商中立格式标准化 AI Agent 的组织知识表示。</li>
+<li>北京人形机器人创新中心具身智能数据与训练基地曝光，部署超 120 款主流机器人型号、覆盖 6 大行业 30+ 场景，其 RoboMIND 数据集全球下载超 600 万次。</li>
+</ul>
+<h2 id="要点解读">要点解读</h2>
+<h3 id="claude-fable-5mythos-5-被令下架ai-治理的铁幕时刻">Claude Fable 5/Mythos 5 被令下架：AI 治理的「铁幕时刻」</h3>
+<p>6 月 12 日美东时间 17:21，美国商务部长卢特尼克签发紧急出口管制指令，要求 Anthropic 立即切断所有非美国用户对 Claude Fable 5 和 Mythos 5 的 API 访问。Anthropic 于次日凌晨执行，全球公网访问全面终止。</p>
+<p>Fable 5 是 Anthropic 6 月 9 日刚发布的 Mythos 级模型，本质上是 Mythos 5 的安全脱敏商用版。其能力之强在于：能自主发现零日漏洞、覆盖所有主流操作系统和浏览器，并自动编写从扫描到利用的完整攻击链，全流程无需人类指导。在 FrontierMath 最难数学题上超越 GPT-5.5 达 13 分。正因这种接近「网络武器」的自主安全研究能力，引发了政府层面的紧急干预。</p>
+<p>整个事件的时间线极具戏剧性：</p>
+<ul>
+<li><strong>6 月 9 日</strong>：Fable 5 正式发布</li>
+<li><strong>6 月 12 日</strong>：出口管制令下达</li>
+<li><strong>6 月 13 日</strong>：全球访问被切断</li>
+</ul>
+<p><strong>关注原因：</strong> 这是 AI 行业首次因政府出口管制命令而下架已发布的前沿模型，具有标志性意义。三个层面值得关注：<strong>第一</strong>，AI 安全与开放的博弈从讨论进入实操，模型能力越强，政府干预的阈值越低，这将对所有前沿模型的国际化发布策略产生寒蝉效应；<strong>第二</strong>，Fable 5 作为目前最强的 AI 编码/推理模型之一被限用，直接改变了全球 AI 编程工具的竞争格局——依赖 Anthropic API 的开发者和企业需要重新评估供应链风险；<strong>第三</strong>，出口管制对象是「推理能力」而非「军事应用」，这一扩展解释可能成为未来 AI 监管的范式——任何能自主完成复杂推理的模型都可能被纳入管制范围。</p>
+<h3 id="kimi-k27-code-开源--6-倍速版ai-编程模型的效率跃迁">Kimi K2.7 Code 开源 + 6 倍速版：AI 编程模型的效率跃迁</h3>
+<p>月之暗面于 6 月 12 日发布并开源 Kimi K2.7 Code 编程模型，紧随其后在 6 月 15 日上线 6 倍速高速版。这一组合拳标志着国产 AI 编程模型从「追赶基准」进入「定义效率标准」的阶段。</p>
+<p>核心升级数据：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>基准测试</th><th>提升幅度</th></tr></thead><tbody><tr><td>Kimi Code Bench v2</td><td>+21.8%</td></tr><tr><td>Program-Bench</td><td>+11%</td></tr><tr><td>MLS Bench Lite</td><td>+31.5%</td></tr><tr><td>Agent 自主化执行 (Kimi Claw 24/7)</td><td>~+10%</td></tr></tbody></table>
+<p>更关键的变化在效率侧：长程编程任务中平均 token 消耗降低 <strong>30%</strong>，这意味着相同任务的成本下降近三分之一。6 倍速版在常规编程场景中输出约 180 Token/s，短上下文可达 260 Token/s，而价格仅为标准版的 2 倍——性价比提升 3 倍。</p>
+<p>定价方面，标准输入 6.5 元/M token，命中缓存低至 1.3 元/M token，与 K2.6 持平但能力大幅提升。</p>
+<p><strong>关注原因：</strong> AI 编程模型的竞争指标正在变化。过去看一次生成对不对，现在更看长任务里能不能少绕路、少幻觉、少浪费 token。K2.7 Code 的核心改进恰恰集中在「减少过度思考」和「降低 token 消耗」上——这不是边际优化，而是 AI 编程从「能做」到「值得做」的关键跨越。当模型每步消耗更少、速度更快，Agent 自主执行长链任务的可行性就实质性提高。尤其在美国管制导致 Fable 5 等模型受限的背景下，开源 + 高性价比的国产方案获得了更大的市场窗口。</p>
+<h3 id="google-open-knowledge-formatagent-知识管理的第一个行业标准">Google Open Knowledge Format：Agent 知识管理的第一个行业标准</h3>
+<p>6 月 12 日，Google Cloud 发布 Open Knowledge Format (OKF) v0.1——一个厂商中立、对人类和 AI Agent 都友好的知识表示规范。核心设计极其简洁：Markdown 文件 + YAML frontmatter，放在目录中，用 git 管理。</p>
+<p>一个 OKF Bundle 的结构示例：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>sales/</span></span>
+<span class="line"><span>├── index.md</span></span>
+<span class="line"><span>├── datasets/</span></span>
+<span class="line"><span>│   ├── index.md</span></span>
+<span class="line"><span>│   └── orders_db.md</span></span>
+<span class="line"><span>├── tables/</span></span>
+<span class="line"><span>│   ├── index.md</span></span>
+<span class="line"><span>│   └── orders.md</span></span>
+<span class="line"><span>└── metrics/</span></span>
+<span class="line"><span>    ├── index.md</span></span>
+<span class="line"><span>    └── weekly_active_users.md</span></span></code></pre>
+<p>每个概念文件的 frontmatter 只有一个必填字段 <code>type</code>，其余可选：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6CB6FF">---</span></span>
+<span class="line"><span style="color:#8DDB8C">type</span><span style="color:#ADBAC7">: </span><span style="color:#96D0FF">BigQuery Table</span></span>
+<span class="line"><span style="color:#8DDB8C">title</span><span style="color:#ADBAC7">: </span><span style="color:#96D0FF">Orders</span></span>
+<span class="line"><span style="color:#8DDB8C">description</span><span style="color:#ADBAC7">: </span><span style="color:#96D0FF">One row per completed customer order.</span></span>
+<span class="line"><span style="color:#8DDB8C">resource</span><span style="color:#ADBAC7">: </span><span style="color:#96D0FF">https://console.cloud.google.com/...</span></span>
+<span class="line"><span style="color:#8DDB8C">tags</span><span style="color:#ADBAC7">: [</span><span style="color:#96D0FF">sales</span><span style="color:#ADBAC7">, </span><span style="color:#96D0FF">revenue</span><span style="color:#ADBAC7">]</span></span>
+<span class="line"><span style="color:#6CB6FF">---</span></span></code></pre>
+<p>文件路径即概念身份，Markdown 链接将目录转化为知识图谱。无需新运行时、无需强制 SDK、无需供应商账户。</p>
+<p><strong>关注原因：</strong> OKF 解决的是 AI Agent 发展中被忽视但极其关键的一环：<strong>知识标准化</strong>。当前 Agent 能调用工具（MCP 解决）、能记忆上下文（CLAUDE.md 解决），但组织知识——数据表结构、指标定义、操作手册——仍然散落在 Wiki、代码注释和人的头脑中。OKF 的赌注是：缺失的不是另一个平台，而是一个格式标准。它不替代 CLAUDE.md，而是让 CLAUDE.md 中可以引用结构化的、可移植的知识文档。如果这一规范获得广泛采用，意味着 Agent 的知识基础可以像代码一样版本控制、像包一样跨项目复用——这是 Agent 从「单项目工具」走向「组织级基础设施」的前提条件。</p>
+<h3 id="北京人形机器人创新中心具身智能的数据基础设施浮出水面">北京人形机器人创新中心：具身智能的数据基础设施浮出水面</h3>
+<p>新华社 6 月 13 日报道，北京人形机器人创新中心的具身智能数据与训练基地已投入运行。基地位于北京经济技术开发区，部署了超过 <strong>120 款</strong> 主流机器人型号，覆盖 <strong>6 大行业</strong>（家庭服务、零售商业、办公运营、工业生产、医药应用、医疗健康）共 <strong>30+ 场景</strong>。</p>
+<p>基地配备专业动作捕捉场地，为机器人拟人化动作的精准度与流畅度设定标准化采集基准。更具行业影响力的是，中心发布的 <strong>RoboMIND 数据集</strong>已获得全球超过 <strong>600 万次</strong>下载。</p>
+<p><strong>关注原因：</strong> 在人形机器人赛道中，「数据」正在取代「硬件」成为核心瓶颈。大模型通过互联网文本实现了智能涌现，但具身智能缺乏等量的高质量操作数据——这正是制约其商业化落地的最大变量。北京基地的战略价值在于：它不是在造机器人，而是在造<strong>训练机器人的数据</strong>。120 款机器人 × 30 个场景的持续采集，加上 RoboMIND 的全球分发能力，意味着它正在成为全球具身智能的数据基础设施提供者。结合工信部/国资委 6 月 9 日启动的「人形机器人与具身智能实景实训专项行动」——该专项行动要求到年底实现百个以上高价值应用场景验证——政策推动与数据基础设施建设正在形成闭环。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li>Anthropic Claude Fable 5/Mythos 5 出口管制：<a href="https://the-decoder.com/">The Decoder</a>、<a href="https://novalogiq.com/2026/06/13/anthropic-blocks-all-public-access-to-claude-fable-5-mythos-5-following-us-government-order-what-enterprises-should-do/">NovaLogiq</a>、<a href="https://news.qq.com/rain/a/20260614A02HQT00">腾讯新闻</a></li>
+<li>Kimi K2.7 Code 发布：<a href="https://www.ithome.com/0/963/661.htm">IT之家</a>、<a href="https://news.qq.com/rain/a/20260612A095TJ00">太平洋科技</a></li>
+<li>Google OKF v0.1：<a href="https://www.explainx.ai/blog/google-open-knowledge-format-okf-ai-agents-2026">ExplainX</a>、<a href="https://cloud.google.com/blog/products/data-analytics/introducing-the-open-knowledge-format">Google Cloud Blog</a></li>
+<li>北京人形机器人创新中心：<a href="https://english.news.cn/20260613/5d8906d63b2a4586a04fe160bd5d7a65/c.html">新华社</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/coding" class="tag" data-astro-cid-fzx4jmue> coding </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a><a href="/tags/embodied-intelligence" class="tag" data-astro-cid-fzx4jmue> embodied-intelligence </a><a href="/tags/policy" class="tag" data-astro-cid-fzx4jmue> policy </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-06-15-fable5-ban-ai-coding-embodied">Fable 5 被令下架与 AI 编程模型新变局</a> </li><li> <a href="/2026-06-11-wechat-ai-ecosystem-agent-infra">微信 AI 生态开放与 Agent 基础设施升级</a> </li><li> <a href="/2026-06-10-ai-coding-embodied-briefing">AI 编程与具身智能双线爆发：Claude Code 迭代与 ICRA 中国突围</a> </li><li> <a href="/2026-06-02-ai-agent-briefing-example">【示例】大模型 Agent 进入「可编排」阶段：近期行业动态</a> </li><li> <a href="/2026-06-02-tech-picks-curated-example">【示例】六月技术精选：Agent 工具链与后端必读</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
