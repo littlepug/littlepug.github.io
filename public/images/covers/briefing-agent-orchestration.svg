@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#6d28d9">BRIEFING</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#1e1e2f">Agent Orchestration</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#5b21b6">Multi-step / Tool Use / Memory</text>
+  <!-- Agent orchestration: linked nodes -->
+  <circle cx="500" cy="260" r="22" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+  <circle cx="590" cy="230" r="16" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <circle cx="650" cy="280" r="18" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <circle cx="570" cy="320" r="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="519" y1="249" x2="576" y2="236" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="603" y1="244" x2="636" y2="266" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="582" y1="308" x2="516" y2="275" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="648" y1="297" x2="584" y2="314" stroke="#7c3aed" stroke-width="2"/>
+  <!-- Gear icon hint -->
+  <circle cx="445" cy="220" r="32" fill="none" stroke="#c4b5fd" stroke-width="4" stroke-dasharray="8 6"/>
+  <circle cx="445" cy="220" r="16" fill="#ffffff" opacity="0.6"/>
+</svg>

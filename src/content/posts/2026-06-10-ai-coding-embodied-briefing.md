@@ -4,7 +4,7 @@ date: 2026-06-10
 categories: briefing
 tags: [ai, coding, embodied-intelligence, robotics, llm]
 excerpt: 2026 年 6 月上旬，AI 编程工具与具身智能两条主线同时迎来关键节点：Claude Code 进入「自愈」时代，GPT-5.6 / Gemini 3.5 Pro / Claude Opus 4.8 三强模型潮来袭；工信部联合国资委启动人形机器人实景实训专项行动，ICRA 2026 维也纳会场中国展商实现全栈突围。
-cover: /images/covers/briefing-default.svg
+cover: /images/covers/briefing-coding-embodied.svg
 ---
 
 2026 年 6 月上旬，AI 行业呈现出明显的双线并进格局：**AI 编程与模型能力**一侧，Claude Code 完成史上最大规模底层升级，三大前沿模型几乎在同一窗口密集亮相；**具身智能**一侧，政策端与产业端同步发力，ICRA 2026 维也纳会场成为中国展商的主场。以下梳理五个值得关注的方向。

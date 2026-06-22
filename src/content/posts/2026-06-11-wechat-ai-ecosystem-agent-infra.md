@@ -4,7 +4,7 @@ date: 2026-06-11
 categories: briefing
 tags: [ai, coding, agent, llm, embodied-intelligence]
 excerpt: 6 月 11 日 AI 领域动态速递：微信正式开放 AI 智能体生态接入，超级 App 向 Agent 平台转型；Claude Code Desktop 推出 YOLO 模式，AI 编程工具进入「无需确认」时代；Chrome 146 上线 WebMCP 早期预览，浏览器正式成为 Agent 工具箱；OpenAI Responses API 原生支持 Agent 任务路由；阶跃星辰 Step 3.7 Flash 以 1/9 成本达到 Claude 97% 编码能力。
-cover: /images/covers/briefing-default.svg
+cover: /images/covers/briefing-wechat-ecosystem.svg
 ---
 
 6 月中旬，AI 行业的核心叙事正在从「模型能力竞赛」转向「Agent 基础设施建设」。今天的五条动态恰好勾勒出这条主线：从超级 App 的生态开放到浏览器级别的协议标准化，从 AI 编程工具的自动化升级到国产模型在性价比上的突破——Agent 不再只是概念，正在获得它运行所需的每一层管道。

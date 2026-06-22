@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f3e8ff"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#6d28d9">BRIEFING</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#1e1e2f">Policy &amp; Model Race</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#5b21b6">Export Control / LLM / Governance</text>
+  <!-- Shield icon -->
+  <path d="M530 220 L590 205 L650 220 L650 270 Q650 320 590 335 Q530 320 530 270 Z" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5" opacity="0.8"/>
+  <text x="590" y="280" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="700" fill="#6d28d9">SEC</text>
+  <!-- Model race: horizontal speed lines -->
+  <line x1="480" y1="355" x2="540" y2="355" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+  <line x1="470" y1="370" x2="580" y2="370" stroke="#7c3aed" stroke-width="4" stroke-linecap="round"/>
+  <line x1="460" y1="385" x2="520" y2="385" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+  <!-- Model labels -->
+  <text x="660" y="360" font-family="system-ui,sans-serif" font-size="12" font-weight="600" fill="#6d28d9">GPT-5.6</text>
+  <text x="660" y="378" font-family="system-ui,sans-serif" font-size="12" font-weight="600" fill="#6d28d9">Gemini 3.5</text>
+  <text x="660" y="396" font-family="system-ui,sans-serif" font-size="12" font-weight="600" fill="#6d28d9">Claude Opus 4.8</text>
+</svg>

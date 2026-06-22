@@ -4,7 +4,7 @@ date: 2026-06-16
 categories: briefing
 tags: [ai, coding, llm, embodied-intelligence, agent]
 excerpt: 本周 AI 编程智能体从「临时补全」迈向持久化执行：OpenAI 收购 Ona 为 Codex 补上长时间运行环境，Anthropic 拆分 Agent SDK 计费模式消除规模化落地障碍，JFrog 将软件供应链治理嵌入 Claude Code 执行流；具身智能侧，星源智在智源大会发布全球首个具身交互世界模型 ω-EVA，实现「预演-验证-行动」决策闭环，让机器人从被动预测走向自主预判与动态修正。
-cover: /images/covers/briefing-default.svg
+cover: /images/covers/briefing-acquisition-worldmodel.svg
 ---
 
 本周，AI 编程智能体领域的关键叙事从「能力验证」转向「基础设施与治理」——智能体要真正成为持久工作者，需要安全可控的运行环境、合理的计费模型和企业级治理能力。具身智能侧，世界模型从「旁观预测」走向「交互决策」，星源智的 ω-EVA 为机器人装上了行动前先预演后果的"大脑"。

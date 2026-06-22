@@ -18,7 +18,7 @@ const pageImage = new URL(image ?? site.ogImage, site.url).href;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const currentPath = Astro.url.pathname;
 
-const posts = sortPostsByDateDesc(getPublishedPosts(await getCollection('posts')));
+const posts = sortPostsByDateDesc(getPublishedPosts(await getCollection('posts'))).filter((p) => p.data.categories !== 'briefing');
 const recentPosts = posts.slice(0, 5);
 
 const navItems = [

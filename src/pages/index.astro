@@ -6,7 +6,7 @@ import { site } from '../site.config';
 import { getPublishedPosts, sortPostsByDateDesc } from '../utils/posts';
 
 const posts = getPublishedPosts(await getCollection('posts'));
-const sortedPosts = sortPostsByDateDesc(posts);
+const sortedPosts = sortPostsByDateDesc(posts).filter((p) => p.data.categories !== 'briefing');
 
 const postCount = sortedPosts.length;
 const tagSet = new Set<string>();

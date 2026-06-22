@@ -4,7 +4,7 @@ date: 2026-06-15
 categories: briefing
 tags: [ai, coding, llm, embodied-intelligence, policy]
 excerpt: 6 月中旬 AI 领域剧烈震荡：美国政府紧急出口管制令迫使 Anthropic 切断 Claude Fable/Mythos 5 全球访问，AI 安全治理进入强监管时代；月之暗面开源 Kimi K2.7 Code 并上线 6 倍速版本，AI 编程模型竞争白热化；Google Cloud 发布 Open Knowledge Format，为 Agent 知识管理建立厂商中立标准；北京人形机器人创新中心具身智能数据训练基地曝光，超 120 款机器人、30+ 场景的数据基础设施浮出水面。
-cover: /images/covers/briefing-default.svg
+cover: /images/covers/briefing-policy-models.svg
 ---
 
 6 月中旬，AI 行业在两条主线上同时经历剧烈变动。治理层面，美国政府史无前例的出口管制命令让最强 AI 编码模型之一在 72 小时内从发布到下架，AI 安全与开放之间的张力被拉到极限。技术与产业层面，国产 AI 编程模型加速追赶、Agent 知识管理标准首次成型、具身智能数据基础设施浮出水面——每个信号都在指向同一个结论：AI 正从能力竞赛进入基础设施与治理规则并重的新阶段。

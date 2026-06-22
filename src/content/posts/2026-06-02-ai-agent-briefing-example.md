@@ -5,7 +5,7 @@ categories: briefing
 tags: [ai, agent, llm, briefing]
 keywords: AI Agent, 大模型, 行业快讯
 excerpt: 梳理 2026 年上半年 Agent 框架的几个共性变化：从单轮对话走向多步编排，工具调用与记忆成为标配，工程侧更关注可观测与成本控制。
-cover: /images/covers/briefing-default.svg
+cover: /images/covers/briefing-agent-orchestration.svg
 ---
 
 > 本文为**行业快讯示例**，展示 `briefing` 分类的标准写法。发布真实内容时，复制本结构并替换标题、日期与正文即可。
