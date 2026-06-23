@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="50%" stop-color="#d8b4fe"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#6d28d9">BRIEFING</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#1e1e2f">Acquisition &amp; World Models</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#5b21b6">OpenAI Ona / Agent SDK / ω-EVA</text>
+  <!-- Globe / world model -->
+  <circle cx="605" cy="260" r="45" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.4"/>
+  <ellipse cx="605" cy="260" rx="20" ry="44" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.35"/>
+  <line x1="560" y1="260" x2="650" y2="260" stroke="#7c3aed" stroke-width="1.5" opacity="0.35"/>
+  <!-- Dots on globe -->
+  <circle cx="595" cy="238" r="5" fill="#7c3aed"/>
+  <circle cx="620" cy="250" r="4" fill="#a78bfa"/>
+  <circle cx="580" cy="272" r="4" fill="#a78bfa"/>
+  <circle cx="610" cy="282" r="5" fill="#7c3aed"/>
+  <!-- Merging arrows (acquisition symbol) -->
+  <path d="M490 230 L530 260 L510 265" fill="none" stroke="#6d28d9" stroke-width="3" stroke-linecap="round"/>
+  <path d="M490 290 L530 260 L510 255" fill="none" stroke="#6d28d9" stroke-width="3" stroke-linecap="round"/>
+  <!-- Company labels -->
+  <text x="450" y="215" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#5b21b6">OpenAI</text>
+  <text x="458" y="308" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#5b21b6">Ona</text>
+  <!-- Particle dots around globe -->
+  <circle cx="540" cy="240" r="3" fill="#c4b5fd"/>
+  <circle cx="680" cy="245" r="3" fill="#c4b5fd"/>
+  <circle cx="555" cy="300" r="2.5" fill="#c4b5fd"/>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#c4b5fd"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#6d28d9">BRIEFING</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#1e1e2f">AI Ecosystem &amp; Agents</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#5b21b6">WeChat / WebMCP / Platform</text>
+  <!-- Ecosystem mesh: interconnected rings -->
+  <circle cx="530" cy="270" r="50" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.3"/>
+  <circle cx="680" cy="270" r="50" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.3"/>
+  <circle cx="605" cy="330" r="40" fill="none" stroke="#7c3aed" stroke-width="2" opacity="0.3"/>
+  <!-- Central node -->
+  <circle cx="605" cy="270" r="28" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="605" y="276" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#6d28d9">API</text>
+  <!-- Connected smaller nodes -->
+  <circle cx="530" cy="270" r="16" fill="#ffffff" stroke="#818cf8" stroke-width="2"/>
+  <circle cx="680" cy="270" r="16" fill="#ffffff" stroke="#818cf8" stroke-width="2"/>
+  <circle cx="605" cy="330" r="12" fill="#ffffff" stroke="#818cf8" stroke-width="2"/>
+  <line x1="546" y1="270" x2="577" y2="270" stroke="#a78bfa" stroke-width="1.5"/>
+  <line x1="633" y1="270" x2="664" y2="270" stroke="#a78bfa" stroke-width="1.5"/>
+  <line x1="605" y1="298" x2="605" y2="318" stroke="#a78bfa" stroke-width="1.5"/>
+  <!-- WeChat green touch -->
+  <rect x="480" y="380" width="26" height="26" rx="6" fill="#07c160" opacity="0.2"/>
+  <text x="480" y="396" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#07c160" opacity="0.5">WX</text>
+</svg>
