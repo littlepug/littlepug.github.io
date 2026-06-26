@@ -3,7 +3,7 @@ title: 六月技术精选：AI Agent 浪潮与后端实战拾遗
 date: 2026-06-26
 categories: curated
 tags: [curated, ai, java, spring, bigdata, tools, coding]
-keywords: 技术精选, AI编程, Spring Boot 4.1, Kafka 调优, Virtual Thread, Elasticsearch
+keywords: 技术精选, AI编程, Spring Boot 4.1, Kafka 调优, Virtual Thread, Elasticsearch, Headroom, Agent 上下文压缩
 excerpt: 六月技术精选聚焦三条线：AI 编程 Agent 工具进入开源爆发期，OpenCode 以 16 万星登顶榜首；Spring Boot 4.1.0 带来 gRPC 原生支持与虚拟线程改进；Elasticsearch 分片策略与 Kafka 4.1.1 生产调优两份实战指南值得细读。
 cover: /images/covers/curated-june-2026.svg
 ---
@@ -19,12 +19,12 @@ cover: /images/covers/curated-june-2026.svg
 - **适合谁**：习惯命令行工作流、注重工具主权与成本控制的 Java / 后端开发者。
 - **链接**：[https://github.com/anomalyco/opencode](https://github.com/anomalyco/opencode)
 
-### 2. ECC — Agent Token 优化引擎
+### 2. Headroom — AI Agent 上下文压缩层
 
-- **是什么**：一套面向 AI Agent 的性能优化系统，通过懒加载、上下文压缩、记忆缓存等技术降低 40%-60% 的 Token 消耗。
-- **为什么值得看**：在 Agent 越来越长链路的趋势下，Token 成本是规模化落地的主要阻力之一。ECC 的思路值得所有在项目中接入 LLM 调用的后端同学参考，理解「哪些上下文该送、哪些该压、哪些该缓存」。
-- **适合谁**：正在业务中集成 LLM、需要优化 API 调用成本的工程师。
-- **链接**：[https://github.com/expectedconditions/ecc](https://github.com/expectedconditions/ecc)
+- **是什么**：开源的 LLM Token 压缩中间层，位于 Agent（Claude Code、Codex、Cursor 等）与 LLM Provider 之间，对工具输出、日志、RAG 检索结果、对话历史进行智能压缩，节省 60%-95% 的 Token 消耗。2026 年 6 月初发布后迅速登上 GitHub Trending 日榜第一，已获 40K+ Stars。
+- **为什么值得看**：Agent 长链路场景下 Token 成本是规模化落地的主要阻力。Headroom 的三个核心思路值得所有做 LLM 集成的后端同学参考：(1) 内容类型感知的多算法压缩（JSON 用结构压缩、代码用 AST 感知、自然语言用专用模型 Kompress-base）；(2) CCR 可逆压缩——压缩后发给 LLM，原始数据保留本地，LLM 按需检索；(3) 跨 Agent 共享记忆缓存，多工具协作时避免重复扫描代码库。
+- **适合谁**：重度使用 AI 编程助手、业务中集成 LLM、需要控制 API 调用成本的工程师与团队。
+- **链接**：[https://github.com/headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom)
 
 ## 代码小技巧
 
@@ -90,6 +90,7 @@ cover: /images/covers/curated-june-2026.svg
 ## 来源
 
 - OpenCode GitHub：[https://github.com/anomalyco/opencode](https://github.com/anomalyco/opencode)
+- Headroom GitHub：[https://github.com/headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom)
 - LogRocket AI 开发工具实力榜（2026 年 6 月版）
 - Spring Boot 4.1.0 Release Notes
 - JDK 25 虚拟线程白皮书：[https://blog.csdn.net/AlgoPerch/article/details/159981129](https://blog.csdn.net/AlgoPerch/article/details/159981129)
