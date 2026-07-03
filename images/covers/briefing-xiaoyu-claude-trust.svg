@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="55%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#7c2d12"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#fbbf24" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fb923c" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- grid hint -->
+  <g stroke="#fbbf24" stroke-opacity="0.06" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+  </g>
+
+  <!-- spark beam -->
+  <rect x="0" y="320" width="800" height="6" fill="url(#spark)" opacity="0.7"/>
+  <circle cx="540" cy="323" r="14" fill="#fde68a"/>
+  <circle cx="540" cy="323" r="28" fill="#f59e0b" opacity="0.45"/>
+  <circle cx="540" cy="323" r="48" fill="#f59e0b" opacity="0.18"/>
+
+  <!-- welding arm -->
+  <g fill="#94a3b8">
+    <rect x="500" y="120" width="22" height="80" rx="6"/>
+    <rect x="488" y="195" width="46" height="14" rx="4"/>
+    <rect x="510" y="208" width="14" height="115" rx="4" transform="rotate(8 517 320)"/>
+  </g>
+  <rect x="528" y="298" width="18" height="28" rx="3" fill="#475569"/>
+  <rect x="520" y="318" width="34" height="10" rx="2" fill="#1e293b"/>
+
+  <!-- industrial base -->
+  <rect x="430" y="345" width="320" height="60" rx="6" fill="#0b1220" opacity="0.7"/>
+  <rect x="430" y="345" width="320" height="6" fill="#f59e0b" opacity="0.8"/>
+  <text x="450" y="385" font-family="monospace" font-size="12" fill="#94a3b8">4D WORLD MODEL · runweld(seq=20260702)</text>
+
+  <!-- left side text block -->
+  <text x="48" y="60" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#fbbf24" letter-spacing="3">BRIEFING · 2026-07-03</text>
+  <text x="48" y="120" font-family="system-ui,sans-serif" font-size="38" font-weight="800" fill="#f8fafc">焊接具身 + Claude Code</text>
+  <text x="48" y="158" font-family="system-ui,sans-serif" font-size="38" font-weight="800" fill="#f8fafc">信任修复双重落地</text>
+  <text x="48" y="200" font-family="system-ui,sans-serif" font-size="16" fill="#cbd5f5">小雨未来机器人 · 4D 世界模型 · 16.98 万</text>
+  <text x="48" y="222" font-family="system-ui,sans-serif" font-size="16" fill="#cbd5f5">Anthropic 中国时区检测代码承诺移除</text>
+  <text x="48" y="244" font-family="system-ui,sans-serif" font-size="16" fill="#cbd5f5">CIEI 2026 上海开幕 · Copilot Browser Tools GA</text>
+
+  <!-- tags -->
+  <g font-family="system-ui,sans-serif" font-size="12" font-weight="700">
+    <rect x="48" y="270" width="86" height="26" rx="13" fill="#fbbf24" fill-opacity="0.18" stroke="#fbbf24"/>
+    <text x="91" y="287" text-anchor="middle" fill="#fde68a">embodied</text>
+    <rect x="142" y="270" width="86" height="26" rx="13" fill="#a78bfa" fill-opacity="0.2" stroke="#a78bfa"/>
+    <text x="185" y="287" text-anchor="middle" fill="#ddd6fe">ai-coding</text>
+    <rect x="236" y="270" width="86" height="26" rx="13" fill="#22d3ee" fill-opacity="0.2" stroke="#22d3ee"/>
+    <text x="279" y="287" text-anchor="middle" fill="#a5f3fc">robotics</text>
+    <rect x="330" y="270" width="80" height="26" rx="13" fill="#f87171" fill-opacity="0.2" stroke="#f87171"/>
+    <text x="370" y="287" text-anchor="middle" fill="#fecaca">policy</text>
+  </g>
+
+  <!-- data strip -->
+  <g font-family="monospace" font-size="11" fill="#94a3b8">
+    <text x="48" y="420">$16.98w  | 4D 10⁵h  | TZ=CST removed  | 1M ctx  | 3万㎡ CIEI</text>
+  </g>
+</svg>
