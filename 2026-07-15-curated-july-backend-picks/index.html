@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="七月中旬技术精选聚焦六大方向：pgrust 用 AI+Rust 重写 PostgreSQL 通过全部 46066 个回归测试、Deep Code CLI 专为 DeepSeek-V4 打造的开源终端编程 Agent、Spring AI Alibaba 1.0 GA 正式发布、虚拟线程上线后 HikariCP 被击穿的根因与调优策略、Kafka 4.4.0 突破 2GB 日志段限制等重磅 KIP、以及开源本地编码模型最新排名。每条附原文链接，内容可验证。"><title>七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-07-15-curated-july-backend-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录 - littlepug's blog"><meta property="og:description" content="七月中旬技术精选聚焦六大方向：pgrust 用 AI+Rust 重写 PostgreSQL 通过全部 46066 个回归测试、Deep Code CLI 专为 DeepSeek-V4 打造的开源终端编程 Agent、Spring AI Alibaba 1.0 GA 正式发布、虚拟线程上线后 HikariCP 被击穿的根因与调优策略、Kafka 4.4.0 突破 2GB 日志段限制等重磅 KIP、以及开源本地编码模型最新排名。每条附原文链接，内容可验证。"><meta property="og:url" content="https://littlepug.github.io/2026-07-15-curated-july-backend-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-july-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录 - littlepug's blog"><meta name="twitter:description" content="七月中旬技术精选聚焦六大方向：pgrust 用 AI+Rust 重写 PostgreSQL 通过全部 46066 个回归测试、Deep Code CLI 专为 DeepSeek-V4 打造的开源终端编程 Agent、Spring AI Alibaba 1.0 GA 正式发布、虚拟线程上线后 HikariCP 被击穿的根因与调优策略、Kafka 4.4.0 突破 2GB 日志段限制等重磅 KIP、以及开源本地编码模型最新排名。每条附原文链接，内容可验证。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-july-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-july-2026.svg" alt="七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-07-15" data-astro-cid-fzx4jmue> 2026-07-15 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>七月中旬的技术圈被两个「重新发明」刷屏：pgrust 用 AI + Rust 从零重写了 PostgreSQL 18.3，通过全部回归测试；Deep Code CLI 以 MIT 协议开源，给 DeepSeek-V4 补上了原生终端编程 Agent 的拼图。本周精选 <strong>6 条</strong> 内容，覆盖 AI 编程工具、开源项目、Java 框架、虚拟线程实战和大数据组件前瞻。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-pgrustai--rust-重写-postgresql全部-46066-个回归测试通过">1. pgrust：AI + Rust 重写 PostgreSQL，全部 46066 个回归测试通过</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：7 月 9 日，前 Heap CEO Michael Malis 在 Hacker News 上发布了 <a href="https://github.com/malisper/pgrust">pgrust</a>——一个用 Rust 从零重写的 PostgreSQL 18.3。项目由 17 个 Codex AI Agent 并行生成，代码量超过 45 万行 Rust，<strong>全部 46066 个回归测试 + 隔离测试 100% 通过</strong>，并且可以直接从 PG 18.3 数据目录启动，无需数据迁移。开发成本约 $3,200（8 个 Codex 付费账号 + 两个月时间）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：pgrust 不是又一个”兼容 PG 协议”的玩具——它做到了与 PG 18.3 的磁盘兼容，这是硬活。更值得关注的是它试图解决 PG 三十年来没人敢碰的架构问题：<strong>线程-per-连接替代进程模型</strong>、<strong>内置连接池</strong>、<strong>64 位事务 ID 替代 32 位防 wraparound 宕机</strong>、<strong>无 VACUUM 存储设计</strong>。项目明确标注”非生产就绪""未做性能优化""不兼容 C 扩展”，但 Malis 透露未发布分支在 TPC-C 上比 PG 快 50%、分析负载快约 300 倍（目前仍比 ClickHouse 慢 2 倍）。</p>
+</li>
+</ul>
+<p>AI 驱动的开发方法论同样值得学习：先让 AI 解释 PG 子系统的 C 源码 → 再协作写出最小 Rust 实现 → 每次变更后立即跑回归测试 → 渐进式委托，早期人工密集、后期 AI 自主度逐步提高 → 17 个并行 Agent 靠小粒度提交解决合并冲突。</p>
+<ul>
+<li>
+<p><strong>适合谁</strong>：对数据库内核感兴趣的后端开发者、关注 AI 辅助大型软件工程实践的工程师。即使你不写 Rust，这个项目的工程方法论和架构决策也值得一读。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/malisper/pgrust">pgrust GitHub</a> · <a href="https://malisper.me/">Michael Malis 开发博客</a> · <a href="https://www.modb.pro/db/2076482986854916096">PostgreSQL 每周生态报告 #28</a></p>
+</li>
+</ul>
+<h3 id="2-deep-code-cli-开源专为-deepseek-v4-打造的终端-ai-编程-agent">2. Deep Code CLI 开源：专为 DeepSeek-V4 打造的终端 AI 编程 Agent</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：7 月 7 日开源的终端 AI 编程助手，被 DeepSeek 官方 API 文档收录，采用 <strong>MIT 协议</strong>，无商用限制。支持 CLI 终端 + VS Code 插件双端使用，核心能力包括：全项目文件遍历和修改、终端 Shell 命令执行、按项目持久化会话上下文、可调的推理强度控制（简单补全用 Flash、架构设计拉满 Pro）、Agent Skills 技能包扩展、MCP 协议集成外部服务。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：在当前 Claude Code 封号风险高、Cursor 企业版成本大的背景下，Deep Code CLI 补上了国产终端 AI 编程 Agent 的关键拼图。它的差异化在于三点：一是<strong>上下文 KV 缓存复用</strong>——多轮重构场景 Token 成本降低 50% 以上；二是<strong>预制 Skills</strong>——内置 Spring Boot、Vue、Docker、Git 等开发场景技能包，团队也可以自定义封装内部规范；三是<strong>细粒度权限管控</strong>——可针对 Shell 命令、文件读写设置「始终允许/每次询问/直接拒绝」三级策略。截至发稿 GitHub 已收获 1500+ Star。</p>
+</li>
+</ul>
+<p>快速上手只需三步：<code>npm install -g @vegamo/deepcode-cli</code> → 配置 DeepSeek API Key → 项目目录下执行 <code>deepcode</code>。</p>
+<ul>
+<li>
+<p><strong>适合谁</strong>：想低成本体验终端 AI 编程的 Java/全栈开发者，特别是已有 DeepSeek API 额度、不方便用 Claude Code 的国内团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/lessweb/deepcode-cli">Deep Code CLI GitHub</a> · <a href="https://deepseek.club/topic/3018">DeepSeek 官方 Agent 工具生态</a>（待核实）</p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="3-虚拟线程上线后-hikaricp-被打爆根因分析与调优公式">3. 虚拟线程上线后 HikariCP 被打爆：根因分析与调优公式</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：多个生产案例和压测报告揭示了同一个问题——Spring Boot 开启虚拟线程后，HikariCP 默认配置（<code>maximum-pool-size=10</code>）瞬间被击穿。压测数据显示：并发 QPS 从 2,450 飙到 7,800（提升 3.1x），但 P99 延迟反而从 52ms 飙升到 1,240ms（恶化 23x），原因就是 2000+ 虚拟线程同时排队等数据库连接。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：虚拟线程不是”性能加速器”，而是<strong>瓶颈放大器</strong>——它消除了 Tomcat 线程池的限流闸门，把压力直接传导到数据库连接池。以下是经过多个生产案例验证的调优策略：</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8DDB8C">spring</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">  threads</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">    virtual</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">      enabled</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">true</span></span>
+<span class="line"><span style="color:#8DDB8C">  datasource</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">    hikari</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#768390">      # 经典公式已失效。新公式：</span></span>
+<span class="line"><span style="color:#768390">      # maxPoolSize ≈ (预期并发VT数 × 单次SQL耗时ms) / 可接受等待阈值ms</span></span>
+<span class="line"><span style="color:#768390">      # 示例：10000 VT × 15ms ÷ 5ms = 30，而非默认的 10</span></span>
+<span class="line"><span style="color:#8DDB8C">      maximum-pool-size</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">50</span></span>
+<span class="line"><span style="color:#768390">      # 固定池大小，避免洪峰时动态创建连接的额外延迟</span></span>
+<span class="line"><span style="color:#8DDB8C">      minimum-idle</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">50</span></span>
+<span class="line"><span style="color:#768390">      # 从默认 30s 缩短到 3~5s，快速失败优于长时间排队</span></span>
+<span class="line"><span style="color:#8DDB8C">      connection-timeout</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">5000</span></span>
+<span class="line"><span style="color:#8DDB8C">      max-lifetime</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">1800000</span></span>
+<span class="line"><span style="color:#8DDB8C">      keepalive-time</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">30000</span></span></code></pre>
+<p>三个关键红线：禁止在虚拟线程中使用未声明 VT 兼容的老旧 JDBC 驱动（会导致 carrier thread pinning）；<code>maximum-pool-size</code> 不超过数据库 <code>max_connections</code> 的 70%；必须配合信号量（Semaphore）做应用层限流，因为 JVM 挂起虚拟线程的开销远小于 HikariCP 内部超时抛异常的重试开销。</p>
+<p>此外，如果 <code>synchronized</code> 块内包含数据库调用，虚拟线程会被 pin 到载体线程上——用 <code>ReentrantLock</code> 替代，并通过 JFR 持续录制 <code>jdk.VirtualThreadPinned</code> 事件监控。</p>
+<ul>
+<li>
+<p><strong>适合谁</strong>：正在或计划在 Spring Boot 3.x/4.x 中开启虚拟线程的后端团队，特别是高并发 I/O 密集型服务。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://blog.csdn.net/weixin_62242812/article/details/160392981">虚拟线程放开并发闸门后，你的数据库连接池为什么先崩？</a> · <a href="https://www.webkt.com/article/14110">Virtual Threads + HikariCP 调优指南</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="4-spring-ai-alibaba-10-gajava-agentic-ai-框架正式发布">4. Spring AI Alibaba 1.0 GA：Java Agentic AI 框架正式发布</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：阿里巴巴开源的 Java Agentic AI 框架 <a href="https://github.com/alibaba/spring-ai-alibaba">Spring AI Alibaba</a> 发布了 <strong>1.0 GA 正式版本</strong>，GitHub 已收获 10K+ Stars。它基于 Spring AI 核心抽象，深度集成阿里云百炼平台，提供三大核心能力：<strong>Graph 多智能体框架</strong>（支持低代码可视化编排 + 高代码 SDK 扩展 + 零代码 MCP 服务代理）、<strong>企业级 AI 生态集成</strong>（ARMS 可观测、Nacos MCP Registry 分布式注册发现、Langfuse 追踪）、以及内置的生产级智能体应用（JManus——Manus 的 Java 实现、DeepResearch 深度研究、DataAgent 自然语言转 SQL）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Python 和 TypeScript 在 AI Agent 领域一直走在前面，Java 生态长期缺乏一个生产级的 Agent 框架。Spring AI Alibaba 1.0 试图解决的就是这个 gap——它不是”调个 API 做聊天”的 Demo 工具，而是一整套<strong>工程底座</strong>：Agent Framework + Graph Runtime + MCP 集成 + Admin 管理台 + 可观测。如果你手上有大量 Spring Boot 存量服务，<code>@McpService</code> 注解可以把现有 API 一键暴露为 MCP 工具，让 AI Agent 直接调用——这是 Python Agent 框架做不到的 Java 生态优势。</p>
+</li>
+</ul>
+<p>1.1.0 里程碑版本（M5）已进入预览，增强了 A2A 通信、MCP 集成和 Graph 运行时。</p>
+<ul>
+<li>
+<p><strong>适合谁</strong>：在 Java 技术栈上构建 AI Agent 应用的后端团队，以及想把现有 Spring Boot 服务接入 AI Agent 生态的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/alibaba/spring-ai-alibaba">Spring AI Alibaba GitHub</a> · <a href="https://www.oschina.net/comment/news/355617">1.0 GA 发布公告</a> · <a href="https://java2ai.com/">官方文档 java2ai.com</a></p>
+</li>
+</ul>
+<h3 id="5-kafka-440-前瞻突破-2gb-日志段限制动态内存分配等重磅-kip">5. Kafka 4.4.0 前瞻：突破 2GB 日志段限制、动态内存分配等重磅 KIP</h3>
+<ul>
+<li><strong>是什么</strong>：Apache Kafka 4.4.0 的 KIP 冻结已于 7 月 8 日截止，代码冻结定于 7 月 27 日，预计 <strong>2026 年 9 月中旬发布</strong>。Red Hat 发布的 <a href="https://developers.redhat.com/blog/2026/07/01/kafka-monthly-digest-june-2026">6 月 Kafka Monthly Digest</a> 和 <a href="https://cwiki.apache.org/confluence/display/KAFKA/Release+Plan+4.4.0">4.4.0 发布计划</a> 揭示了几个值得关注的 KIP：</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>KIP</th><th>内容</th><th>影响</th></tr></thead><tbody><tr><td><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1333">KIP-1333</a></td><td>支持超过 2GB 的日志段</td><td>高吞吐场景减少文件切换开销</td></tr><tr><td><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1332">KIP-1332</a></td><td>Producer 动态内存分配</td><td>减少 OOM 风险，按需使用堆外内存</td></tr><tr><td><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1360">KIP-1360</a></td><td>集群同步镜像</td><td>零 RPO 灾备，Kafka Connect/Streams 跨集群迁移</td></tr><tr><td><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1358">KIP-1358</a></td><td>渐进式 preferred leader 选举</td><td>避免 broker 重加入时数千次选举同时触发</td></tr><tr><td><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1357">KIP-1357</a></td><td>Broker 端自定义 Streams 分配器</td><td>让 KIP-1071 新协议支持自定义分配策略</td></tr></tbody></table>
+<ul>
+<li><strong>为什么值得看</strong>：KIP-1333 是 Kafka 历史上第一次突破单日志段 2GB 上限——经过 <code>MetadataVersion</code> 升级后索引从 8 字节扩展到 12 字节格式，且保持向前兼容（旧索引文件自动检测格式）。KIP-1332 动态内存分配对高吞吐 Producer 场景是显著优化——不再需要预分配固定大小的 buffer pool。KIP-1360 同步镜像则是 Kafka 向零 RPO 灾备迈出的关键一步。</li>
+</ul>
+<p>另外，4.3.1（6 月 25 日发布）修复了 Kafka Streams RocksDB 原生内存泄漏（<a href="https://issues.apache.org/jira/browse/KAFKA-20616">KAFKA-20616</a>），如果你在生产环境用 Kafka Streams 且 4.3.0 遇到过进程 RSS 持续增长的问题，建议优先升级。</p>
+<ul>
+<li>
+<p><strong>适合谁</strong>：使用 Kafka 的数据平台团队、关注流处理和大数据基础设施的后端架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://cwiki.apache.org/confluence/display/KAFKA/Release+Plan+4.4.0">Kafka 4.4.0 Release Plan</a> · <a href="https://developers.redhat.com/blog/2026/07/01/kafka-monthly-digest-june-2026/">Kafka Monthly Digest June 2026</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="6-开源-ai-编码-agent-格局变化kilo-code-接棒-roo-code本地模型赶超闭源">6. 开源 AI 编码 Agent 格局变化：Kilo Code 接棒 Roo Code，本地模型赶超闭源</h3>
+<ul>
+<li><strong>是什么</strong>：2026 年 7 月，开源 AI 编码 Agent 领域悄然完成了一次格局洗牌。Roo Code 于 5 月 15 日归档后，<strong>Kilo Code</strong> 作为活跃 fork 接棒，一周内融合了 Cline 的优质特性，新增并行子任务、检查点恢复和按任务预算的成本上限模式。与此同时，<a href="https://dev.to/doremonai/the-5-open-source-coding-llms-you-should-be-running-locally-in-july-2026-3926">开源编码模型排行榜</a>也发生了变化：</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>参数量</th><th>亮点</th></tr></thead><tbody><tr><td>Qwen3-Coder</td><td>72B</td><td>SWE-bench Verified 78.6%，支持 120+ 语言，128K 上下文</td></tr><tr><td>Devastral</td><td>40B</td><td>仓库级代码理解，单次 prompt 生成 README + 架构分析</td></tr><tr><td>Codestral</td><td>22B</td><td>M4 Ultra 上 80+ token/s，FIM 能力 IDE 补全最佳</td></tr><tr><td>DeepSeek-Coder-V3</td><td>67B</td><td>HumanEval 96.2%，RLHF 变体擅长解释代码推理过程</td></tr></tbody></table>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：两个趋势值得关注。一是<strong>工具层面</strong>：开源 Agent 不再只是 Claude Code 的”低配替代品”——Kilo Code 的并行子任务和成本上限是闭源工具没有的功能，Cline 的 “Plan Mode + Act Mode” 分离适合对代码变更质量要求高的场景，Continue 则在企业自托管和团队标准化上有独特优势。二是<strong>模型层面</strong>：Ollama、LM Studio、llama.cpp 都已加入原生 Agent 循环，本地跑 Qwen3-Coder 72B 量化版已经可以用单张 RTX 5090 完成自主调试、重构、写测试的多文件任务——不再依赖 API 订阅。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：关注 AI 编程工具选型的开发者，特别是想在本地/内网运行编码 Agent 的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://andrew.ooo/answers/kilo-code-vs-cline-vs-continue-open-source-coding-agents-july-2026">Kilo Code vs Cline vs Continue 对比</a> · <a href="https://dev.to/doremonai/the-5-open-source-coding-llms-you-should-be-running-locally-in-july-2026-3926">5 个本地开源编码 LLM</a> · <a href="https://ai-solutions.wiki/comparisons/open-source-coding-agents">Open-Source Coding Agents 全景图</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://github.com/malisper/pgrust">pgrust GitHub — malisper/pgrust</a></li>
+<li><a href="https://bytepith.com/article/pgrust-passes-100percent-postgress-regression-tests">pgrust Passes 100% of Postgres’s Regression Tests — BytePith</a></li>
+<li><a href="https://github.com/lessweb/deepcode-cli">Deep Code CLI GitHub — lessweb/deepcode-cli</a></li>
+<li><a href="https://blog.csdn.net/weixin_62242812/article/details/160392981">虚拟线程放开并发闸门后，你的数据库连接池为什么先崩？— CSDN</a></li>
+<li><a href="https://www.webkt.com/article/14110">Spring Boot 3 开启虚拟线程后 HikariCP 调优 — WebKT</a></li>
+<li><a href="https://github.com/alibaba/spring-ai-alibaba">Spring AI Alibaba GitHub — alibaba/spring-ai-alibaba</a></li>
+<li><a href="https://www.oschina.net/comment/news/355617">Spring AI Alibaba 1.0 GA 发布公告 — OSCHINA</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/KAFKA/Release+Plan+4.4.0">Kafka 4.4.0 Release Plan — Apache Wiki</a></li>
+<li><a href="https://developers.redhat.com/blog/2026/07/01/kafka-monthly-digest-june-2026/">Kafka Monthly Digest: June 2026 — Red Hat Developer</a></li>
+<li><a href="https://andrew.ooo/answers/kilo-code-vs-cline-vs-continue-open-source-coding-agents-july-2026">Kilo Code vs Cline vs Continue (July 2026) — andrew.ooo</a></li>
+<li><a href="https://dev.to/doremonai/the-5-open-source-coding-llms-you-should-be-running-locally-in-july-2026-3926">The 5 Open-Source Coding LLMs — dev.to</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-07-15-curated-july-backend-picks">七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</a> </li><li> <a href="/2026-07-14-curated-july-backend-picks">七月第三周技术精选：Rust重写PG、Meta入局Agent与虚拟线程调优</a> </li><li> <a href="/2026-07-06-curated-july-weekly-picks">七月第二周技术精选：MCP Server 实战、ES 9.4 新特性与 AI 网关</a> </li><li> <a href="/2026-07-03-curated-july-tech-picks">七月技术精选：虚拟线程防坑、Agent 框架半年复盘与混合搜索实战</a> </li><li> <a href="/2026-06-30-curated-backend-trending">六月末技术精选：JDK 27 结构化并发与 Agent 基础设施新范式</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
