@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="本周技术精选聚焦七大方向：Spring Boot 4.1.0 内置原生 gRPC、虚拟线程默认启用与惰性连接三大杀器；GPT-5.6 Sol/Terra/Luna 发布后 AI 编程 Agent 集体从「比谁更强」转向「比谁更安全」；Grok Build CLI 被曝静默上传完整代码库含 .env 密钥引发信任危机；Elasticsearch 性能调优方法论「定位→度量→调整」实战指南；Multica 把 14 款 AI 编程工具变成看板上的正式成员；Java Optional/Record/Sealed Class 最佳实践；以及 Spring Boot 两个高危 CVE 安全修复。每条附原文链接。"><title>七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-07-16-curated-july-tech-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒 - littlepug's blog"><meta property="og:description" content="本周技术精选聚焦七大方向：Spring Boot 4.1.0 内置原生 gRPC、虚拟线程默认启用与惰性连接三大杀器；GPT-5.6 Sol/Terra/Luna 发布后 AI 编程 Agent 集体从「比谁更强」转向「比谁更安全」；Grok Build CLI 被曝静默上传完整代码库含 .env 密钥引发信任危机；Elasticsearch 性能调优方法论「定位→度量→调整」实战指南；Multica 把 14 款 AI 编程工具变成看板上的正式成员；Java Optional/Record/Sealed Class 最佳实践；以及 Spring Boot 两个高危 CVE 安全修复。每条附原文链接。"><meta property="og:url" content="https://littlepug.github.io/2026-07-16-curated-july-tech-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-july-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒 - littlepug's blog"><meta name="twitter:description" content="本周技术精选聚焦七大方向：Spring Boot 4.1.0 内置原生 gRPC、虚拟线程默认启用与惰性连接三大杀器；GPT-5.6 Sol/Terra/Luna 发布后 AI 编程 Agent 集体从「比谁更强」转向「比谁更安全」；Grok Build CLI 被曝静默上传完整代码库含 .env 密钥引发信任危机；Elasticsearch 性能调优方法论「定位→度量→调整」实战指南；Multica 把 14 款 AI 编程工具变成看板上的正式成员；Java Optional/Record/Sealed Class 最佳实践；以及 Spring Boot 两个高危 CVE 安全修复。每条附原文链接。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-july-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-july-2026.svg" alt="七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-07-16" data-astro-cid-fzx4jmue> 2026-07-16 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>13 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>本周的技术圈出现了两条值得关注的叙事线：一边是 Spring Boot 4.1.0 用「gRPC + 虚拟线程 + 惰性连接」三件套加固 Java 云原生的地基；另一边是 AI 编程 Agent 生态集体从「比谁的模型更强」转向「比谁的安全护栏更牢」。GPT-5.6 发布后的第一周，Codex、OpenHands、Claude Code、Zed 不约而同地推出审批模式、预算上限和本地运行——而 Grok Build CLI 的静默上传丑闻，恰好给这个转向做了最刺眼的注脚。本周精选 <strong>7 条</strong> 内容。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-spring-boot-410原生-grpc--虚拟线程默认启用--惰性连接三件套">1. Spring Boot 4.1.0：原生 gRPC + 虚拟线程默认启用 + 惰性连接三件套</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Spring Boot 4.1.0 已于 2026 年 6 月 10 日正式发布，基于 Spring Framework 7.0.8、Spring Security 7.1，基线 JDK 17（Java 21 解锁虚拟线程等专属特性）。从 4.0 升级破坏性变更极少，核心带来了三大能力：</p>
+<p><strong>原生 gRPC 自动配置</strong>——官方内置 <code>spring-grpc</code> starter，不再依赖社区 <code>grpc-spring-boot-starter</code>。新增模块 <code>spring-boot-grpc-server</code>、<code>spring-boot-grpc-client</code>、<code>spring-boot-grpc-test</code>，支持 Netty 独立服务和 Servlet HTTP/2 双传输协议；<code>@GrpcAdvice</code> 注解对标 <code>@ControllerAdvice</code> 统一异常处理；<code>ObservationGrpcServerInterceptor</code> 自动埋点对接 Micrometer/OpenTelemetry。</p>
+<p><strong>虚拟线程默认启用（Java 21+）</strong>——Tomcat、Jetty、Undertow 容器线程池在 Java 21 环境下默认使用虚拟线程，同步和 Reactor 代码零改动兼容。</p>
+<p><strong>LazyConnectionDataSourceProxy 自动集成</strong>——设置 <code>spring.datasource.connection-fetch=lazy</code> 后，只有真正执行 SQL 时才从连接池获取物理连接，大幅降低连接池占用。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这三项不是孤立的新功能，而是组合在一起产生协同效应：虚拟线程消除 Tomcat 线程池的限流闸门后，惰性连接避免了成千上万个虚拟线程在请求入口处争抢连接池，而 gRPC 原生化让微服务间高性能内部调用不再需要拼凑社区 starter。有实战者反馈：升到 4.1 后必须同步调低 <code>maximum-pool-size</code>（虚拟线程 + 惰性连接模式下，实际并发连接数远低于请求并发数），否则池过大反而浪费资源。</p>
+<p>升级建议：先从 4.0 清干净 deprecated 警告 → 在非核心服务上试跑一个月 → 用 <code>-Djdk.tracePinnedThreads=full</code> 审计虚拟线程 pinning → 检查第三方依赖是否包含 <code>synchronized</code> 阻塞数据库调用。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在 Spring Boot 4.x 线上升级的后端团队，以及计划在微服务架构中引入 gRPC 的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/spring-projects/spring-boot/releases/tag/v4.1.0">Spring Boot 4.1.0 Release Notes</a> · <a href="https://chenxutan.com/d/3805.html">Spring Boot 4.1 深度实战指南</a> · <a href="https://www.826pc.com/program/java/4064.html">Spring Boot 4.1 新特性解析</a></p>
+</li>
+</ul>
+<h3 id="2-gpt-56-发布后一周ai-编程-agent-集体装上刹车">2. GPT-5.6 发布后一周：AI 编程 Agent 集体装上「刹车」</h3>
+<ul>
+<li><strong>是什么</strong>：OpenAI 于 7 月 9 日发布 GPT-5.6 家族（Sol 旗舰 / Terra 均衡 / Luna 低成本），同日登陆 API、ChatGPT、Codex、GitHub Copilot、Devin 和 Microsoft 365 Copilot。但 7 月 6-11 日这一周，四款主流 AI 编程工具不约而同地发版——<strong>没一个是关于「写得更好」的，全是关于「控得更严」</strong>：</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具</th><th>版本</th><th>新增的「刹车」</th></tr></thead><tbody><tr><td>Codex CLI</td><td>v0.144.x</td><td><code>writes</code> 审批模式：只读免批、写操作弹窗确认</td></tr><tr><td>OpenHands</td><td>v1.11.0</td><td>预算仪表盘 + Agent 配置模板 + 自带密钥</td></tr><tr><td>Claude Code</td><td>v2.1.205-207</td><td>Bedrock/Vertex/Foundry 上 <code>auto mode</code> 默认开启</td></tr><tr><td>Zed</td><td>v1.10.2</td><td>新增 <code>llama.cpp</code> 本地模型 provider</td></tr></tbody></table>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：这是 AI 编程工具生态的一个转折信号——「能不能写代码」不再是前沿，<strong>「敢不敢让它无人值守跑」</strong> 才是。Codex 的 <code>writes</code> 模式是「读可以放行、写必须确认」的细粒度审批，OpenHands 的预算系统则直面「Agent 跑了一夜账单吓死人」的痛点。对个人开发者而言，这意味着你可以更放心地把 Agent 放进日常开发循环里；对团队来说，这是引入 AI 编程工具时必须建立的治理基线。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：所有在团队中推广 AI 编程工具的 Tech Lead，以及想了解 Agent 治理最佳实践的开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://dreaming.press/posts/coding-agents-shipped-guardrails-not-horsepower-july-2026.html">Coding Agents Spent This Week Shipping Guardrails</a> · <a href="https://neodrop.ai/post/qsGUrD1aZC_">GPT-5.6 Resets the Agent Stack</a> · <a href="https://clawvard.school/blog/best-ai-coding-agents-2026-muse-spark-claude-code-gemini">2026 年最好的 AI 编程 Agent 对比</a></p>
+</li>
+</ul>
+<h3 id="3-grok-build-cli-被曝静默上传完整代码库含-env-密钥">3. Grok Build CLI 被曝静默上传完整代码库，含 .env 密钥</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：7 月 10-13 日，安全研究员 @cereblab 通过 mitmproxy 抓包分析发现，xAI 的 Grok Build CLI（v0.2.93）存在两条数据上传通道：<strong>模型交互通道</strong>——当 Agent 读取文件时，<code>.env</code> 密钥以明文序列化进 POST 请求体；<strong>存储通道</strong>——无论 Agent 是否读取，整个 Git 仓库（含完整提交历史）被打包为 Git bundle 上传至 Google Cloud Storage 的 <code>grok-code-session-traces</code> 桶。测试中一个 12GB 仓库的存储通道上传了 5.1 GiB 数据，而模型通道仅 192KB——数据放大 27,800 倍。关闭「Improve the model」选项无效，服务端仍返回 <code>trace_upload_enabled: true</code>。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这不是 Grok Build 一家的问题。这是整个 AI 编程工具品类必须面对的信任拷问——<strong>当工具拥有完整的本地文件系统访问权限，又连接着远程云端，你如何确保它不会在背后偷传数据？</strong> 事件发生后，社区给出的实践建议包括：用 Docker 沙箱隔离 Agent 工作区、用 <code>.agentignore</code> 替代 <code>.gitignore</code>（因为 Grok Build 无视了后者）、在网关层拦截非白名单域名的出站流量。更根本的反思是：<strong>闭源 CLI 工具不应拥有对代码库的无限制网络访问权</strong>——这条原则正在成为开发者选型时的硬性约束。</p>
+<p>截至 7 月 14 日，xAI 已通过服务端静默关闭上传，但未发布任何公开声明或安全公告。研究员建议所有使用过 Grok Build 0.2.x 的开发者立即轮换仓库中的所有凭据。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：所有使用或评估 AI 编程 CLI 工具的开发者——无论你用不用 Grok Build，这条新闻都决定了下一次选型时你会多问一句「它的网络行为透明吗？」</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://chatforest.com/builders-log/xai-grok-build-cli-repository-upload-google-cloud-no-statement-builder-alert">Grok Build CLI Was Uploading Your Entire Repo — ChatForest</a> · <a href="https://gist.github.com/cereblab">cereblab 原始抓包分析 Gist</a>（待核实） · <a href="https://www.tmtpost.com/agent/ai-article?id=19103">马斯克亲手清空 Grok Build 用户数据 — 钛媒体</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="4-elasticsearch-性能调优方法论先定位再度量最后调整">4. Elasticsearch 性能调优方法论：先定位，再度量，最后调整</h3>
+<ul>
+<li><strong>是什么</strong>：技术博客 magicliang 发布的 <a href="https://magicliang.github.io/2026/06/26/%E6%80%A7%E8%83%BD%E6%A8%A1%E5%9E%8B-%E6%90%9C%E7%B4%A2%E5%BB%B6%E8%BF%9F-%E5%86%99%E5%85%A5%E5%90%9E%E5%90%90%E4%B8%8E%E8%B0%83%E4%BC%98%E6%80%9D%E8%B7%AF/">深入 Elasticsearch(14)</a> 系列文章，提炼出了一套 ES 调优的方法论公式：「<strong>定位 → 度量 → 调整</strong>」，并附了一张非常实用的速查表：</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>症状</th><th>可能瓶颈</th><th>度量工具</th><th>调整方向</th></tr></thead><tbody><tr><td>搜索延迟高</td><td>segment 太多</td><td><code>_segments</code></td><td>force merge（仅对静态 index）</td></tr><tr><td>搜索延迟高</td><td>filesystem cache 不足</td><td><code>_nodes/stats os.mem</code></td><td>增加内存或减少数据量</td></tr><tr><td>搜索延迟高</td><td>query 复杂</td><td><code>profile: true</code></td><td>简化查询，用 filter 替代 query</td></tr><tr><td>写入吞吐低</td><td>refresh 太频繁</td><td><code>refresh_interval</code> 配置</td><td>增大 refresh_interval</td></tr><tr><td>写入吞吐低</td><td>单条写入</td><td>客户端代码</td><td>改用 bulk API</td></tr><tr><td>写入被拒绝</td><td>write 线程池满</td><td><code>_cat/thread_pool rejected</code></td><td>控制客户端并发</td></tr><tr><td>节点 OOM</td><td>heap 不足或 fielddata 爆炸</td><td>JVM stats</td><td>增大 heap 或禁用 fielddata</td></tr></tbody></table>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：文章最大的价值不是参数推荐，而是纠正了一个普遍误区——「性能调优就是调参数」。它用一个横跨 ES/MySQL/Kafka 的对比表说明：三大系统的底层缓存层、批量化写入、延迟可见性和瓶颈定位机制虽然术语不同，但调优模式是相通的。知道 <code>refresh_interval=30s</code> 没用，知道「什么时候调、调了之后用什么指标验证」才有用。</p>
+<p>补充 10 条黄金准则（来自生产实践总结）：写入必用 Bulk、查询优先用 filter、深度分页用 <code>search_after</code>、聚合/排序用 keyword、text 字段仅做全文检索、JVM 堆 ≤32GB 且 <code>Xms=Xmx</code>、服务器必用 SSD 并关 swap、分片控制在 30~50GB、低峰期执行段合并、节点角色分离。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：日常维护 ES 集群的后端开发者，以及准备从 MySQL 迁移搜索场景到 ES 的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://magicliang.github.io/2026/06/26/%E6%80%A7%E8%83%BD%E6%A8%A1%E5%9E%8B-%E6%90%9C%E7%B4%A2%E5%BB%B6%E8%BF%9F-%E5%86%99%E5%85%A5%E5%90%9E%E5%90%90%E4%B8%8E%E8%B0%83%E4%BC%98%E6%80%9D%E8%B7%AF/">深入 Elasticsearch(14)：搜索延迟、写入吞吐与调优思路</a> · <a href="https://juejin.cn/post/7598424770321973257">ES 生产环境 10 大最佳实践</a></p>
+</li>
+</ul>
+<h3 id="5-java-代码技巧不要用-optional-当字段不要用-record-当可变-bean">5. Java 代码技巧：不要用 Optional 当字段，不要用 Record 当可变 Bean</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：一篇发布于 7 月 8 日的 Java 现代特性实战总结，聚焦 Optional、Record、Sealed Class 和 <code>var</code> 四个 JDK 8-17 中最容易被误用的特性。核心观点：</p>
+<p><strong>Optional 的正确用法</strong>——✅ 用于方法返回值表示「可能为空」；✅ 链式 <code>map/flatMap/orElse</code> 替代层层 null 检查；❌ 不要作为字段类型（序列化问题 + 违反设计意图）；❌ 不要作为方法参数（调用方被迫包装）；❌ 不要用 <code>Optional.get()</code> 裸调（比 NPE 更难排查）。</p>
+<p><strong>Record 的正确用法</strong>——✅ DTO、VO、配置绑定、Map Key 等不可变数据载体；❌ 不要当可变 Bean 用（Entity/Controller 不适用）；❌ 不要继承（Record 隐式为 final）。</p>
+<p><strong>Sealed Class 的实战价值</strong>——配合 switch 模式匹配实现「穷尽性检查」，编译器强制覆盖所有子类型，消除遗漏分支的运行时 bug。适合状态机、支付渠道、事件类型等有限枚举场景。</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#768390">// ❌ 错误：Optional 作为字段</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> User</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#F47067">    private</span><span style="color:#ADBAC7"> Optional</span><span style="color:#F69D50">&#x3C;</span><span style="color:#F47067">String</span><span style="color:#F69D50">> </span><span style="color:#ADBAC7">nickname; </span><span style="color:#768390">// 不要这样做</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">// ✅ 正确：Optional 用于返回值</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#ADBAC7"> Optional</span><span style="color:#F47067">&#x3C;</span><span style="color:#ADBAC7">User</span><span style="color:#F47067">></span><span style="color:#DCBDFB"> findById</span><span style="color:#ADBAC7">(Long id) {</span></span>
+<span class="line"><span style="color:#F47067">    return</span><span style="color:#ADBAC7"> Optional.</span><span style="color:#DCBDFB">ofNullable</span><span style="color:#ADBAC7">(repository.</span><span style="color:#DCBDFB">findById</span><span style="color:#ADBAC7">(id));</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">// ✅ Record 作为 DTO</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> UserDTO</span><span style="color:#ADBAC7">(Long id, String name, String email) {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">// ✅ Sealed Class 配合 switch 穷尽性检查</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> sealed</span><span style="color:#F47067"> interface</span><span style="color:#F69D50"> Payment</span><span style="color:#F47067"> permits</span><span style="color:#6CB6FF"> WechatPay</span><span style="color:#ADBAC7">, </span><span style="color:#6CB6FF">Alipay</span><span style="color:#ADBAC7">, </span><span style="color:#6CB6FF">BankCard</span><span style="color:#ADBAC7"> {}</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> WechatPay</span><span style="color:#ADBAC7">(String openId) </span><span style="color:#F47067">implements</span><span style="color:#6CB6FF"> Payment</span><span style="color:#ADBAC7"> {}</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> Alipay</span><span style="color:#ADBAC7">(String userId) </span><span style="color:#F47067">implements</span><span style="color:#6CB6FF"> Payment</span><span style="color:#ADBAC7"> {}</span></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> BankCard</span><span style="color:#ADBAC7">(String cardNo) </span><span style="color:#F47067">implements</span><span style="color:#6CB6FF"> Payment</span><span style="color:#ADBAC7"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">// 编译器强制覆盖所有子类，漏写会直接报错</span></span>
+<span class="line"><span style="color:#ADBAC7">String </span><span style="color:#DCBDFB">getPaymentLabel</span><span style="color:#ADBAC7">(Payment p) {</span></span>
+<span class="line"><span style="color:#F47067">    return</span><span style="color:#F47067"> switch</span><span style="color:#ADBAC7"> (p) {</span></span>
+<span class="line"><span style="color:#F47067">        case</span><span style="color:#ADBAC7"> WechatPay w </span><span style="color:#F47067">-></span><span style="color:#96D0FF"> "微信支付"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">        case</span><span style="color:#ADBAC7"> Alipay a   </span><span style="color:#F47067">-></span><span style="color:#96D0FF"> "支付宝"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">        case</span><span style="color:#ADBAC7"> BankCard b </span><span style="color:#F47067">-></span><span style="color:#96D0FF"> "银行卡"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">    };</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：这些特性推出多年，但生产代码里滥用的情况仍然普遍——Optional 当字段塞进 JPA Entity 导致序列化问题、Record 套在 <code>@Entity</code> 上触发 Hibernate 代理异常、<code>var</code> 在 Lambda 参数里与类型推断打架。文章把「推荐用法」和「避免用法」并列对比，适合团队 code review 时作为检查清单。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：从 Java 8 升级到 Java 17/21 的团队，以及想在新项目中规范化代码风格的 Tech Lead。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="http://www.rhkb.cn/news/925458">32 Optional 与新 API</a> · <a href="https://lobehub.com/skills/neversight-skills_feed-java-best-practices">Java Best Practices Skill — LobeHub</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="6-multica把-14-款-ai-编程工具变成看板上的正式成员">6. Multica：把 14 款 AI 编程工具变成看板上的正式成员</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：7 月 11 日引发关注的开源项目 <a href="https://github.com/multica-ai/multica">Multica</a>，核心定位是把 Claude Code、Codex、Cursor、GitHub Copilot CLI、Kimi、Gemini 等 14 款 AI 编程 CLI 从「被动问答工具」升级为看板上的「正式团队成员」。用户创建 Issue → 从 Assignee 下拉菜单选择 AI Agent → Agent 自动认领 → 在本机 Runtime 上调起对应的 CLI → 读代码/写代码/跑测试/提交 → 实时推送进度到 WebSocket → 完成后把解决方案沉淀为团队可复用的 Skill 包。</p>
+<p>技术架构：服务端负责 Issue 队列与状态同步，本地守护进程负责安全执行（代码和密钥不离开本机），支持 Docker Compose 自托管。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Multica 试图解决的不是「Agent 怎么写代码」，而是「Agent 怎么融入团队工作流」——这是当前 AI 编程工具生态最大的 gap。它的三个设计决策值得关注：<strong>运行时无关</strong>——不绑死任何一款 Agent，团队可以按任务类型切换（重架构用 Claude Code、简单 CRUD 用 Kimi、本地隐私任务用 Gemini）；<strong>Squads 路由层</strong>——像分配任务给前端组一样 <code>@FrontendTeam</code>，Agent Leader 自动派发给最合适的成员；<strong>完全开源</strong>——不像 Devin 或 Copilot Workspace 那样闭源锁定，你可以审查每一行代码。</p>
+<p>注意：平台本身免费开源，但 Agent 推理调用仍需各自的 API 费用；目前尚无独立的第三方基准测试或生产案例报告，建议作为早期信号关注而非直接替换现有流程。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在尝试「人 + AI Agent 混合团队」工作模式的后端团队和独立开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/multica-ai/multica">Multica GitHub</a> · <a href="https://gongke.net/tools/multica-ai">Multica 功能介绍</a> · <a href="https://theagenttimes.com/articles/multica-launches-free-open-source-platform-to-deploy-ai-agen-ba5f9740">Multica 发布公告 — The Agent Times</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="7-spring-boot-高危安全漏洞smtp-中间人攻击--artemis-本地提权">7. Spring Boot 高危安全漏洞：SMTP 中间人攻击 + Artemis 本地提权</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：HeroDevs 维护的 Spring Boot 安全公告显示，2026 年 6 月发布的两个版本修复了两个重要的 CVE：</p>
+<p><strong>CVE-2026-40992</strong>（影响 Spring Boot 3.4.x）——Mail 自动配置在 SMTP 连接上默认未启用 SSL 主机名验证，攻击者在中间人场景下可窃取或篡改邮件内容。修复版本：3.4.20。</p>
+<p><strong>CVE-2026-41001</strong>（影响 Spring Boot 3.3.x 和 3.4.x）——内嵌 Artemis 消息代理 <code>ArtemisEmbeddedConfigurationFactory</code> 使用了固定的、可预测的数据目录路径。本地攻击者可以预先创建该目录，劫持队列数据，甚至触发基于反序列化的代码执行。修复版本：3.3.22 和 3.4.20。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：两个 CVE 的严重性不容低估。CVE-2026-41001 特别值得注意——如果你使用了 Spring Boot 内嵌的 Artemis（<code>spring-boot-starter-artemis</code>），且部署在多租户或有本地用户的环境中，攻击者只需预创建目录就能实现代码执行。如果版本锁定在 3.3.x 或 3.4.x 且暂时无法大版本升级，至少升级到对应的安全修复次版本。</p>
+<p>如果你已在 Spring Boot 4.1.0，这两个 CVE 的修复已合并到 4.1.0 的基线中（4.1.0 合并了 4.0.7 的所有 Bug 修复）。如果是 4.0.x，请升级到 4.0.7+。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：所有使用 Spring Boot 3.3.x 和 3.4.x 的生产环境运维和架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://docs.herodevs.com/spring/release-notes/spring-boot">Spring Boot Release Notes — HeroDevs</a> · <a href="https://github.com/spring-projects/spring-boot/releases/tag/v4.1.0">Spring Boot 4.1.0 安全公告</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://github.com/spring-projects/spring-boot/releases/tag/v4.1.0">Spring Boot 4.1.0 Release Notes — GitHub</a></li>
+<li><a href="https://chenxutan.com/d/3805.html">Spring Boot 4.1.0 深度实战：虚拟线程 + 惰性连接 + 原生 gRPC — 程序员茄子</a></li>
+<li><a href="https://www.826pc.com/program/java/4064.html">Spring Boot 4.1.0 正式发布 — 826PC</a></li>
+<li><a href="https://dreaming.press/posts/coding-agents-shipped-guardrails-not-horsepower-july-2026.html">Coding Agents Spent This Week Shipping Guardrails — dreaming.press</a></li>
+<li><a href="https://neodrop.ai/post/qsGUrD1aZC_">GPT-5.6 Resets the Agent Stack — neodrop.ai</a></li>
+<li><a href="https://clawvard.school/blog/best-ai-coding-agents-2026-muse-spark-claude-code-gemini">2026 年最好的 AI 编程 Agent 对比 — clawvard.school</a></li>
+<li><a href="https://chatforest.com/builders-log/xai-grok-build-cli-repository-upload-google-cloud-no-statement-builder-alert">Grok Build CLI Was Uploading Your Entire Repo — ChatForest</a></li>
+<li><a href="https://www.tmtpost.com/agent/ai-article?id=19103">马斯克亲手清空 Grok Build 用户数据 — 钛媒体</a></li>
+<li><a href="https://magicliang.github.io/2026/06/26/%E6%80%A7%E8%83%BD%E6%A8%A1%E5%9E%8B-%E6%90%9C%E7%B4%A2%E5%BB%B6%E8%BF%9F-%E5%86%99%E5%85%A5%E5%90%9E%E5%90%90%E4%B8%8E%E8%B0%83%E4%BC%98%E6%80%9D%E8%B7%AF/">深入 Elasticsearch(14)：搜索延迟、写入吞吐与调优思路 — magicliang</a></li>
+<li><a href="https://juejin.cn/post/7598424770321973257">ES 生产环境 10 大最佳实践 — 掘金</a></li>
+<li><a href="http://www.rhkb.cn/news/925458">32 Optional 与新 API — rhkb.cn</a></li>
+<li><a href="https://lobehub.com/skills/neversight-skills_feed-java-best-practices">Java Best Practices Skill — LobeHub</a></li>
+<li><a href="https://github.com/multica-ai/multica">Multica GitHub — multica-ai/multica</a></li>
+<li><a href="https://gongke.net/tools/multica-ai">Multica 功能介绍 — gongke.net</a></li>
+<li><a href="https://docs.herodevs.com/spring/release-notes/spring-boot">Spring Boot Release Notes — HeroDevs</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-07-16-curated-july-tech-picks">七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</a> </li><li> <a href="/2026-07-15-curated-july-backend-picks">七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</a> </li><li> <a href="/2026-07-14-curated-july-backend-picks">七月第三周技术精选：Rust重写PG、Meta入局Agent与虚拟线程调优</a> </li><li> <a href="/2026-07-06-curated-july-weekly-picks">七月第二周技术精选：MCP Server 实战、ES 9.4 新特性与 AI 网关</a> </li><li> <a href="/2026-07-03-curated-july-tech-picks">七月技术精选：虚拟线程防坑、Agent 框架半年复盘与混合搜索实战</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 

@@ -63,12 +63,12 @@
 
   <!-- Subtitle line 1 -->
   <text x="60" y="215" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="500" fill="#94a3b8">
-    pgrust · Deep Code CLI · Spring AI Alibaba
+    Spring Boot 4.1 · GPT-5.6 · Grok Build 安全事件
   </text>
 
   <!-- Subtitle line 2 -->
   <text x="60" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#64748b">
-    虚拟线程调优 · Kafka 4.4 前瞻 · 开源编码模型
+    ES 调优方法论 · Multica · Java 代码技巧
   </text>
 
   <!-- Divider line -->
@@ -77,7 +77,7 @@
   <!-- Date badge -->
   <rect x="60" y="300" width="140" height="36" rx="18" fill="#3b82f6" opacity="0.15"/>
   <text x="130" y="324" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#93c5fd" text-anchor="middle" font-weight="600">
-    2026.07.15
+    2026.07.16
   </text>
 
   <!-- Bottom labels -->
