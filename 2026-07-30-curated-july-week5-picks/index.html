@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="七月第五周精选聚焦后端开发者不可错过的七个方向：Kafka 4.4.0 Feature Freeze 达成，KIP-1357/1358/1360 三大新特性预览；Elasticsearch 宣布列存引擎在 9.5 成为一等公民，存储降 6.6 倍、查询快 160 倍；Spring AI 2.0 Advisor 链架构深度解读；开源 Coding Agent 三强（Kilo Code/Cline/Continue）选型指南；GraalVM 25.1 月更发布 + Spring Boot Native Image 生产部署实战；AgentScope Java 版登上 GitHub Trending；Java 虚拟线程生产踩坑实录。每条附原文链接，可验证。"><title>七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-07-30-curated-july-week5-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎 - littlepug's blog"><meta property="og:description" content="七月第五周精选聚焦后端开发者不可错过的七个方向：Kafka 4.4.0 Feature Freeze 达成，KIP-1357/1358/1360 三大新特性预览；Elasticsearch 宣布列存引擎在 9.5 成为一等公民，存储降 6.6 倍、查询快 160 倍；Spring AI 2.0 Advisor 链架构深度解读；开源 Coding Agent 三强（Kilo Code/Cline/Continue）选型指南；GraalVM 25.1 月更发布 + Spring Boot Native Image 生产部署实战；AgentScope Java 版登上 GitHub Trending；Java 虚拟线程生产踩坑实录。每条附原文链接，可验证。"><meta property="og:url" content="https://littlepug.github.io/2026-07-30-curated-july-week5-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-july-w5-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎 - littlepug's blog"><meta name="twitter:description" content="七月第五周精选聚焦后端开发者不可错过的七个方向：Kafka 4.4.0 Feature Freeze 达成，KIP-1357/1358/1360 三大新特性预览；Elasticsearch 宣布列存引擎在 9.5 成为一等公民，存储降 6.6 倍、查询快 160 倍；Spring AI 2.0 Advisor 链架构深度解读；开源 Coding Agent 三强（Kilo Code/Cline/Continue）选型指南；GraalVM 25.1 月更发布 + Spring Boot Native Image 生产部署实战；AgentScope Java 版登上 GitHub Trending；Java 虚拟线程生产踩坑实录。每条附原文链接，可验证。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-july-w5-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-july-w5-2026.svg" alt="七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-07-30" data-astro-cid-fzx4jmue> 2026-07-30 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>12 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>七月第五周，后端技术圈的热度集中在三个方向：<strong>Kafka 4.4 路线图敲定</strong>、<strong>Elasticsearch 存储引擎范式转变</strong>、<strong>AI Coding Agent 生态持续分化</strong>。</p>
+<p>昨天（7 月 29 日），Apache Kafka 4.4.0 达成 Feature Freeze——所有主要特性已完成合并，进入四周稳定期。Elasticsearch 这边，官方博客宣布列存引擎（Columnar Mode）将在 9.5 版本成为「一等公民」，存储和查询性能同时飞跃。Spring AI 2.0 的 Advisor 链架构为 Java AI 开发提供了全新的可组合范式。开源 Coding Agent 这边，Roo Code 归档后的生态正在快速重构：Kilo Code 接棒成为增长最快的开源 Agent，Cline 守住「透明可控」定位，Continue 深耕企业市场。</p>
+<p>本期精选 <strong>7 条</strong> 内容，每条附带「是什么 / 为什么值得看 / 适合谁」。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-kafka-440-feature-freeze-达成三大-kip-预览">1. Kafka 4.4.0 Feature Freeze 达成：三大 KIP 预览</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Apache Kafka 4.4.0 于 7 月 29 日达成 Feature Freeze，所有主要特性已合并，接下来进入四周稳定期，预计最早 9 月 9 日正式发布。本次值得关注的三个 KIP：</p>
+<p><strong>KIP-1357：Broker 端自定义 Assignor</strong>——Kafka 4.2.0 引入的服务端 Rebalance 协议（KIP-1071）虽然性能更好，但不再支持用户自定义的 Partition 分配策略。KIP-1357 补齐了这个缺口，让 Streams 用户可以把自己的 Assignor 逻辑注册到 Broker 端，在享受新协议性能的同时保留定制灵活性。</p>
+<p><strong>KIP-1358：渐进式 Preferred Leader 选举</strong>——当前 Kafka 的 Preferred Leader 选举在每个 <code>leader.imbalance.check.interval.seconds</code>（默认 5 分钟）触发时可能一次性发起数千次选举，对延迟产生明显冲击。KIP-1358 引入了可配置的选举节流机制，让 Leader 切换以渐进方式完成，降低对在线流量的影响。</p>
+<p><strong>KIP-1360：集群同步镜像（Synchronous Mirroring）</strong>——基于 KIP-1279 的跨集群复制能力，进一步支持同步镜像模式：一条消息只有在所有镜像集群的 ISR 都确认收到后才算写入成功。这意味着 Kafka 首次原生支持零 RPO 的灾备方案，以及跨集群的 Kafka Connect 和 Streams 平滑迁移。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：三个 KIP 覆盖了 Streams 可定制性、运维稳定性、灾备能力三个维度，每一条都直指当前生产环境的真实痛点。4.4.0 还有一个 pragmatical 的变化：<code>broker.id</code> 配置正式标记为 Deprecated（KIP-1232），转向 <code>node.id</code>——这是 KRaft 彻底替换 ZooKeeper 之路上的又一块拼图。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护 Kafka 集群的后端/SRE 团队，以及正在规划 Kafka 版本升级路线的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://cwiki.apache.org/confluence/x/XoA_Gg">Kafka 4.4.0 Release Plan — Apache Confluence</a> · <a href="https://developers.redhat.com/blog/2026/07/01/kafka-monthly-digest-june-2026">Kafka Monthly Digest: June 2026 — Red Hat Developer</a></p>
+</li>
+</ul>
+<h3 id="2-elasticsearch-列存引擎95-将成一等列存数据库">2. Elasticsearch 列存引擎：9.5 将成「一等列存数据库」</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Elastic 官方博客 7 月 7 日发文宣布，Elasticsearch 的列存引擎（Columnar Mode）将在 9.5 版本正式成为「一等公民」。这意味着同一份数据可以同时支持全文检索（行存）、时序聚合（列存）和向量检索——三种存储模式共享一份写入路径，不再需要为不同查询模式维护多套数据管道。</p>
+<p>目前 9.4 版本的列存引擎已经在 metrics 场景下交出了惊艳的成绩单：<strong>存储减少 6.6 倍、查询快 160 倍</strong>、原生支持 PromQL 和 OpenTelemetry。配合 Prometheus Remote Write 协议的原生兼容（<code>POST /_prometheus/api/v1/write</code>），Elasticsearch 可以作为 Prometheus 的 drop-in 存储后端——不需要改任何 Exporter 或 Grafana 面板配置。</p>
+<p>同期，9.4 还带来了 FIPS 140-3 合规支持（对政企和金融行业是关键门槛），以及 simdvec 向量检索引擎的持续优化（利用 AVX-512 指令集实现 bfloat16 标量器，向量吞吐再翻倍）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这不是一个「ES 又加了新功能」的常规更新，而是存储引擎的范式转变。过去你用 Elasticsearch 存日志、用 ClickHouse 做分析、用 Prometheus 存指标的「三件套」架构，正在被单一引擎 + 多模存储取代。对于已经跑着 ELK 栈的团队来说，这意味着可以用同一套集群吃掉原来需要多个专用数据库才能覆盖的场景，运维复杂度和资源成本都有望大幅下降。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护 ELK 栈的后端/SRE 团队，以及正在评估时序数据库选型（InfluxDB/TimescaleDB/ClickHouse vs ES）的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.elastic.co/search-labs/blog/elasticsearch-columnar-database">Why Elasticsearch is becoming a columnar database — Elastic Blog</a> · <a href="https://versionlog.com/elasticsearch/9.4/">Elasticsearch 9.4 Release Notes — VersionLog</a> · <a href="https://www.elastic.co/search-labs/blog/elasticsearch-metrics-columnar-engine">Bringing it together: How we rebuilt Elasticsearch as a columnar metrics engine — Elastic Blog</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="3-spring-ai-20-advisor-链工具调用的可组合架构">3. Spring AI 2.0 Advisor 链：工具调用的可组合架构</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Spring AI 2.0.0 GA 于 6 月 12 日发布（基于 Spring Boot 4.1.0 + Spring Framework 7.0 + Jakarta EE 11），其最值得后端开发者关注的设计是 <strong>Advisor 链 + ToolCallingAdvisor 自动注册</strong>。</p>
+<p>核心机制：<code>ChatClient</code> 内置一条 Advisor 链，每次请求依次经过链上的 Advisor 处理。<code>ToolCallingAdvisor</code> 被自动注册到链中，接管完整的工具调用循环——模型返回工具调用请求 → 执行工具 → 结果返回模型 → 模型决定是否继续调用工具 → 循环，直到模型产出最终回复。</p>
+<p>这个设计有两个精妙之处：</p>
+<ol>
+<li>
+<p><strong>循环可组合</strong>——Advisor 链支持循环重入，同一套机制既可以做工具调用，也可以做结构化输出的重试循环、评估循环（让模型自我检查和修正输出），不需要为每种循环写独立的控制逻辑。</p>
+</li>
+<li>
+<p><strong>可插拔</strong>——你可以继承 <code>ToolCallingAdvisor</code> 重写关键方法来定制工具调用行为（比如添加权限校验、调用审计日志），也可以临时关闭自动工具调用：<code>.advisors(AdvisorParams.toolCallingAdvisorAutoRegister(false))</code>。</p>
+</li>
+</ol>
+<p>MCP 2.0 集成也同步升级：传输层从 MCP Java SDK 移入 Spring AI 框架本身（版本不再撕裂），Streamable HTTP 替代 SSE 成为默认传输（无状态、可水平扩展），本地集成继续用 STDIO。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Advisor 链的设计把「工具调用」从模型能力变成框架能力——这不是在 Spring AI 里调用 OpenAI Function Calling 的简单封装，而是一套与模型无关的、可在框架层编排的工具调用引擎。对于后端团队来说，这意味着你可以用写 Spring Interceptor 的思维来编排 AI Agent 的工具调用流程，不需要理解每个 LLM 提供商的 Function Call 协议差异。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在或计划用 Java 构建 AI Agent 应用的后端团队，以及已经在用 Spring AI 1.x 考虑升级的开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://cloud.tencent.com/developer/article/2712874">Spring AI 2.0 正式发布：Java AI 开发的分水岭来了 — 腾讯云开发者社区</a> · <a href="https://blog.csdn.net/qq_38235138/article/details/162684520">Spring AI 2.0 深度解读：从架构重构到生产实践 — CSDN</a> · <a href="https://patotski.com/blog/mcp-server-java-spring-ai">Build an MCP Server in Java with Spring AI — patotski.com</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="4-开源-coding-agent-三强格局2026-年-7-月">4. 开源 Coding Agent 三强格局（2026 年 7 月）</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：随着 Roo Code 于 5 月 15 日归档，开源 AI Coding Agent 生态在 2026 年 7 月形成了清晰的三强格局：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具</th><th>Stars（≈）</th><th>定位</th><th>最适合</th></tr></thead><tbody><tr><td><strong>Kilo Code</strong></td><td>25.6k</td><td>Roo Code 接班人，最自主</td><td>多文件重构、追求效率</td></tr><tr><td><strong>Cline</strong></td><td>64.3k</td><td>透明可控、每步可审</td><td>生产代码、合规场景</td></tr><tr><td><strong>Continue</strong></td><td>34.7k</td><td>聊天优先、Agent 可选</td><td>企业自托管、JetBrains</td></tr></tbody></table>
+<p><strong>Kilo Code</strong> 是增长最快的选手（月度 +32.6%），v5.x 带来了重构的任务管理 UI（并行子任务 + 检查点恢复）、合并了 Cline 的最佳特性、新增了对 Kimi K2/Qwen 3/DeepSeek V4 的一等支持，以及按任务计费的「成本上限」模式。</p>
+<p><strong>Cline</strong> 坚持「Plan 模式」和「Act 模式」分离——先审计划再执行代码，对生产环境编辑天然友好。MCP 原生工具集成成熟，在 Claude Sonnet 5 上的长任务稳定性经过大量验证。</p>
+<p><strong>Continue</strong> 是唯一同时支持 VS Code 和 JetBrains IDE 的开源方案。它用配置文件（<code>.continue/config.yaml</code>）管理一切——模型、Prompt、上下文提供器全部版本化，企业自托管支持审计日志和模型路由策略。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：三个工具代表了三种 Agent 哲学——Kilo Code 让你「信任 Agent」、Cline 让你「审查 Agent」、Continue 让你「管理 Agent」。选择哪个取决于你的团队对 AI 编码的风险容忍度，不存在「最好的」，只有「最适合的」。切换成本很低（一个下午就能试完三个），建议都装一遍跑自己的代码库看看效果。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：所有在日常工作中使用 AI 编码工具的后端开发者，以及需要为团队制定 AI 工具选型标准的 Tech Lead。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://andrew.ooo/answers/kilo-code-vs-cline-vs-continue-open-source-coding-agents-july-2026">Kilo Code vs Cline vs Continue: Open Coding Agents (July 2026) — andrew.ooo</a> · <a href="https://irrlicht.io/landscape">AI Coding Agent Landscape — irrlicht.io</a>（Stars 数据截至 2026-07-05）</p>
+</li>
+</ul>
+<h3 id="5-agentscope-java阿里开源的-java-agent-框架">5. AgentScope Java：阿里开源的 Java Agent 框架</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：AgentScope Java（<code>agentscope-ai/agentscope-java</code>）是阿里开源的面向 Java 生态的 Agent 编程框架，本周登上 GitHub Trending（Java 分类），累计约 8,000+ Stars。它的核心理念是「Agent-Oriented Programming」——把 Agent 作为一等编程抽象，提供 Agent 的创建、编排、通信和状态管理能力。</p>
+<p>关键特性：</p>
+<ul>
+<li><strong>分布式 Agent</strong>——支持多 Agent 协作，Agent 之间可以跨进程通信</li>
+<li><strong>生产级长运行</strong>——Agent 可以持续运行数小时甚至数天，内置状态持久化和故障恢复</li>
+<li><strong>LLM 无关</strong>——可以接入 OpenAI、Anthropic、通义千问、DeepSeek 等多个模型提供商</li>
+<li><strong>MCP 协议支持</strong>——Agent 可以通过 MCP 协议调用外部工具和数据源</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Java 生态的 AI Agent 框架选择一直不多——LangChain4j 偏「工具包」风格，Spring AI 更偏「Spring 集成」。AgentScope Java 填补了「开箱即用的分布式 Agent 运行时」这个空白。如果你在做企业级的 Agent 应用（比如客服 Agent 集群、自动化运维 Agent），它的分布式和长运行能力是差异化的核心卖点。Apache 2.0 协议，商用友好。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 Java 构建 AI Agent 应用的后端团队，特别是需要多 Agent 协作和长运行场景的企业开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/agentscope-ai/agentscope-java">AgentScope Java — GitHub</a> · <a href="https://adg.csdn.net/6a675154662f9a54cb94bf53.html">GitHub Trending Java (2026-07-27) — CSDN</a>（Stars 数据待核实）</p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="6-graalvm-251--spring-boot-native-image生产部署实战">6. GraalVM 25.1 + Spring Boot Native Image：生产部署实战</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：GraalVM 从 25.1 版本（2026 年 6 月）开始改为<strong>月度发布</strong>节奏——每月一个 feature release，季度版本同时包含 JDK 安全补丁。配合 Spring Boot 4.1 的 AOT 处理成熟度，Native Image 已经从「尝鲜」进入「生产默认」阶段。</p>
+<p>一组经过验证的生产数据（Spring Boot 支付授权服务，4 核 8G 实例）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标</th><th>JVM 模式</th><th>Native Image</th><th>提升</th></tr></thead><tbody><tr><td>冷启动</td><td>4.2s</td><td>87ms</td><td>48x</td></tr><tr><td>稳态内存</td><td>348MB</td><td>71MB</td><td>4.9x</td></tr><tr><td>峰值吞吐</td><td>基准</td><td>-12%</td><td>—</td></tr><tr><td>P99 延迟</td><td>基准</td><td>-9%</td><td>✅</td></tr><tr><td>容器镜像</td><td>312MB</td><td>78MB</td><td>4x</td></tr></tbody></table>
+<p>关键洞察：Native Image 的峰值吞吐比 JVM 低约 12%（JIT 编译器在长跑中有优势），但 P99 延迟反而更低——因为没有 JIT 预热曲线和 GC 暂停方差。对 I/O 密集型微服务和 Serverless 场景，Native Image 的冷启动和内存优势远超那 12% 的吞吐差距。</p>
+<p>Spring Boot 4.1 的 AOT 处理器已经能自动覆盖大部分 Spring 托管 Bean 的反射/代理需求。需要手动添加 Hints 的场景主要集中在：自定义 <code>FactoryBean</code>、字节码操作库（ByteBuddy）、以及使用 <code>Class.forName()</code> 动态加载的第三方库。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这篇文章不是「跑个 Hello World 测启动速度」的教程，而是生产环境的真实数据 + 踩坑清单。特别值得关注的是 <code>-H:+ReportExceptionStackTraces</code> 在排查 Native Image 构建失败时的价值，以及用 <code>RuntimeHintsRegistrar</code> 集中管理反射配置的最佳实践。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在评估 Spring Boot Native Image 投入生产的后端团队，以及 K8s 集群内存成本敏感、需要快速扩缩容的 SRE。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://blogs.pavanrangani.com?p=4137/">Spring Boot 4.1 GraalVM Native Image Production Deployment Guide — Pavan Rangani</a> · <a href="https://www.backendbytes.com/articles/graalvm-native-images-java-production/">GraalVM Native Images in Production — BackendBytes</a> · <a href="https://www.graalvm.org/">GraalVM 25.1 Release — graalvm.org</a></p>
+</li>
+</ul>
+<h3 id="7-java-虚拟线程生产踩坑实录我们把它从生产环境移除了">7. Java 虚拟线程生产踩坑实录：我们把它从生产环境移除了</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：一篇在掘金引发广泛讨论的实战文章——作者团队在 JDK 21 上将核心服务全面切换到虚拟线程，半年后决定部分回退。文章的核心价值不在于「否定虚拟线程」，而在于把虚拟线程的三个关键限制讲透了：</p>
+<p><strong>坑一：synchronized 导致 pinning</strong>——虚拟线程进入 <code>synchronized</code> 块或执行 native 方法时会被「钉住」到载体线程上，无法卸载。一个看似无害的 <code>synchronized</code> 就可能让整个载体线程池耗尽。排查方法：启动时加 <code>-Djdk.tracePinnedThreads=full</code> 记录所有 pinning 事件。修法：把 <code>synchronized</code> 换成 <code>ReentrantLock</code>。</p>
+<p><strong>坑二：ThreadLocal 膨胀</strong>——虚拟线程可以轻松创建几十万个，每个都带 ThreadLocal 会导致内存暴涨。修法：用 JDK 21 的 <code>ScopedValue</code> API 替代 ThreadLocal 传递请求上下文。</p>
+<p><strong>坑三：连接池仍然是瓶颈</strong>——虚拟线程只解决了线程数瓶颈，数据库连接池（HikariCP）和 Redis 连接池的 <code>max-size</code> 仍然需要根据实际资源限制来配置。虚拟线程不会魔法般地让你的数据库能承受更多并发连接。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：在铺天盖地的「虚拟线程性能提升 300%」文章之后，这篇「反向经验」非常珍贵。它提醒我们：虚拟线程不是银弹——I/O 密集型场景是它的主场，但如果你代码里有大量 <code>synchronized</code> 或 CPU 密集型计算，迁移前需要先做代码审计。作者最终的选择也很务实：网关层保留虚拟线程、数据处理层回归平台线程——场景选择比技术正确性更重要。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在或计划从 JDK 17 升级到 JDK 21 + 开启虚拟线程的后端团队。建议在完整阅读本文后再做迁移计划。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://juejin.cn/post/7662248944408002560">Java 虚拟线程发布两年后，我们把它从生产环境移除了 — 掘金</a> · <a href="https://juejin.cn/post/7657737294859436032">SpringBoot3 + Java21 虚拟线程实战：吞吐量提升 300% — 掘金</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://cwiki.apache.org/confluence/x/XoA_Gg">Kafka 4.4.0 Release Plan — Apache Confluence</a></li>
+<li><a href="https://developers.redhat.com/blog/2026/07/01/kafka-monthly-digest-june-2026">Kafka Monthly Digest: June 2026 — Red Hat Developer</a></li>
+<li><a href="https://www.elastic.co/search-labs/blog/elasticsearch-columnar-database">Why Elasticsearch is becoming a columnar database — Elastic Blog</a></li>
+<li><a href="https://versionlog.com/elasticsearch/9.4/">Elasticsearch 9.4 Release Notes — VersionLog</a></li>
+<li><a href="https://www.elastic.co/search-labs/blog/elasticsearch-metrics-columnar-engine">Bringing it together: How we rebuilt Elasticsearch as a columnar metrics engine — Elastic Blog</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/2712874">Spring AI 2.0 正式发布：Java AI 开发的分水岭来了 — 腾讯云开发者社区</a></li>
+<li><a href="https://blog.csdn.net/qq_38235138/article/details/162684520">Spring AI 2.0 深度解读：从架构重构到生产实践 — CSDN</a></li>
+<li><a href="https://patotski.com/blog/mcp-server-java-spring-ai">Build an MCP Server in Java with Spring AI — patotski.com</a></li>
+<li><a href="https://andrew.ooo/answers/kilo-code-vs-cline-vs-continue-open-source-coding-agents-july-2026">Kilo Code vs Cline vs Continue: Open Coding Agents (July 2026) — andrew.ooo</a></li>
+<li><a href="https://irrlicht.io/landscape">AI Coding Agent Landscape — irrlicht.io</a></li>
+<li><a href="https://github.com/agentscope-ai/agentscope-java">AgentScope Java — GitHub</a></li>
+<li><a href="https://adg.csdn.net/6a675154662f9a54cb94bf53.html">GitHub Trending Java (2026-07-27) — CSDN</a></li>
+<li><a href="https://blogs.pavanrangani.com?p=4137/">Spring Boot 4.1 GraalVM Native Image Production Deployment Guide — Pavan Rangani</a></li>
+<li><a href="https://www.backendbytes.com/articles/graalvm-native-images-java-production/">GraalVM Native Images in Production — BackendBytes</a></li>
+<li><a href="https://www.graalvm.org/">GraalVM 25.1 Release — graalvm.org</a></li>
+<li><a href="https://juejin.cn/post/7662248944408002560">Java 虚拟线程发布两年后，我们把它从生产环境移除了 — 掘金</a></li>
+<li><a href="https://juejin.cn/post/7657737294859436032">SpringBoot3 + Java21 虚拟线程实战：吞吐量提升 300% — 掘金</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-07-30-curated-july-week5-picks">七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</a> </li><li> <a href="/2026-07-21-curated-july-week4-picks">七月第四周技术精选：Record Patterns 实战与 AI Agent 三件套</a> </li><li> <a href="/2026-07-16-curated-july-tech-picks">七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</a> </li><li> <a href="/2026-07-15-curated-july-backend-picks">七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</a> </li><li> <a href="/2026-07-14-curated-july-backend-picks">七月第三周技术精选：Rust重写PG、Meta入局Agent与虚拟线程调优</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 

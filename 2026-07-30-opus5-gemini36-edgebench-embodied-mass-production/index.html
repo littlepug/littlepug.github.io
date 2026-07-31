@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="本周 AI 双线加速。Claude Code v2.1.220 将 Opus 5 设为默认 Opus 模型，1M 上下文 + 沙箱网络白名单；Google Gemini 3.6 Flash 接棒 Managed Agents 默认模型，token 消耗降 17% 并内置 Computer Use；字节 Seed 团队 EdgeBench 发现 Agent 环境学习速度每三个月翻倍的新 Scaling Law；工信部确认 2026 上半年国内人形机器人产量超 4 万台，车企密集入局开启量产元年；Poolside 开源 118B 编程模型 Laguna S 2.1，单台 DGX Spark 即可运行。"><title>Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-07-30-opus5-gemini36-edgebench-embodied-mass-production/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万 - littlepug's blog"><meta property="og:description" content="本周 AI 双线加速。Claude Code v2.1.220 将 Opus 5 设为默认 Opus 模型，1M 上下文 + 沙箱网络白名单；Google Gemini 3.6 Flash 接棒 Managed Agents 默认模型，token 消耗降 17% 并内置 Computer Use；字节 Seed 团队 EdgeBench 发现 Agent 环境学习速度每三个月翻倍的新 Scaling Law；工信部确认 2026 上半年国内人形机器人产量超 4 万台，车企密集入局开启量产元年；Poolside 开源 118B 编程模型 Laguna S 2.1，单台 DGX Spark 即可运行。"><meta property="og:url" content="https://littlepug.github.io/2026-07-30-opus5-gemini36-edgebench-embodied-mass-production/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万 - littlepug's blog"><meta name="twitter:description" content="本周 AI 双线加速。Claude Code v2.1.220 将 Opus 5 设为默认 Opus 模型，1M 上下文 + 沙箱网络白名单；Google Gemini 3.6 Flash 接棒 Managed Agents 默认模型，token 消耗降 17% 并内置 Computer Use；字节 Seed 团队 EdgeBench 发现 Agent 环境学习速度每三个月翻倍的新 Scaling Law；工信部确认 2026 上半年国内人形机器人产量超 4 万台，车企密集入局开启量产元年；Poolside 开源 118B 编程模型 Laguna S 2.1，单台 DGX Spark 即可运行。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>Opus 5 登场，Gemini 3.6 Flash 上位，具身量产破十万</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-07-30" data-astro-cid-fzx4jmue> 2026-07-30 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>8 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>7 月最后一周，AI Coding 与具身智能两条主线同时出现标志性节点。模型层，Anthropic 和 Google 同周更新旗舰编程模型；研究层，字节 Seed 团队首次量化了 Agent 从环境中学习的速度规律；产业层，工信部确认国内人形机器人产量半年破 4 万台，量产元年正式开启。以下是 5 条最值得关注的动态。</p>
+<h2 id="claude-opus-5-登场-claude-code1m-上下文--沙箱安全升级">Claude Opus 5 登场 Claude Code，1M 上下文 + 沙箱安全升级</h2>
+<p>7 月 25 日，Anthropic 发布 Claude Code v2.1.220，正式引入 <strong>Claude Opus 5</strong>（<code>claude-opus-5</code>）作为默认 Opus 模型。这是继 6 月 30 日 Sonnet 5 发布后，Anthropic 在一个月内完成的第二次旗舰模型迭代。</p>
+<p><strong>关键更新</strong>：</p>
+<ul>
+<li><strong>Opus 5 定位</strong>：支持 1M token 上下文窗口，快速模式定价 $10/$50 per Mtok（输入/输出），取代 Opus 4.8 成为 Claude Code 中的默认 Opus 模型；</li>
+<li><strong>Opus 4.7 退役</strong>：从快速模式中移除，Opus 4.8 仍可选；</li>
+<li><strong>沙箱网络白名单</strong>：新增 <code>sandbox.network.allowed_domains</code> 设置，开发者可精确控制 Agent 在沙箱环境中能访问的网络域名，防止数据外泄；</li>
+<li><strong>子代理嵌套深度提升至 3 层</strong>：支持更复杂的多 Agent 协作编排；</li>
+<li><strong>Fable 模型临时受限</strong>：作为 advisor 可用但存在已知问题，Anthropic 正在修复。</li>
+</ul>
+<p><strong>为什么值得关注</strong>：Opus 5 的发布节奏意味着 Anthropic 已进入”月度旗舰迭代”模式。更重要的是，沙箱网络白名单和子代理嵌套深度的提升，指向了 Claude Code 从”编码助手”向”安全 Agent 平台”的定位迁移——开发者现在可以构建更深层的多 Agent 工作流，同时精确控制每个 Agent 的网络访问边界。</p>
+<h2 id="gemini-36-flash-接棒-managed-agentstoken-效率提升-17">Gemini 3.6 Flash 接棒 Managed Agents，token 效率提升 17%</h2>
+<p>7 月 28 日，Google 宣布 <strong>Gemini 3.6 Flash</strong> 正式成为 Gemini API Managed Agents 的默认模型，同步推出环境钩子（Environment Hooks）、预算控制和定时触发等 Agent 基础设施能力。</p>
+<p><strong>3.6 Flash 核心数据</strong>：</p>
+<ul>
+<li><strong>token 效率</strong>：根据 Artificial Analysis 指数，输出 token 消耗比 3.5 Flash 减少 17%；在 Datacurve DeepSWE 等部分基准中降幅高达 65%；</li>
+<li><strong>编程能力</strong>：SWE-Bench Pro 从 55.1% 提升至 58.7%，DeepSWE v1.1 从 37% 跃升至 49%，MLE-Bench 从 49.7% 拉到 63.9%；</li>
+<li><strong>Computer Use</strong>：OSWorld-Verified 从 78.4% 升至 83%，并作为 Gemini API 和企业版的内置工具开箱即用；</li>
+<li><strong>定价</strong>：输入 $1.50 / 输出 $7.50 per Mtok，低于 3.5 Flash 的 $1.50 / $9.00；</li>
+<li><strong>知识截止日期</strong>：从 2025 年 1 月推进至 2026 年 3 月。</li>
+</ul>
+<p><strong>Managed Agents 基础设施升级</strong>：</p>
+<ul>
+<li><strong>Environment Hooks</strong>：支持在沙箱内对每次工具调用执行前置/后置脚本，可实现安全拦截、代码格式化、自动验证等流水线；</li>
+<li><strong>预算控制</strong>：通过 <code>max_total_tokens</code> 限制 Agent 总消耗，到达上限后安全暂停并保留环境状态，支持续跑；</li>
+<li><strong>定时触发</strong>：将 Agent、环境、prompt 和 cron 计划绑定为持久化资源，无需人工干预即可定期执行；</li>
+<li><strong>免费层开放</strong>：Managed Agents 现已向未启用计费的项目开放。</li>
+</ul>
+<p><strong>为什么值得关注</strong>：Google 此次的发布重点不在模型参数，而在 Agent 工程化基础设施。Environment Hooks 让远程沙箱中的 Agent 行为变得可审计、可拦截，预算控制让长任务 Agent 的成本变得可预测——这些能力直接回应了生产环境中”Agent 跑飞了怎么办”的核心焦虑。</p>
+<h2 id="字节-edgebenchagent-环境学习速度每三个月翻倍">字节 EdgeBench：Agent 环境学习速度每三个月翻倍</h2>
+<p>字节跳动 Seed 团队 7 月初发布 EdgeBench（arXiv:2607.05155），首次系统量化了 AI Agent 从真实环境中的学习规律，发现了一条与预训练 Scaling Law 平行的新增长曲线。</p>
+<p><strong>研究方法</strong>：</p>
+<ul>
+<li><strong>134 个真实任务</strong>：覆盖科学发现、软件工程、组合优化、知识工作、形式化数学和交互游戏六大领域，每个任务支持 12 小时以上连续运行，部分延长实验超过 72 小时；</li>
+<li><strong>约 38,000 小时</strong>环境交互数据，追踪 5 个前沿模型在超长时程任务中的表现变化；</li>
+<li>51 个任务和完整评测框架已开源（edge-bench.org）。</li>
+</ul>
+<p><strong>核心发现</strong>：</p>
+<ul>
+<li><strong>Log-sigmoid 学习曲线</strong>：Agent 的环境学习轨迹精确遵循对数 S 形曲线（R² = 0.998），即”前慢—中快—后平台”的三段式增长；</li>
+<li><strong>学习速度每三个月翻倍</strong>：对比 2025 年 9 月至 2026 年 4 月发布的 6 代前沿模型，Agent 从环境中学习的速度大约每三个月翻一倍。这意味着 2025 年 9 月最强模型 2 小时能学到的能力，2026 年 3 月的最强模型只需 1 小时；</li>
+<li><strong>案例</strong>：GPT-5.5 在引力波任务的 12 小时运行中，通过 247 次评分尝试将分数从 42.8 提升至 67.0，关键跃升来自 Agent 根据反馈重新拆解问题。</li>
+</ul>
+<p><strong>为什么值得关注</strong>：这条”环境学习 Scaling Law”与预训练 Scaling Law 形成了双轴增长结构。如果翻倍趋势持续，2027 年初最强 Agent 在 2 小时内的学习能力将是现在的约 16 倍。对 AI Coding 而言，这意味着”给 Agent 足够时间，它就能学会”不再是一句口号，而是一条可预测的工程曲线——产品设计的核心变量将从”模型初始能力”转向”环境反馈质量”。</p>
+<h2 id="人形机器人量产元年上半年超-4-万台车企密集入局">人形机器人量产元年：上半年超 4 万台，车企密集入局</h2>
+<p>7 月 29 日，多条消息交叉印证：中国人形机器人产业正式进入规模化量产阶段。</p>
+<p><strong>工信部数据</strong>：</p>
+<ul>
+<li>2025 年国内人形机器人产量约 2 万台；</li>
+<li><strong>2026 年上半年已超 4 万台</strong>，预计全年超过 10 万台；</li>
+<li>工信部副部长柯吉欣判断：未来两三年是产业从”单机样机、舞台展示”走向”批量交付”的关键窗口。</li>
+</ul>
+<p><strong>车企密集入局</strong>：</p>
+<ul>
+<li><strong>比亚迪</strong>：自研人形机器人将于 8 月通过”迪空间”正式亮相；</li>
+<li><strong>小鹏</strong>：IRON 人形机器人 7 月 24 日在广州工厂开启小批量试生产，2026 年底月产能目标突破 1000 台；</li>
+<li><strong>理想</strong>：项目代号”Nexus”，规划”双轮”与”双足”两款产品，双轮版面向工厂场景计划年内发布；2026 年研发投入预计 120 亿元，AI 相关占比约 50%；</li>
+<li><strong>特斯拉</strong>：Optimus Gen-3 首批量产机型已在弗里蒙特工厂下线，原 Model S/X 产线将升级为机器人专属产线，设计年产能 100 万台。</li>
+</ul>
+<p><strong>供应链国产化</strong>：</p>
+<ul>
+<li>深圳某无框电机企业 2026 年上半年在手订单突破 100 万台，较 2025 全年增长 9 倍；</li>
+<li>人形机器人核心零部件国产化率超 90%，核心算力板卡实现 100% 国产化；</li>
+<li>首钢智新完成 0.2mm 超薄人形机器人专用电工钢量产验证，铁损较常规产品降低 20%-30%；</li>
+<li>近 20 家海内外车企已入局，智能汽车与人形机器人技术重合度超 70%。</li>
+</ul>
+<p><strong>为什么值得关注</strong>：“年产 10 万台”是一个产业从实验室走向工厂的分水岭数字。车企的密集入局不是跟风——汽车制造工厂本身就是人形机器人最理想的商业化首站，而自动驾驶积累的 VLA 模型、感知算法和供应链能力可以直接迁移。当量产规模越过临界点，单位成本快速下降将打开更多场景，形成正循环。</p>
+<h2 id="poolside-laguna-s-21118b-开源编程模型单机可运行">Poolside Laguna S 2.1：118B 开源编程模型，单机可运行</h2>
+<p>7 月 21 日，Poolside 发布 <strong>Laguna S 2.1</strong>，定位为”西方最强开源编程模型”，直接对标中国实验室的开源编程模型生态。</p>
+<p><strong>模型规格</strong>：</p>
+<ul>
+<li><strong>118B 总参数</strong>，MoE 架构，每 token 激活 8B 参数；</li>
+<li><strong>1M token 上下文窗口</strong>，支持思考/非思考两种推理模式；</li>
+<li><strong>开源协议</strong>：OpenMDW-1.1（允许商用），提供 BF16、FP8、INT4、NVFP4、GGUF、MLX 多种量化格式；</li>
+<li><strong>硬件需求</strong>：单台 NVIDIA DGX Spark 即可运行（约 75GB 显存），Apple M5 Max 128GB 上 Q4_K_M 量化可达 49 tok/s。</li>
+</ul>
+<p><strong>基准表现</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>基准</th><th>Laguna S 2.1 (118B-A8B)</th><th>对比</th></tr></thead><tbody><tr><td>Terminal-Bench 2.1</td><td>70.2%</td><td>超过 DeepSeek V4-Pro-Max (64.0%)、Nemotron 3 Ultra (56.4%)</td></tr><tr><td>SWE-Bench Multilingual</td><td>78.5%</td><td>接近 Qwen-3.7 Max (78.3%)、Claude Sonnet 5 (80.4%)</td></tr><tr><td>SWE-Bench Pro</td><td>59.4%</td><td>超过 DeepSeek V4-Flash (52.6%)</td></tr><tr><td>DeepSWE v1.1</td><td>40.4%</td><td>接近 Claude Sonnet 5 (54.0%)</td></tr></tbody></table>
+<p><strong>战略定位</strong>：Poolside 联合 CEO Jason Warner 直言：“西方需要可以信任、可以运行、可以构建的开源模型。Laguna S 2.1 就是我们的答案。“该模型面向政府、国防和高度监管企业，核心卖点是将高_volume 编程 Agent 工作从计量 API 迁移到自有硬件上，实现数据不出域。</p>
+<p><strong>为什么值得关注</strong>：过去一年，最强开源编程模型几乎全部来自中国实验室（DeepSeek、Qwen、Kimi）。Poolside 是第一家以 118B 参数量在 Terminal-Bench 上打到 70 分以上的西方公司，虽然距离 Kimi K3（88.3%）和 GPT-5.6 Sol（88.8%）仍有差距，但它的意义在于：验证了”小而精”的 MoE 架构路线在编程任务上的可行性，同时为数据主权敏感的场景提供了一个非中国系的开源选项。</p>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.220">Claude Code v2.1.220 Release Notes — GitHub</a></li>
+<li><a href="https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/">Gemini API Managed Agents: 3.6 Flash, hooks, and more — Google Blog</a></li>
+<li><a href="https://new.qq.com/rain/a/20260728A0043V00">Gemini 3.6 Flash 与 3.5 Flash-Lite 发布 — 腾讯新闻</a></li>
+<li><a href="https://storage.googleapis.com/deepmind-media/gemini/gemini_3_6_flash_model_evaluation.pdf">Gemini 3.6 Flash Model Evaluation — Google DeepMind</a></li>
+<li><a href="https://edge-bench.org/paper.pdf">EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments — arXiv:2607.05155</a></li>
+<li><a href="https://seed.bytedance.com/zh/blog/edgebench-measuring-real-world-environment-learning-and-discovering-a-new-scaling-law">字节 Seed 发布 EdgeBench — ByteDance Seed Blog</a></li>
+<li><a href="https://www.163.com/dy/article/L30TUULG0534A4SC.html">车企密集入局造人，人形机器人量产元年开启 — 网易</a></li>
+<li><a href="https://news.cctv.cn/2026/07/29/ARTI5cUxQubJbewO3Nj7lL46260729.shtml">从核心零部件到整机自主可控、批量出货 — 央视网</a></li>
+<li><a href="https://cj.sina.com.cn/article/norm_detail?url=https%3A%2F%2Ffinance.sina.com.cn%2Fstock%2Fhkstock%2F2026-07-29%2Fdoc-inikmytp5906409.shtml">港股汽车股全线走强，车企密集布局人形机器人赛道 — 新浪港股</a></li>
+<li><a href="https://poolside.ai/blog/introducing-laguna-s-2-1">Poolside releases Laguna S 2.1 — Poolside Blog</a></li>
+<li><a href="https://www.globenewswire.com/news-release/2026/07/21/3330818/0/en/Poolside-releases-Laguna-S-2-1-the-West-s-most-capable-open-weight-model.html">Poolside releases Laguna S 2.1, the West’s most capable open-weight model — GlobeNewswire</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/ai-coding" class="tag" data-astro-cid-fzx4jmue> ai-coding </a><a href="/tags/embodied-intelligence" class="tag" data-astro-cid-fzx4jmue> embodied-intelligence </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-07-30-curated-july-week5-picks">七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</a> </li><li> <a href="/2026-07-21-curated-july-week4-picks">七月第四周技术精选：Record Patterns 实战与 AI Agent 三件套</a> </li><li> <a href="/2026-07-16-curated-july-tech-picks">七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</a> </li><li> <a href="/2026-07-15-curated-july-backend-picks">七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</a> </li><li> <a href="/2026-07-14-curated-july-backend-picks">七月第三周技术精选：Rust重写PG、Meta入局Agent与虚拟线程调优</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
