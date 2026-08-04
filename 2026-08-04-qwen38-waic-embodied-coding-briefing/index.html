@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="阿里巴巴发布 Qwen 3.8-Max，2.4 万亿参数稀疏 MoE，从空文件夹自主编程 16 天交付可用框架并宣布下周开源；WAIC 2026 具身智能参展企业翻倍至 200+，机器人从跳舞转向拆垛装配；银河通用 Galbot S1 在宁德时代产线 7×24 小时连续作业超 3 个月，全球首次新能源产线常态化自主作业；AI Coding Agent 竞争白热化，GPT-5.6 Sol 与 Claude Opus 5 并驾齐驱；Baseten 130 亿美元 F 轮融资，推理工程成为独立学科。"><title>Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-08-04-qwen38-waic-embodied-coding-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场 - littlepug's blog"><meta property="og:description" content="阿里巴巴发布 Qwen 3.8-Max，2.4 万亿参数稀疏 MoE，从空文件夹自主编程 16 天交付可用框架并宣布下周开源；WAIC 2026 具身智能参展企业翻倍至 200+，机器人从跳舞转向拆垛装配；银河通用 Galbot S1 在宁德时代产线 7×24 小时连续作业超 3 个月，全球首次新能源产线常态化自主作业；AI Coding Agent 竞争白热化，GPT-5.6 Sol 与 Claude Opus 5 并驾齐驱；Baseten 130 亿美元 F 轮融资，推理工程成为独立学科。"><meta property="og:url" content="https://littlepug.github.io/2026-08-04-qwen38-waic-embodied-coding-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场 - littlepug's blog"><meta name="twitter:description" content="阿里巴巴发布 Qwen 3.8-Max，2.4 万亿参数稀疏 MoE，从空文件夹自主编程 16 天交付可用框架并宣布下周开源；WAIC 2026 具身智能参展企业翻倍至 200+，机器人从跳舞转向拆垛装配；银河通用 Galbot S1 在宁德时代产线 7×24 小时连续作业超 3 个月，全球首次新能源产线常态化自主作业；AI Coding Agent 竞争白热化，GPT-5.6 Sol 与 Claude Opus 5 并驾齐驱；Baseten 130 亿美元 F 轮融资，推理工程成为独立学科。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>Qwen 3.8-Max 自主编程 16 天，具身智能告别秀场</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-08-04" data-astro-cid-fzx4jmue> 2026-08-04 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>7 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <h2 id="发生了什么">发生了什么</h2>
+<p>8 月初，AI 编程与具身智能两条主线同时出现标志性节点。AI Coding 方面，阿里巴巴发布 Qwen 3.8-Max，以 2.4 万亿参数稀疏 MoE 架构实现了「从空文件夹自主编程 16 天交付可用框架」的演示，并宣布下周开源权重——这是国产大模型在长周期自主编程能力上的最强信号。与此同时，GPT-5.6 Sol 与 Claude Opus 5 在 Terminal-Bench 2.1 上以不到 0.5 分之差并驾齐驱，AI Coding Agent 市场进入贴身肉搏阶段。具身智能方面，WAIC 2026 闭幕带来一个清晰的行业拐点：参展企业翻倍、真机超 300 台，机器人从「表演才艺」转向「产线干活」；银河通用 Galbot S1 在宁德时代产线连续作业超 3 个月，成为全球首个新能源产线常态化自主作业的人形机器人。</p>
+<h2 id="qwen-38-max从空文件夹自主编程-16-天下周开源">Qwen 3.8-Max：从空文件夹自主编程 16 天，下周开源</h2>
+<p>8 月 3 日，阿里巴巴正式发布 <strong>Qwen3.8-Max</strong>，这是 Qwen 系列迄今最大的旗舰模型：</p>
+<ul>
+<li><strong>架构与规模</strong>：2.4 万亿总参数，每 token 仅激活 95B，采用稀疏混合专家（MoE）+ 混合注意力机制</li>
+<li><strong>上下文与多模态</strong>：1M token 上下文窗口，原生视觉能力</li>
+<li><strong>基准成绩</strong>：Text Arena 第 5、Vision Arena 第 2、CodeArena 第 4；PaperBench 93.0 分（对比 Fable 5 为 88.8）</li>
+<li><strong>定价</strong>：国内 ¥12/百万输入 token、¥36 输出、缓存命中 ¥1.5；国际价格约为 Opus 5 的 40%（输入）和 24%（输出）</li>
+</ul>
+<p>最引人注目的是官方演示：任务设定为「从空文件夹构建一个自进化 Agent 框架」，Qwen3.8-Max 独立运行了约 <strong>16 天</strong>的工程循环——生成代码、测试、预览、读取日志、融入用户反馈和社区实践——最终交付了名为 <strong>oh-my-cli</strong> 的可用自进化 Agent 框架，已在 GitHub 开源并公开完整操作历史。此外，团队还报告了 125 小时自主研究运行（复现已发表论文并将 AIME24 提升 2.7 分）和一个量化工作流（协调约 330 个子代理完成约 6000 次因子回测）。</p>
+<p>同日，阿里巴巴还发布了 <strong>QwenWork</strong>，一款整合 Qwen 模型能力的职场 Agent 产品，提供 PC 客户端和钉钉集成。模型权重（Qwen3.8-Max 及 Qwen3.8-27B）计划于下周开放。</p>
+<p><strong>值得关注的原因</strong>：16 天自主编程是长周期 Agent 能力的里程碑。此前类似演示多在数小时量级，Qwen3.8-Max 把「AI 独立交付完整项目」的时间线拉到了「周」级别。加上开源承诺和极具竞争力的定价，这将对闭源旗舰模型的定价权构成直接压力。</p>
+<h2 id="waic-2026具身智能告别秀场200-企业秀打工实力">WAIC 2026：具身智能告别秀场，200+ 企业秀「打工」实力</h2>
+<p>世界人工智能大会 WAIC 2026 落幕，具身智能展区出现了一个肉眼可见的转变——从「表演」走向「干活」：</p>
+<ul>
+<li><strong>规模翻倍</strong>：参展企业从去年的 80 余家猛增至 <strong>200+</strong>，现场真机数量突破 <strong>300 台</strong>，大会首次开辟 H3 整馆作为具身智能专属展区</li>
+<li><strong>画风转向</strong>：前几年展馆里机器人翻跟头、跳舞编排，今年变为<strong>拆垛、上料、装配</strong>。智元机器人 1:1 复刻了广州地铁安检扫描场景，机器人自主完成包裹识别、扫码、分拣、码垛；有的展台搭起缩微版芯片封装产线，机器人双臂配合完成取料、视觉对位到精密装配的全流程</li>
+<li><strong>客户关注点变了</strong>：不再问「能不能动」，而是问<strong>良率多少、CT 节拍多少秒、故障率多低</strong>。极智嘉创始人陈曦在论坛上一句话被反复引用：「我们不做 Demo，只做生产力。」</li>
+</ul>
+<p>逐际动力展台带来 Luna、Oli、TRON 2 三款产品组成的机器人矩阵，全新发布的 <strong>COSA 人形大脑系统</strong>搭配自研 WBT 全身运动基础模型；开普勒机器人则展出面向工业场景的重载机器人，其中平板型重载机器人自重 300 公斤、载重近 1 吨，可在非铺装地形完成重型物资运输。</p>
+<p><strong>值得关注的原因</strong>：这是具身智能行业从「技术验证」走向「商业验证」的拐点信号。当客户开始用工业级可靠性标准（而非新奇感）来验收机器人，意味着行业正进入真正的规模化部署前夜。</p>
+<h2 id="银河通用-galbot全球首次人形机器人新能源产线常态化自主作业">银河通用 Galbot：全球首次人形机器人新能源产线常态化自主作业</h2>
+<p>北京银河通用自研的 <strong>WAM-TTT（世界模型测试时后训练）框架</strong>近期进入规模化部署阶段。该框架使机器人在部署阶段仅凭少量人类视频即可快速适应新场景，无需重新训练：</p>
+<ul>
+<li><strong>Galbot G1</strong>：已在全家便利店上岗，执行商品补货、货架整理等任务</li>
+<li><strong>Galbot S1</strong>：在宁德时代产线 <strong>7×24 小时连续作业超 3 个月</strong>，实现<strong>全球首次人形机器人新能源产线常态化自主作业</strong></li>
+</ul>
+<p>同期，RoboHarness 框架提出异构策略编排新范式——将 VLA、RL、TAMP 等控制策略封装为可调用技能，由 coding agent 进行任务拆解与路由，在 LIBERO-LoHo 长时序任务上将完整成功率提升至 <strong>95.2%</strong>。美格智能也于 8 月 3 日发布了两款具身智能数据采集解决方案，聚焦多路传感器时间同步、高帧率原始数据采集与多模态融合。</p>
+<p><strong>值得关注的原因</strong>：3 个月连续产线作业是一个硬指标——它证明人形机器人已能扛住工业级强度的可靠性要求，不再只是展台上的演示品。WAM-TTT 的「测试时后训练」思路也为具身智能的快速场景适配提供了一条不同于大规模重训练的轻量路径。</p>
+<h2 id="ai-coding-agent-竞争白热化gpt-56-sol-与-claude-opus-5-并驾齐驱">AI Coding Agent 竞争白热化：GPT-5.6 Sol 与 Claude Opus 5 并驾齐驱</h2>
+<p>8 月基准榜单显示，AI Coding Agent 头部模型的差距已缩小到毫厘之间：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型 / Agent</th><th>Terminal-Bench 2.1</th><th>SWE-bench Verified</th><th>SWE-bench Pro</th></tr></thead><tbody><tr><td>GPT-5.6 Sol（模型独立）</td><td>89.5%</td><td>未公布</td><td>未公布</td></tr><tr><td>Claude Opus 5（模型独立）</td><td>89.1%</td><td>未公布</td><td>未公布</td></tr><tr><td>Claude Code / Fable 5</td><td>83.1%</td><td>95.0%</td><td>80.3%</td></tr><tr><td>Codex CLI / GPT-5.5</td><td>83.4%</td><td>88.7%</td><td>58.6%</td></tr></tbody></table>
+<p>市场侧的数据同样惊人：</p>
+<ul>
+<li><strong>Cursor</strong>：从 $1M 到 $500M ARR 仅用约 24 个月，2026 年 2 月年化收入超 <strong>$20 亿</strong>，近 70% 的 Fortune 1000 企业在使用，企业收入占比从 25% 升至 60%</li>
+<li><strong>Claude Code</strong>：2025 年 5 月上线，9 个月内年化收入达 <strong>$25 亿</strong>，占 Anthropic 总收入约 20%；约 4% 的 GitHub 公开 commit 由 Claude Code 生成</li>
+<li><strong>Codex</strong>：周活 <strong>300 万</strong>，OpenAI 内部 70% 工程师使用，每周合并 PR 数提升 70%</li>
+</ul>
+<p>值得注意的是，Cursor 在 7 月发布了与 xAI 联合训练的 <strong>Grok 4.5</strong>，成为首个由工具厂商参与训练前沿级编码模型的案例——模型与工具不再是可以独立选择的两件事。</p>
+<p><strong>值得关注的原因</strong>：当头部模型基准分差不到 0.5 分，竞争重心已从「谁的模型更强」转向「谁的工程化体验更好、成本结构更优」。对开发者而言，这意味着选型的关键变量从模型跑分变成了工作流适配度、上下文工程质量和团队协作能力。</p>
+<h2 id="baseten-130-亿美元-f-轮推理工程成为独立学科">Baseten 130 亿美元 F 轮：推理工程成为独立学科</h2>
+<p>AI 推理基础设施公司 <strong>Baseten</strong> 完成了一轮 <strong>130 亿美元</strong>的 F 轮融资，直接跻身 AI 基础设施十角兽阵营。这轮融资传递的信号很明确：推理工程不再是大模型训练完成后「捎带手做的边角料」，而是被资本和产业同时按下了加速键。</p>
+<p>Philip Kiely 今年 2 月出版的《推理工程》一书系统回答了一个被长期忽视的问题：如何把训练好的模型权重变成又快、又稳、又省钱的线上产品。Baseten 团队在 GLM-5.2 上跑出了一个反直觉发现——<strong>对更多层做量化，不仅没有拉低模型质量，吞吐量反而提升了 20%</strong>。原因是不同层引入的量化误差会彼此抵消，误差 A 加上误差 B 居然比误差 A 单独存在时更小。</p>
+<p>推理工程正在长出完整的骨架：独立的研究问题、专属的基础设施栈，以及越来越细分的人才岗位。从量化配对到服务架构，每个环节都藏着新的优化空间。</p>
+<p><strong>值得关注的原因</strong>：当模型能力趋同，推理效率成为新的护城河。Baseten 的「误差抵消」发现说明，推理优化中还有大量反直觉的工程红利尚未被挖掘——这对自建推理基础设施的团队尤其有价值。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://dev.to/hiroki-ii-ai/ai-daily-digest-august-4-2026-qwen-38-max-ships-mythos-cracks-hawk-fireworks-hits-1b-arr-26ok">AI Daily Digest — August 4, 2026: Qwen 3.8-Max Ships, Mythos Cracks HAWK, Fireworks Hits 1B ARR</a></li>
+<li><a href="https://xueqiu.com/6824503346/403501103">24 小时全球 AI 最热 10 条（2026 年 8 月 4 日）— 雪球</a></li>
+<li><a href="https://www.163.com/dy/article/L3FEMHHR05561FZV.html">Baseten 获 130 亿美元融资，推理工程已成独立学科 — 网易</a></li>
+<li><a href="https://new.qq.com/rain/a/20260804A03K5K00">跨越数字与物理边界 — 人民日报海外版（2026-08-04 第 05 版）</a></li>
+<li><a href="https://new.qq.com/rain/a/20260804A02ZAY00">具身智能日报 — 腾讯新闻</a></li>
+<li><a href="https://www.kwkr.cn/news/58508.html">逛完 2026 WAIC，我发现机器人不再「表演」，开始「打工赚钱」了</a></li>
+<li><a href="https://neuralcoretech.com/best-ai-coding-agents-august-2026">Best AI Coding Agents August 2026 — NeuralCoreTech</a></li>
+<li><a href="https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/">Claude Code vs Cursor vs Copilot vs Codex: 2026 Developer Usage Report</a></li>
+<li><a href="https://www.stackspend.app/resources/blog/best-coding-models-august-2026">The Best Coding Models in August 2026 — StackSpend</a></li>
+<li><a href="https://clauday.com/article/2088ae08-a5be-4588-ba57-d7e2447df857">Loop Daily: August 4, 2026 — Clauday</a></li>
+</ul>
+<!-- 封面建议：800×450，可自定义 /images/covers/briefing-qwen38-waic-2026-08-04.svg，主题色推荐深蓝渐变 + 代码终端元素 + 机器人工业场景剪影 --> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-07-31-curated-july-dev-roundup">七月技术精选收官：MCP 无状态协议发布</a> </li><li> <a href="/2026-07-30-curated-july-week5-picks">七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</a> </li><li> <a href="/2026-07-21-curated-july-week4-picks">七月第四周技术精选：Record Patterns 实战与 AI Agent 三件套</a> </li><li> <a href="/2026-07-16-curated-july-tech-picks">七月中旬技术精选：Spring Boot 4.1 三大杀器与 AI 编程 Agent 的安全觉醒</a> </li><li> <a href="/2026-07-15-curated-july-backend-picks">七月中旬技术精选：pgrust 引爆 HN、Deep Code CLI 开源与虚拟线程踩坑实录</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
