@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="八月第三周精选聚焦六个方向：Apache Kafka 4.4.0 达成代码冻结、预计 9 月发布；DeepSeek 开源「一切皆插件」的 Agent 框架 Harness，并同日发布 V4-Pro 模型；Prime Intellect 的 Prime Agent 持续霸榜 GitHub；腾讯云开源团队级 Agent 记忆中枢 TencentDB Agent Memory v2.0；英伟达开源 LLM 流量代理 Switchyard；dev.to 热文详解 Spring Boot 资源占用直降 80% 的调优清单。每条附可验证链接。"><title>八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-08-19-curated-august-week3-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源 - littlepug's blog"><meta property="og:description" content="八月第三周精选聚焦六个方向：Apache Kafka 4.4.0 达成代码冻结、预计 9 月发布；DeepSeek 开源「一切皆插件」的 Agent 框架 Harness，并同日发布 V4-Pro 模型；Prime Intellect 的 Prime Agent 持续霸榜 GitHub；腾讯云开源团队级 Agent 记忆中枢 TencentDB Agent Memory v2.0；英伟达开源 LLM 流量代理 Switchyard；dev.to 热文详解 Spring Boot 资源占用直降 80% 的调优清单。每条附可验证链接。"><meta property="og:url" content="https://littlepug.github.io/2026-08-19-curated-august-week3-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-august-w3-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源 - littlepug's blog"><meta name="twitter:description" content="八月第三周精选聚焦六个方向：Apache Kafka 4.4.0 达成代码冻结、预计 9 月发布；DeepSeek 开源「一切皆插件」的 Agent 框架 Harness，并同日发布 V4-Pro 模型；Prime Intellect 的 Prime Agent 持续霸榜 GitHub；腾讯云开源团队级 Agent 记忆中枢 TencentDB Agent Memory v2.0；英伟达开源 LLM 流量代理 Switchyard；dev.to 热文详解 Spring Boot 资源占用直降 80% 的调优清单。每条附可验证链接。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-august-w3-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-august-w3-2026.svg" alt="八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-08-19" data-astro-cid-fzx4jmue> 2026-08-19 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>八月第三周，后端技术圈的注意力被两件事牢牢抓住：一边是 <strong>Apache Kafka 4.4.0 正式达成代码冻结</strong>（Code Freeze），历经 KIP Freeze、Feature Freeze 后进入收尾稳定期；另一边是 <strong>DeepSeek 把自家 Agent 框架 Harness 整个开源</strong>，抛出一句「Model + Harness = Agent」，并同步放出 1.6 万亿参数的 V4-Pro 模型。与此同时，GitHub 周榜几乎被 Agent 基础设施项目霸榜——自改进编码 Agent、团队级记忆中枢、LLM 流量代理，清一色指向同一个命题：<strong>智能体如何接入工具、保存上下文并可靠执行任务</strong>。</p>
+<p>本期精选 <strong>6 条</strong>内容，方向覆盖大数据组件进展、AI Agent 生态、实用开源项目与 Java/Spring Boot 代码技巧。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-apache-kafka-440-达成代码冻结进入至少-4-周稳定期">1. Apache Kafka 4.4.0 达成代码冻结，进入至少 4 周稳定期</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：根据 Apache Kafka 官方 Wiki 的 4.4.0 Release Plan，本次版本在 7 月 8 日完成 <strong>KIP Freeze</strong>（提案冻结）、7 月 29 日完成 <strong>Feature Freeze</strong>（功能冻结、切分支）、并在 <strong>8 月 12 日达成 Code Freeze</strong>（代码冻结）。8 月 13 日，Release Manager Omnia Ibrahim 在 dev 邮件列表正式发布 <code>[ANNOUNCE] Code freeze for Apache Kafka 4.4.0</code> 公告。按照惯例，代码冻结后将有至少 4 周稳定期，预计<strong>不早于 9 月 9 日发布</strong>，期间滚动产出 Release Candidate 直至投票通过。</p>
+<p>7 月社区共提交 9 个 KIP（KIP-1361 至 KIP-1369），其中几个值得关注：<strong>KIP-1365</strong>（提升 Kafka Connect 对跳过记录的可观测性，新增指标与回调）、<strong>KIP-1366</strong>（Window/Session Store 支持可配置分段间隔，避免改动 retention 触发全量 state 恢复）、<strong>KIP-1368</strong>（客户端上报所属框架名与版本，便于排查嵌在 Streams/Connect 里的客户端）。社区侧同步更新：kroxylicious 0.23.0 引入动态路由 API（预览）、librdkafka 2.15 预览支持 Share Groups（KIP-932 队列）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：对 Kafka 使用者而言，代码冻结意味着 4.4 的功能面已经锁定，现在是评估「升不升、什么时候升」的最佳窗口。KIP-1366 尤其务实——用过 Kafka Streams 的人都知道，调整窗口 store 的 retention 会连带改变分段时长并强制全量恢复，这个改动直接解决了一个长期运维痛点。KIP-1368 则让「客户端到底是谁发的」在排查时不再靠猜。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护 Kafka 集群与 Kafka Streams 任务的后端/SRE 团队，以及规划 4.4 升级节奏的平台负责人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://cwiki.apache.org/confluence/x/fIQ_Gg">Kafka 4.4.0 Release Plan — Apache Wiki</a> · <a href="https://developers.redhat.com/blog/2026/08/03/kafka-monthly-digest-july-2026">Kafka Monthly Digest: July 2026 — Red Hat Developer</a> · <a href="https://www.mail-archive.com/dev%40kafka.apache.org/maillist.html">dev 邮件列表公告（2026-08-13）</a></p>
+</li>
+</ul>
+<h3 id="2-deepseek-harness-开源一切皆插件的-agent-运行时对标-claude-code">2. DeepSeek Harness 开源：一切皆插件的 Agent 运行时，对标 Claude Code</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：8 月 13 日，DeepSeek 正式开源 <strong>DeepSeek Harness（命令行名 <code>dsh</code>）</strong>，MIT 协议，代码仓库 <code>github.com/deepseek-ai/deepseek-harness</code>，npm 包 <code>@deepseek-ai/dsh</code>。它不是一个新基础模型，而是一套把模型接入文件系统、终端、网页、代码工具与其他 Agent 的 <strong>Agent 运行框架</strong>。核心理念「一切皆插件」——模型、工具、Agent Loop、会话、沙箱、存储、调度、UI 全部作为独立插件实现，由 <strong>Cordis</strong> 微内核驱动组合，可自由替换、重组、扩展。</p>
+<p>上手极简：装好 Node.js 后执行 <code>npx @deepseek-ai/dsh web</code>，浏览器打开 <code>http://127.0.0.1:3080</code> 即可使用。提供 Web / TUI / Headless / Python SDK 四种运行模式，插件通过 pnpm 安装卸载。同日，DeepSeek 还发布了 <strong>V4-Pro-0813</strong>：MoE 架构总参数 1.6 万亿、每次推理仅激活 490 亿，100 万 token 上下文窗口，权重以 MIT 许可开放。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：DeepSeek 把「对标 Claude Code / Codex」这件事从模型层下探到了 <strong>Agent 工具层</strong>。Claude Code 仍是闭源、绑定 Anthropic 模型的商业产品，而 Harness 用 MIT 协议把整套 Agent 运行时交了出来——模型可换、工具可加、Agent 循环可改，且支持接入任意 OpenAI 兼容端点。它给的公式是 <code>Model + Harness = Agent</code>：模型只负责「聊天」，Harness 才让它「读代码、跑命令、改文件」。对于想自建编程 Agent、又不想被单一云厂商锁定的团队，这是一条真正可审计、可 fork 的路。官方也明确标注当前是 Developer Preview，接口仍在快速变动、可能有破坏性变更，不宜直接当生产依赖。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：关注 AI 编程工具自建与国产开源 Agent 框架的后端开发者、架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness 仓库</a> · <a href="https://m.ithome.com/html/989446.htm">对标 Claude Code：DeepSeek Harness 公测 — IT之家</a> · <a href="https://developer.aliyun.com/article/1755877">DeepSeek Harness 终于来了：开源，一切皆插件 — 阿里云开发者社区</a>（「一夜 5 万星」数据待核实）</p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="3-prime-agent自我改进的编码-agent稳居-github-周榜前三">3. Prime Agent：自我改进的编码 Agent，稳居 GitHub 周榜前三</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Prime Intellect 于 8 月 6 日以 MIT 协议开源 <strong>Prime Agent</strong>（<code>github.com/PrimeIntellect-ai/prime-agent</code>），一个面向编码工作流与长周期自主任务的自我改进型 Agent。截至 8 月 16 日的 GitHub 周榜，它以 16,291 星、周增 8,488 星排在第 3 位。</p>
+<p>它的架构不走「给模型一堆工具 schema」的老路，而是基于两条核心设计：<strong>Recursive Language Model（RLM）</strong> 模式 + <strong>持久化 IPython kernel</strong>。上下文被当作变量管理，子 Agent 被当作可编程调用的函数；通过 Continual Harness 机制，Agent 能在运行中根据执行反馈沉淀经验与技能，实现自我改进。还提供守护进程后台运行、心跳调度与预算控制，专门优化长任务场景。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：大多数 Agent 框架在上下文填满后就会丢信息、忘经验，Prime Agent 用「持久 kernel + 自我精炼循环」正面解决了长任务上下文丢失与经验无法沉淀这对核心矛盾。它把「工具、技能、子 Agent」统一成 Python 代码在同一个 kernel 里运行，这个思路对理解「Agent 如何真正持久工作」很有启发。MIT 协议意味着可以放心 fork、改造成商业产品。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在自建 AI 编程工具或自动化研究管线的后端/平台开发者，以及想评估 2026 年开源 Agent 框架上限的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/PrimeIntellect-ai/prime-agent">PrimeIntellect-ai/prime-agent — GitHub</a> · <a href="https://bizstack.tech/prime-intellect-open-sources-prime-agent-a-self-improving-coding-harness">Prime Intellect open-sources Prime Agent — BizStack</a></p>
+</li>
+</ul>
+<h3 id="4-tencentdb-agent-memory-v20给-agent-建一个团队级记忆中枢">4. TencentDB Agent Memory v2.0：给 Agent 建一个团队级记忆中枢</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：腾讯云开源的 <strong>TencentDB Agent Memory</strong>（<code>github.com/TencentCloud/TencentDB-Agent-Memory</code>，TypeScript，MIT）发布 v2.0.0 后登上热榜，截至 8 月 16 日周榜约 21,989 星、排第 10。它解决的是 Agent 规模化后的一个核心矛盾：<strong>每个 Agent 各记一套「用户偏好」，团队内信息割裂、无法复用</strong>。</p>
+<p>它的做法是把对话记录、产品文档、代码仓库统一加工成四类可治理资产——<strong>Chat Memory、Skill、LLM-Wiki、Code-Graph</strong>，经审核与权限控制后跨 Agent、跨框架共享。v2.0.0 最大的变化是上线 <strong>Memory Hub 控制面板</strong>，让记忆资产从「谁生产谁使用」变成「团队治理、按需装备」；单行命令 <code>./start-all.sh</code> 即可拉起全部服务，访问 <code>localhost:8125</code> 的管理面板。项目已适配 OpenClaw、Hermes Agent、Claude Code、CodeBuddy 等框架。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：当单 Agent 变成多 Agent 团队后，记忆如何治理会成为比「模型多强」更实际的问题。这个项目把「团队记忆」落成了可审核、可共享、可装配的四类资产，而不是又一个大而全的向量库。对后端开发者，它的价值在于给出了一个 <strong>Agent 记忆的工程化范式</strong>：记忆不是某个框架的私有功能，而是可以被治理、被共享、跨框架复用的基础设施。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在内部落地多个 AI Agent、需要统一记忆与经验的团队，以及对 Agent 记忆治理架构感兴趣的后端开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentCloud/TencentDB-Agent-Memory — GitHub</a></p>
+</li>
+</ul>
+<h3 id="5-nvidia-switchyard保持-openaianthropic-兼容的-llm-流量代理">5. NVIDIA Switchyard：保持 OpenAI/Anthropic 兼容的 LLM 流量代理</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：英伟达开源的 <strong>Switchyard</strong>（<code>github.com/NVIDIA-NeMo/Switchyard</code>，Rust），是一个 LLM 流量代理与路由库，本周登上 GitHub 周榜第 5。它在保留原生 OpenAI 与 Anthropic API 兼容性的前提下，让应用在多个模型与供应商之间灵活路由流量——支持 OpenAI Chat、Anthropic Messages、OpenAI Responses 三种协议间的<strong>双向转换</strong>，客户端可用原生 API 接入 vLLM、NVIDIA NIM、Ollama 等后端。</p>
+<p>代理内置基于内容分类、对话信号与随机分流的多种路由算法，并暴露 Prometheus 监控指标，方便做多模型分流、A/B 评测与成本优化。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：后端开发者接入大模型时最头疼的莫过于「供应商锁定」与「协议不兼容」。Switchyard 用一层 Rust 代理把协议转换和路由解耦——你可以今天走 OpenAI、明天切 Anthropic、后天接自建 vLLM，业务代码不用改。对正在做多模型降级、灰度切流或成本优化的团队，这是一个轻量、可自托管、可观测的基础设施组件，而不是又一套绑定云的 SDK。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：需要多模型路由、A/B 评测与供应商解耦的 AI 应用后端团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/NVIDIA-NeMo/Switchyard">NVIDIA-NeMo/Switchyard — GitHub</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="6-spring-boot-资源占用直降-80一份可落地的调优清单">6. Spring Boot 资源占用直降 80%：一份可落地的调优清单</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：dev.to 本周一篇热门文章《Redrawing the Spring Boot Performance Map: Cut Resource Usage by 80%》系统梳理了现代 Spring Boot 应用「降本增效」的实操清单。核心结论是：很多团队仍在用十年前的 JVM 默认配置跑微服务，白白多付云账单。文章给出的几个可直接照抄的技巧：</p>
+<p><strong>(1) 显式收敛 JVM 内存</strong>——把堆设成固定值并限制 GC 线程，容器环境下启用 <code>-XX:+UseContainerSupport</code>：</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F47067">export</span><span style="color:#ADBAC7"> JAVA_OPTS</span><span style="color:#F47067">=</span><span style="color:#96D0FF">"-Xms512m -Xmx1024m -XX:+UseContainerSupport -XX:ParallelGCThreads=2 -XX:MaxMetaspaceSize=256m"</span></span></code></pre>
+<p><strong>(2) 收紧 Tomcat 线程池</strong>——默认 200 线程对中小应用是浪费，按需调小：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#8DDB8C">server</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">  tomcat</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">    threads</span><span style="color:#ADBAC7">:</span></span>
+<span class="line"><span style="color:#8DDB8C">      max</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">60</span></span></code></pre>
+<p><strong>(3) 用现代 Java 语法替代样板代码</strong>——DTO 直接用 Record 一行搞定，SQL 用文本块（Text Block），分支用 Switch 表达式与模式匹配：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> UserResponse</span><span style="color:#ADBAC7">(Long id, String nickname, String email) {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">String</span><span style="color:#ADBAC7"> sql</span><span style="color:#F47067"> =</span><span style="color:#96D0FF"> """</span></span>
+<span class="line"><span style="color:#96D0FF">    SELECT * FROM product_info</span></span>
+<span class="line"><span style="color:#96D0FF">    WHERE category = 'ELECTRONICS' AND stock > 0</span></span>
+<span class="line"><span style="color:#96D0FF">    """</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">String</span><span style="color:#ADBAC7"> categoryName</span><span style="color:#F47067"> =</span><span style="color:#F47067"> switch</span><span style="color:#ADBAC7"> (typeCode) {</span></span>
+<span class="line"><span style="color:#F47067">    case</span><span style="color:#6CB6FF"> 1</span><span style="color:#F47067"> -></span><span style="color:#96D0FF"> "Electronics"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">    case</span><span style="color:#6CB6FF"> 2</span><span style="color:#F47067"> -></span><span style="color:#96D0FF"> "Home &#x26; Living"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">    default</span><span style="color:#F47067"> -></span><span style="color:#96D0FF"> "Other"</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">};</span></span></code></pre>
+<p><strong>(4) 按场景选 GC 与原生镜像</strong>——高并发低延迟用 ZGC（暂停可压到 1ms 内）；对启动速度敏感的 Serverless 场景用 GraalVM 编译原生可执行文件，启动从秒级降到几十毫秒、内存最多降 80%。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：这不是玄学调参，而是一份「每个改动对应什么收益」的清单。它点破了一个普遍误区：<strong>性能瓶颈往往不是架构缺陷，而是从没被挑战过的默认配置</strong>。把 <code>-Xms</code> 设成等于 <code>-Xmx</code> 这一条，就能消灭一整类「高负载下动态扩容触发 GC 停顿」的延迟尖刺；Record、文本块、Switch 表达式则是让代码更短、更类型安全、更好维护的「顺手优化」。适合当作团队的 Spring Boot 代码审查与容量规划 check-list。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：运行在云上、在意账单与启动时长的 Spring Boot 团队，以及想用现代 Java 语法精简代码的后端开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://dev.to/james_miller_8dc58a89cb9e/redrawing-the-spring-boot-performance-map-cut-resource-usage-by-80-3b5f">Redrawing the Spring Boot Performance Map — dev.to</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://cwiki.apache.org/confluence/x/fIQ_Gg">Kafka 4.4.0 Release Plan — Apache Wiki</a></li>
+<li><a href="https://developers.redhat.com/blog/2026/08/03/kafka-monthly-digest-july-2026">Kafka Monthly Digest: July 2026 — Red Hat Developer</a></li>
+<li><a href="https://www.mail-archive.com/dev%40kafka.apache.org/maillist.html">Kafka dev 邮件列表（Code freeze 公告，2026-08-13）</a></li>
+<li><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness 仓库 — GitHub</a></li>
+<li><a href="https://m.ithome.com/html/989446.htm">对标 Claude Code：DeepSeek Harness 公测，同步开放 npm 插件生态 — IT之家</a></li>
+<li><a href="https://developer.aliyun.com/article/1755877">DeepSeek Harness 终于来了：开源，一切皆插件 — 阿里云开发者社区</a></li>
+<li><a href="https://github.com/PrimeIntellect-ai/prime-agent">PrimeIntellect-ai/prime-agent — GitHub</a></li>
+<li><a href="https://bizstack.tech/prime-intellect-open-sources-prime-agent-a-self-improving-coding-harness">Prime Intellect open-sources Prime Agent — BizStack</a></li>
+<li><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentCloud/TencentDB-Agent-Memory — GitHub</a></li>
+<li><a href="https://github.com/NVIDIA-NeMo/Switchyard">NVIDIA-NeMo/Switchyard — GitHub</a></li>
+<li><a href="https://dev.to/james_miller_8dc58a89cb9e/redrawing-the-spring-boot-performance-map-cut-resource-usage-by-80-3b5f">Redrawing the Spring Boot Performance Map: Cut Resource Usage by 80% — dev.to</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-08-19-curated-august-week3-picks">八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源</a> </li><li> <a href="/2026-08-04-curated-august-week1-picks">八月第一周技术精选：Qwen-Code-220B 开源与 AI Agent 基建潮</a> </li><li> <a href="/2026-07-31-curated-july-dev-roundup">七月技术精选收官：MCP 无状态协议发布</a> </li><li> <a href="/2026-07-30-curated-july-week5-picks">七月第五周技术精选：Kafka 4.4 路线图与 ES 列存引擎</a> </li><li> <a href="/2026-07-21-curated-july-week4-picks">七月第四周技术精选：Record Patterns 实战与 AI Agent 三件套</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
