@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="八月末，Apache Kafka 4.4.0 首个候选版本 RC0 开启投票，26 个 KIP 即将定稿；Spring Boot 同日三连发（4.0.8/4.1.1/4.2.0-M1），Spring AI 2.0.1 一次修复 7 个 CVE 并补上 Agent 循环防护。Elasticsearch 用列式引擎继续向统一数据平台收敛，阿里通义开源的 Qwen Code 与 Manus 式 planning-with-files 持续升温。本期精选 6 条，附可验证链接。"><title>八月末技术精选：Kafka 4.4 投票与 AI 安全 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-08-26-curated-august-end-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="八月末技术精选：Kafka 4.4 投票与 AI 安全 - littlepug's blog"><meta property="og:description" content="八月末，Apache Kafka 4.4.0 首个候选版本 RC0 开启投票，26 个 KIP 即将定稿；Spring Boot 同日三连发（4.0.8/4.1.1/4.2.0-M1），Spring AI 2.0.1 一次修复 7 个 CVE 并补上 Agent 循环防护。Elasticsearch 用列式引擎继续向统一数据平台收敛，阿里通义开源的 Qwen Code 与 Manus 式 planning-with-files 持续升温。本期精选 6 条，附可验证链接。"><meta property="og:url" content="https://littlepug.github.io/2026-08-26-curated-august-end-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-august-end-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="八月末技术精选：Kafka 4.4 投票与 AI 安全 - littlepug's blog"><meta name="twitter:description" content="八月末，Apache Kafka 4.4.0 首个候选版本 RC0 开启投票，26 个 KIP 即将定稿；Spring Boot 同日三连发（4.0.8/4.1.1/4.2.0-M1），Spring AI 2.0.1 一次修复 7 个 CVE 并补上 Agent 循环防护。Elasticsearch 用列式引擎继续向统一数据平台收敛，阿里通义开源的 Qwen Code 与 Manus 式 planning-with-files 持续升温。本期精选 6 条，附可验证链接。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-august-end-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>八月末技术精选：Kafka 4.4 投票与 AI 安全</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-august-end-2026.svg" alt="八月末技术精选：Kafka 4.4 投票与 AI 安全" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>八月末技术精选：Kafka 4.4 投票与 AI 安全</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-08-26" data-astro-cid-fzx4jmue> 2026-08-26 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>八月末，后端技术圈有几条值得盯紧的线：一条是<strong>发布节奏</strong>——Kafka 4.4.0 进入 RC 投票、Spring Boot 一天三连发；一条是<strong>安全</strong>——Spring AI 2.0.1 一次修复 7 个 CVE，其中一条直接戳中「AI Agent 边界」这个软肋；还有一条是<strong>收敛</strong>——Elasticsearch 用列式引擎把「五件套」往统一平台上收，阿里通义的开源编程 Agent 与 Manus 式文件规划也在持续升温。</p>
+<p>本期精选 <strong>6 条</strong>内容，方向覆盖大数据组件、Spring Boot 实践、Java 代码技巧与 AI Agent 生态。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-apache-kafka-440-rc0-开启投票26-个-kip-即将定稿">1. Apache Kafka 4.4.0 RC0 开启投票：26 个 KIP 即将定稿</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Apache Kafka 4.4.0 的<strong>首个候选版本 RC0</strong> 已打出 tag 并启动社区投票，投票截止 8 月 24 日（周一）。这是 8 月 12 日「代码冻结」之后的第一个里程碑，release manager 是 Omnia Ibrahim。4.4.0 是一个 minor release，共包含 <strong>26 个 KIP</strong>，覆盖全部组件。</p>
+<p>值得关注的几个 KIP：</p>
+<ul>
+<li><strong>KIP-1191 Dead-letter queues for share groups</strong>：为共享组（share groups）补上死信队列，消费失败的消息不再「悄悄消失」；</li>
+<li><strong>KIP-1241 Reduce tiered storage redundancy with delayed upload</strong>：用延迟上传降低分层存储的冗余；</li>
+<li><strong>KIP-1306 ConsumerRebalanceListener 增加 Consumer-Aware 方法</strong>：rebalance 回调里能拿到 consumer 自身；</li>
+<li><strong>KIP-1319 Align TxnOffsetCommit API with OffsetCommit API</strong>：对齐事务 offset 提交与普通 offset 提交的 API；</li>
+<li><strong>KIP-1242 Detection and handling of misrouted connections</strong>：检测并处理「连错路由」的连接。</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：按 Kafka 的「时间基发布计划」，代码冻结后至少 4 周稳定期，因此官方口径是<strong>不早于 9 月 9 日发布</strong>（目标日期，可能调整）。RC 投票是社区最后一次「拦下问题」的机会——如果 RC0 投票不过，会继续滚 RC1、RC2。对生产上跑 Kafka 的团队来说，现在正是下载 RC、跑一遍自家负载、把 blocker 报上去的窗口期。尤其 KIP-1191 死信队列，是共享组场景「消息不丢失」的关键补丁，值得先读 KIP 设计。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：Kafka 平台团队、用 Kafka Streams / share groups 的后端，以及关注 Kafka 4.4 迁移窗口的人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.mail-archive.com/dev@kafka.apache.org/msg158214.html">[VOTE] 4.4.0 RC0 — Apache Kafka Mailing List</a> · <a href="https://cwiki.apache.org/confluence/x/BoSnGQ">Release Plan 4.4.0 — Apache Kafka Wiki</a></p>
+</li>
+</ul>
+<h3 id="2-spring-boot-一天三连发408--411--420-m1">2. Spring Boot 一天三连发：4.0.8 / 4.1.1 / 4.2.0-M1</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：8 月 20 日同一天，Spring 团队发布三个版本：<strong>Spring Boot 4.0.8</strong>（4.0.x 补丁，77 个修复）、<strong>4.1.1</strong>（4.1.x 首个补丁，98 个修复）以及 <strong>4.2.0-M1</strong>（下一 minor 的首个里程碑，113 项增强）。</p>
+<p>其中 4.2.0-M1 的两个新特性是风向标：</p>
+<ul>
+<li><strong>AMQP 1.0 支持</strong>（含 RabbitMQ 专属特性）；</li>
+<li><strong>Image-Based Build Cache Support for Buildpacks</strong>——基于镜像的构建缓存，加速 Buildpacks 打包。</li>
+</ul>
+<p>按发布说明，4.2 在此节点已完成约 91%（181 个计划 issue 里已关 165 个）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：4.0 与 4.1 双线同步维护，意味着两代版本都不会「突然断供」，跑在任一条线上的团队都可以按例行窗口升级补丁。真正的信号在 4.2.0-M1：AMQP 1.0 支持把 RabbitMQ 之外的 AMQP broker 纳入一等公民，镜像构建缓存则直接利好 CI 里用 Buildpacks 打镜像的流水线。想提前试 4.2 特性、或评估迁移成本的团队，现在可以拉 M1 先跑一遍。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：生产跑 4.0 / 4.1 的 Spring Boot 团队（例行补丁），以及关注 Spring Boot 下一版本路线的人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://spring.io/blog/2026/08/20/spring-boot-4-0-8-available-now">Spring Boot 4.0.8 available now — Spring Blog</a> · <a href="https://spring.io/blog/2026/08/20/spring-boot-4-1-1-available-now">Spring Boot 4.1.1 available now — Spring Blog</a> · <a href="https://spring.io/blog/2026/08/20/spring-boot-4-2-0-m1-available-now">Spring Boot 4.2.0-M1 available now — Spring Blog</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="3-elasticsearch-数据平台整合列式引擎把五件套往一套上收">3. Elasticsearch 数据平台整合：列式引擎把「五件套」往一套上收</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Elastic Search Labs 发布《Elasticsearch data platform consolidation》，把 Elasticsearch 的定位从「搜索引擎」往「统一数据平台」收敛。核心路线是 <strong>Columnar Mode</strong>——技术预览在 9.5，<strong>9.6 正式 GA</strong>，后续版本再分阶段优化存储、摄取与查询。</p>
+<p>这篇博客最有信息量的是<strong>指标引擎的实测数字</strong>：TSDB 从 8.7 起步，经过 9.1–9.4 几个版本迭代成列式指标引擎后——</p>
+<ul>
+<li>OpenTelemetry metrics 现在 <strong>3.75 bytes/datapoint</strong>（一年前是 25 bytes），比 Prometheus 省 2.5x 存储、比 ClickHouse 省 2x；</li>
+<li>gauge average / counter rate 查询比 Prometheus 和 Mimir <strong>快 30 倍</strong>；</li>
+<li>高基数基准里，扫描 50 万条时间序列的 4 小时数据 <strong>不到 2 秒</strong>，其他系统要 30 秒以上。</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：官方给出了一套「量化五套工具税」的实用方法——先数两件事：<strong>把同一事件发给多个目标的 ingest pipeline 数量</strong>，以及<strong>用两种不同查询语言回答同一问题的 dashboard 数量</strong>（官方说第二个数字往往最让人意外）。Columnar Mode 按 index 逐个 opt-in，现有 API 不变、dashboard 不破。</p>
+<p>需要冷静看待的是边界：9.5 里 <code>semantic_text</code> / <code>dense_vector</code> 在 Columnar Mode 下<strong>不可用</strong>（向量检索的列式方案要到后续版本），<code>nested</code> 字段类型也不支持。所以它不是「万能模式」，而是为<strong>追加写入、列式聚合</strong>的日志/指标/安全类负载准备的。RAG 检索层、频繁单文档更新、强嵌套结构的场景，仍应留在文档模式。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：同时运营多套数据系统（日志/指标/检索）的团队，考虑「用一套引擎吃掉几套」的架构负责人与 SRE。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.elastic.co/search-labs/blog/data-platform-consolidation-elasticsearch">Elasticsearch data platform consolidation — Elastic Search Labs</a> · <a href="https://www.elastic.co/search-labs/blog/elasticsearch-columnar-storage">Elasticsearch columnar database: one platform for search and analytics — Elastic Search Labs</a> · <a href="https://juejin.cn/post/7672290941203480586">中文解读：Elasticsearch 作为统一平台 — 稀土掘金</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="4-spring-ai-201一次修复-7-个-cve顺手补上-agent-循环防护">4. Spring AI 2.0.1：一次修复 7 个 CVE，顺手补上 Agent 循环防护</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：8 月 21 日发布的 <strong>Spring AI 2.0.1</strong>（2.0.0 GA 之后的第一个维护版）修了 80+ issue，关掉 7 个 CVE。范围很广：PDF 读取（CVE-2026-47851 无限递归）、ONNX 模型缓存（CVE-2026-47852 可预测路径替换）、会话分配（CVE-2026-59279）、任意文件写（CVE-2026-59294 Path Traversal）、语义缓存跨租户隔离绕过（CVE-2026-59308 SHA-256 截断）、Redis 记忆标签注入（CVE-2026-59319），以及最值得注意的 <strong>CVE-2026-59318</strong>——<code>DefaultToolCallingManager</code> 的全局 resolver fallback 允许通过 prompt injection 调用<strong>未被广告的工具</strong>。</p>
+<p>功能侧，2.0.1 给 <code>ToolCallingAdvisor</code> 加了一个可配置的<strong>每请求工具调用上限</strong>，用来挡住「永不终止的 agentic loop」：</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F47067">var</span><span style="color:#ADBAC7"> advisor</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> ToolCallingAdvisor.</span><span style="color:#DCBDFB">builder</span><span style="color:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#ADBAC7">        .</span><span style="color:#DCBDFB">toolCallLimit</span><span style="color:#ADBAC7">(</span><span style="color:#6CB6FF">8</span><span style="color:#ADBAC7">)   </span><span style="color:#768390">// 每个请求最多 8 次工具调用</span></span>
+<span class="line"><span style="color:#ADBAC7">        .</span><span style="color:#DCBDFB">build</span><span style="color:#ADBAC7">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F47067">var</span><span style="color:#ADBAC7"> response</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> chatClient.</span><span style="color:#DCBDFB">prompt</span><span style="color:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#ADBAC7">        .</span><span style="color:#DCBDFB">user</span><span style="color:#ADBAC7">(question)</span></span>
+<span class="line"><span style="color:#ADBAC7">        .</span><span style="color:#DCBDFB">advisors</span><span style="color:#ADBAC7">(advisor)</span></span>
+<span class="line"><span style="color:#ADBAC7">        .</span><span style="color:#DCBDFB">call</span><span style="color:#ADBAC7">();</span></span>
+<span class="line"><span style="color:#768390">// 超过上限时抛 ToolCallLimitExceededException，</span></span>
+<span class="line"><span style="color:#768390">// 但异常路径仍返回单个 Generation，错误处理形状不变</span></span></code></pre>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：CVE-2026-59318 是这一批里最值得后端消化的一条——<strong>「广告给模型的边界」不等于「运行时真正强制执行的边界」</strong>。工具作用域、缓存上下文、聊天记忆命名空间这些 agent 边界，只有被 runtime 真正 enforce 才算数；这条 CVE 之所以存在，正是因为边界只在 prompt 里声明、却没在运行时拦下。给每个 <code>ToolCallingAdvisor</code> 加一个（哪怕宽松的）工具调用上限，几乎零成本，却能给下一次 prompt injection 兜个底。</p>
+<p>升级注意几个 breaking change：Mistral AI 模型支持已退役、Redis 聊天记忆自动配置模块改名、OpenAI 工具调用 strict mode 默认改为 <code>false</code>（之前会让带可选参数的工具直接 400）。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：跑 Spring AI 2.0 生产的人（这应该是<strong>优先级升级</strong>而非例行维护），以及给 Agent 做工具调用 / 记忆隔离的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://spring.io/blog/2026/08/21/spring-ai-2-0-1-available-now">Spring AI 2.0.1 Available Now — Spring Blog</a> · <a href="https://dev.to/jamilxt/spring-ai-201-fixed-7-cves-one-of-them-lets-a-prompt-call-tools-you-never-advertised-2d4k">Spring AI 2.0.1 Fixed 7 CVEs. One of Them Lets a Prompt Call Tools You Never Advertised — dev.to</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="5-qwenlmqwen-code阿里通义的开源终端编程-agent">5. QwenLM/qwen-code：阿里通义的开源终端编程 Agent</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：阿里通义灵码团队开源的终端 AI 编程 Agent（<code>QwenLM/qwen-code</code>，TypeScript，Apache-2.0，约 27.2k stars）。最初基于 Google Gemini CLI，从 v0.1 起停止与上游同步、独立发展成一个<strong>多协议、多平台</strong>的 Agent 框架。定位一句话：<strong>「会 Claude Code，就会 Qwen Code——而且更多」</strong>。</p>
+<p>几个差异化能力：</p>
+<ul>
+<li><strong>开箱 Agentic</strong>：Auto-Memory、Auto-Skills、SubAgents、Agent Teams、MCP 全内置；</li>
+<li><strong>多协议</strong>：同时支持 OpenAI / Anthropic / Gemini / Qwen API，也能接 Ollama / vLLM 本地模型，运行时随时切换，无厂商锁定；</li>
+<li><strong>多形态</strong>：除了终端，还有 VS Code / JetBrains / Zed 插件、Desktop 桌面端、<code>qwen serve</code> daemon（多个 client 共享一个 agent）、IM bot（Telegram / 钉钉 / 微信 / 飞书），以及 TypeScript / Python / Java SDK。</li>
+</ul>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F69D50">npm</span><span style="color:#96D0FF"> install</span><span style="color:#6CB6FF"> -g</span><span style="color:#96D0FF"> @qwen-code/qwen-code@latest</span></span>
+<span class="line"><span style="color:#F69D50">qwen</span><span style="color:#768390">   # 启动交互式终端 UI</span></span></code></pre>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：它和 8 月中 DeepSeek 开源的 Harness 形成互补——一个来自阿里通义、一个来自 DeepSeek，都在做「Claude Code 的国产开源平替」。Qwen Code 的「框架和模型一起开源、一起演进」加上 daemon / IM / SDK 的多形态接入，让它对「想把编程 Agent 嵌进自己产品」的团队尤其友好。项目正在用自己（自己的 agent + 模型）给自己提 issue、交 PR、review、跑测试，这种「自我迭代」的活法本身就是个看点。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：想用开源可自托管编程 Agent、或需要 daemon / IM / SDK 多形态接入的团队与独立开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/QwenLM/qwen-code">QwenLM/qwen-code — GitHub</a></p>
+</li>
+</ul>
+<h3 id="6-planning-with-filesmanus-式文件即记忆本周发布-v3101">6. planning-with-files：Manus 式「文件即记忆」，本周发布 v3.10.1</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<code>OthmanAdi/planning-with-files</code>，一个把 Manus「文件系统即记忆」方法论封装成可复用 Skill 的开源项目（MIT）。核心是三个 Markdown 文件：</p>
+<ul>
+<li><strong>task_plan.md</strong>：目标、阶段、状态机；</li>
+<li><strong>findings.md</strong>：查到的事实与决定；</li>
+<li><strong>progress.md</strong>：做过什么、踩过什么错。</li>
+</ul>
+<p>配合 5 个生命周期 Hook（<code>UserPromptSubmit</code> / <code>PreToolUse</code> / <code>PostToolUse</code> / <code>Stop</code> / <code>PreCompact</code>），让 Agent 在每轮开始、工具调用前后、上下文压缩、停止时重新读取或注入计划。本周刚发布 <strong>v3.10.1</strong>，截至 8 月 19 日有 <strong>26.2k stars / 2.2k forks</strong>，支持 60+ Agent（Claude Code / Codex / Cursor / OpenCode / Gemini / Hermes 等）。</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F69D50">npx</span><span style="color:#96D0FF"> skills</span><span style="color:#96D0FF"> add</span><span style="color:#96D0FF"> OthmanAdi/planning-with-files</span><span style="color:#6CB6FF"> --skill</span><span style="color:#96D0FF"> planning-with-files</span><span style="color:#6CB6FF"> -g</span></span></code></pre>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：它直击长任务 Agent 最大的痛点——<strong>对话上下文会变短，磁盘文件不会消失</strong>。经历 <code>/clear</code>、上下文压缩、崩溃、跨会话之后，Agent 靠这三个文件就能恢复「我做到哪一步、下一步是什么」。对超过五次工具调用、需要多阶段推进的复杂任务（大型重构、资料研究、故障排查）价值最大。</p>
+<p>两个提醒：其一，计划写进文件<strong>不代表内容正确</strong>，错误目标也会被稳定地反复注入，关键变更仍需测试和人工确认；其二，多会话同时改同一套计划可能冲突，并行工作时建议独立计划目录或明确分工。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：经常让 Agent 做大型改造、深度研究、长时间自动化任务的开发者，以及想「随时看到 Agent 做到哪」的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/OthmanAdi/planning-with-files">OthmanAdi/planning-with-files — GitHub</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://www.mail-archive.com/dev@kafka.apache.org/msg158214.html">[VOTE] 4.4.0 RC0 — Apache Kafka Mailing List</a></li>
+<li><a href="https://cwiki.apache.org/confluence/x/BoSnGQ">Release Plan 4.4.0 — Apache Kafka Wiki</a></li>
+<li><a href="https://spring.io/blog/2026/08/20/spring-boot-4-0-8-available-now">Spring Boot 4.0.8 available now — Spring Blog</a></li>
+<li><a href="https://spring.io/blog/2026/08/20/spring-boot-4-1-1-available-now">Spring Boot 4.1.1 available now — Spring Blog</a></li>
+<li><a href="https://spring.io/blog/2026/08/20/spring-boot-4-2-0-m1-available-now">Spring Boot 4.2.0-M1 available now — Spring Blog</a></li>
+<li><a href="https://www.elastic.co/search-labs/blog/data-platform-consolidation-elasticsearch">Elasticsearch data platform consolidation — Elastic Search Labs</a></li>
+<li><a href="https://www.elastic.co/search-labs/blog/elasticsearch-columnar-storage">Elasticsearch columnar database: one platform for search and analytics — Elastic Search Labs</a></li>
+<li><a href="https://spring.io/blog/2026/08/21/spring-ai-2-0-1-available-now">Spring AI 2.0.1 Available Now — Spring Blog</a></li>
+<li><a href="https://dev.to/jamilxt/spring-ai-201-fixed-7-cves-one-of-them-lets-a-prompt-call-tools-you-never-advertised-2d4k">Spring AI 2.0.1 Fixed 7 CVEs. One of Them Lets a Prompt Call Tools You Never Advertised — dev.to</a></li>
+<li><a href="https://github.com/QwenLM/qwen-code">QwenLM/qwen-code — GitHub</a></li>
+<li><a href="https://github.com/OthmanAdi/planning-with-files">OthmanAdi/planning-with-files — GitHub</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-08-26-curated-august-end-picks">八月末技术精选：Kafka 4.4 投票与 AI 安全</a> </li><li> <a href="/2026-08-21-curated-august-late-picks">八月下旬技术精选：ES 查询批处理与 Agent 沙箱新范式</a> </li><li> <a href="/2026-08-20-curated-august-tech-picks">八月技术精选：Elasticsearch 9.5 列存引擎与 Agent 降本提效</a> </li><li> <a href="/2026-08-19-curated-august-week3-picks">八月第三周技术精选：Kafka 4.4 冻结与 DeepSeek Harness 开源</a> </li><li> <a href="/2026-08-04-curated-august-week1-picks">八月第一周技术精选：Qwen-Code-220B 开源与 AI Agent 基建潮</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
