@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="八月最后一周，Java 后端有两条线值得盯：Spring 之父 Rod Johnson 创办的 Embabel 1.5.0 正式 GA，让 Java/Kotlin 开发者用 Spring Boot 4 + Spring AI 2 搭生产级 Agent；虚拟线程在 Java 24 JEP 491 修复 pinning 之后，GC 层面的深坑值得重看。本期精选 6 条，覆盖手写 ReAct 循环、Spring Boot Starter 新书，以及 Spring FlashAPI 与 PII 隐私护栏两个实用开源项目。"><title>八月第四周技术精选：Java Agent 与虚拟线程 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-08-28-curated-august-week4-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="八月第四周技术精选：Java Agent 与虚拟线程 - littlepug's blog"><meta property="og:description" content="八月最后一周，Java 后端有两条线值得盯：Spring 之父 Rod Johnson 创办的 Embabel 1.5.0 正式 GA，让 Java/Kotlin 开发者用 Spring Boot 4 + Spring AI 2 搭生产级 Agent；虚拟线程在 Java 24 JEP 491 修复 pinning 之后，GC 层面的深坑值得重看。本期精选 6 条，覆盖手写 ReAct 循环、Spring Boot Starter 新书，以及 Spring FlashAPI 与 PII 隐私护栏两个实用开源项目。"><meta property="og:url" content="https://littlepug.github.io/2026-08-28-curated-august-week4-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-august-w4-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="八月第四周技术精选：Java Agent 与虚拟线程 - littlepug's blog"><meta name="twitter:description" content="八月最后一周，Java 后端有两条线值得盯：Spring 之父 Rod Johnson 创办的 Embabel 1.5.0 正式 GA，让 Java/Kotlin 开发者用 Spring Boot 4 + Spring AI 2 搭生产级 Agent；虚拟线程在 Java 24 JEP 491 修复 pinning 之后，GC 层面的深坑值得重看。本期精选 6 条，覆盖手写 ReAct 循环、Spring Boot Starter 新书，以及 Spring FlashAPI 与 PII 隐私护栏两个实用开源项目。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-august-w4-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>八月第四周技术精选：Java Agent 与虚拟线程</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-august-w4-2026.svg" alt="八月第四周技术精选：Java Agent 与虚拟线程" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>八月第四周技术精选：Java Agent 与虚拟线程</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-08-28" data-astro-cid-fzx4jmue> 2026-08-28 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>八月最后一周，后端技术圈的注意力从「发版」转向「怎么用好」：Kafka 4.4 仍卡在 RC 投票前的稳定期（RC1 尚未开启），Elasticsearch 9.5 也已在上几期覆盖，本周真正有增量的是 Java 侧的 Agent 与并发两条线——Spring 之父 Rod Johnson 的 Embabel 1.5.0 正式 GA，以及 Java 24 之后虚拟线程在生产上暴露出来的 GC 深坑。</p>
+<p>本期精选 <strong>6 条</strong>，方向覆盖 AI Agent 生态、Java 代码技巧、Spring Boot 实践与两个实用开源项目，全部附可验证链接。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-embabel-150-gaspring-之父下场做-java-agent-编排框架">1. Embabel 1.5.0 GA：Spring 之父下场做 Java Agent 编排框架</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<strong>Embabel</strong>（<code>embabel/embabel-agent</code>，Apache-2.0）是一个跑在 JVM 上的 Agent 框架，可以用 Java 或 Kotlin 编写「强类型」的 Agent 应用——把 LLM 调用、普通代码、工具与领域模型放在一起，通过注解（如 <code>@Agent</code>、<code>@Action</code>）和「目标-行动-条件」领域模型来描述 Agent 行为。它的幕后推手是 <strong>Rod Johnson</strong>（Spring Framework 创始人，2026 年 8 月 24 日前后在 LinkedIn 亲自官宣）。</p>
+<p>本周发布的 <strong>1.5.0 正式 GA</strong>，核心是<strong>全面适配 Spring Boot 4.x + Spring AI 2.x</strong>：把原生结构化输出移植到新框架，并修掉了 Spring AI 2.0「options 合并移除」带来的模型绑定问题；旧 1.0 线则继续对应 Spring Boot 3 / Spring AI 1，供还没迁移的团队使用。默认 planner 采用<strong>目标导向行动规划（Goal-Oriented Action Planning）</strong>，也支持 Utility AI 做开放式探索任务，并内置 MCP、RAG 与 A2A 通信等生产级能力。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这是「Java 是不是被 Python 的 Agent 生态抛下」这个问题的一个硬回答。过去一年 Agent 框架几乎被 Python 垄断（LangChain / LangGraph / CrewAI），而 Embabel 的定位很明确：<strong>让 Spring 体系里的 Java/Kotlin 团队，不用跳出既有技术栈就能做生产级 Agent</strong>——类型安全、可测试、可审计，靠 Spring 的依赖注入和模块边界把 Agent 的行为「锁进工程系统」。</p>
+<p>不过也要泼两盆冷水：其一，核心代码用 Kotlin 编写，Java 调用无感知、但读源码要适应 Kotlin 语法；其二，社区仍在早期，star 规模（各方口径约 4k，<strong>待核实</strong>）与文档成熟度都远不及 Python 系。如果你已经在 Spring 上跑了多年，这是「立即能上手」的首选；如果只想做简单的模型调用封装，LangChain4j 可能更省事。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：在 Spring Boot 上做 Agent / agentic RAG 的 Java 后端团队，以及关注「JVM 生态能不能接住 Agent 浪潮」的架构负责人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/embabel/embabel-agent">embabel/embabel-agent — GitHub</a> · <a href="https://www.linkedin.com/posts/johnsonroda_release-embabel-agent-150-embabelembabel-agent-activity-7493126961373052928-Nj14">Rod Johnson：Embabel 1.5.0 Supports Spring Boot 4.x and Spring AI 2.x — LinkedIn</a> · <a href="https://agihunt.info/en/p/19ff3c12ba26c2a6ac5d8d00336">Embabel Agent 1.5.0 GA Released — AGI Hunt</a></p>
+</li>
+</ul>
+<h2 id="spring-boot-实践">Spring Boot 实践</h2>
+<h3 id="2-wim-deblauwe-新书crafting-spring-boot-starters上线phil-webb-亲自作序">2. Wim Deblauwe 新书《Crafting Spring Boot Starters》上线，Phil Webb 亲自作序</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Spring Boot 生态知名作者 <strong>Wim Deblauwe</strong>（《Testing Spring Boot Applications Masterclass》作者）的新书 <strong>《Crafting Spring Boot Starters》</strong> 本周上线，被 8 月 25 日的「This Week in Spring」点名推荐，且由 <strong>Spring Boot 创始人 Phil Webb 亲自作序</strong>。</p>
+<p>这本书聚焦一个大多数 Spring 团队「天天用却很少自己写」的东西——<strong>Spring Boot Starter</strong>：如何把一个可复用的自动配置 + 依赖管理打包成符合惯例的 starter，包括 <code>@AutoConfiguration</code> 的边界、<code>spring.factories</code>/imports 的写法、条件装配（<code>@ConditionalOnClass</code> / <code>@ConditionalOnProperty</code>）、可观测性钩子与版本兼容策略。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：对平台团队这是「刚需中的盲区」。企业内部做基础组件封装（统一日志、统一鉴权、统一缓存、统一消息）时，最常见的失败不是功能写不对，而是 <strong>starter 做得不符合 Spring Boot 惯例</strong>——配置项不收敛、自动装配一开一堆、和其他 starter 抢顺序。把这块学扎实，比堆业务代码的 ROI 高得多。Phil Webb 作序本身就是个信号：这本书讲的是「官方认为正确的 starter 应该长什么样」。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：负责内部基础组件 / 平台封装的后端与架构师，以及想从「会用 Spring Boot」进阶到「能扩展 Spring Boot」的人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://spring.io/blog/2026/08/25/this-week-in-spring-august-25">This Week in Spring — August 25th, 2026（含本书推荐）</a> · <a href="https://www.wimdeblauwe.com/">Wim Deblauwe 官网（书籍详情，待核实）</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="3-spring-ai-手写-react-循环把黑盒变成可审计的每一步">3. Spring AI 手写 ReAct 循环：把「黑盒」变成可审计的每一步</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：本周 Spring AI 的亮点是一组「手写 Agent 循环」的内容——Craig Walls 的 ReAct 系列被 8 月 25 日「This Week in Spring」点名，配套的 codefarm.in 指南《Agentic Patterns: ReAct, Plan-and-Execute &#x26; Reflection by Hand》则给了完整可跑的 Java 代码。</p>
+<p>核心观点很锋利：<code>ToolCallingAdvisor</code> 会在模型和工具之间<strong>自动循环</strong>直到产出答案，但这个循环是「黑盒」——你只拿到最终的 <code>ChatResponse</code>，看不到「考虑了 X、调用了 Y、观察到 Z、因此得出结论 W」的中间过程。一旦合规要求「超过 500 元的退款决策必须留审计轨迹」，黑盒就不够了。解法是把循环<strong>自己写出来</strong>，让每一步都显式化：</p>
+</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F47067">public</span><span style="color:#F47067"> record</span><span style="color:#F69D50"> AgentStep</span><span style="color:#ADBAC7">(</span></span>
+<span class="line"><span style="color:#ADBAC7">    String thought,      </span><span style="color:#768390">// 为什么这么做</span></span>
+<span class="line"><span style="color:#ADBAC7">    String action,       </span><span style="color:#768390">// 工具名，或 "FINAL_ANSWER"</span></span>
+<span class="line"><span style="color:#ADBAC7">    String actionInput,  </span><span style="color:#768390">// 参数，或最终答案文本</span></span>
+<span class="line"><span style="color:#F47067">    boolean</span><span style="color:#ADBAC7"> isFinal</span></span>
+<span class="line"><span style="color:#ADBAC7">) {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F47067">public</span><span style="color:#ADBAC7"> List</span><span style="color:#F47067">&#x3C;</span><span style="color:#ADBAC7">AgentStep</span><span style="color:#F47067">></span><span style="color:#DCBDFB"> runReActLoop</span><span style="color:#ADBAC7">(String question, </span><span style="color:#F47067">int</span><span style="color:#ADBAC7"> maxSteps) {</span></span>
+<span class="line"><span style="color:#ADBAC7">    List</span><span style="color:#F69D50">&#x3C;</span><span style="color:#F47067">AgentStep</span><span style="color:#F69D50">> </span><span style="color:#ADBAC7">trace</span><span style="color:#F47067"> =</span><span style="color:#F47067"> new</span><span style="color:#ADBAC7"> ArrayList&#x3C;>();</span></span>
+<span class="line"><span style="color:#ADBAC7">    ChatMemory</span><span style="color:#ADBAC7"> scratchpad</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> MessageWindowChatMemory.</span><span style="color:#DCBDFB">builder</span><span style="color:#ADBAC7">().</span><span style="color:#DCBDFB">build</span><span style="color:#ADBAC7">();</span></span>
+<span class="line"><span style="color:#ADBAC7">    String</span><span style="color:#ADBAC7"> conversationId</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> UUID.</span><span style="color:#DCBDFB">randomUUID</span><span style="color:#ADBAC7">().</span><span style="color:#DCBDFB">toString</span><span style="color:#ADBAC7">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F47067">    for</span><span style="color:#ADBAC7"> (</span><span style="color:#F47067">int</span><span style="color:#ADBAC7"> step</span><span style="color:#F47067"> =</span><span style="color:#6CB6FF"> 0</span><span style="color:#ADBAC7">; step </span><span style="color:#F47067">&#x3C;</span><span style="color:#ADBAC7"> maxSteps; step</span><span style="color:#F47067">++</span><span style="color:#ADBAC7">) {</span></span>
+<span class="line"><span style="color:#ADBAC7">        AgentStep</span><span style="color:#ADBAC7"> next</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> chatClient.</span><span style="color:#DCBDFB">prompt</span><span style="color:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#ADBAC7">                .</span><span style="color:#DCBDFB">user</span><span style="color:#ADBAC7">(question)</span></span>
+<span class="line"><span style="color:#ADBAC7">                .</span><span style="color:#DCBDFB">advisors</span><span style="color:#ADBAC7">(a </span><span style="color:#F47067">-></span><span style="color:#ADBAC7"> a.</span><span style="color:#DCBDFB">param</span><span style="color:#ADBAC7">(ChatMemory.CONVERSATION_ID, conversationId))</span></span>
+<span class="line"><span style="color:#ADBAC7">                .</span><span style="color:#DCBDFB">call</span><span style="color:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#ADBAC7">                .</span><span style="color:#DCBDFB">entity</span><span style="color:#ADBAC7">(AgentStep.class);          </span><span style="color:#768390">// 结构化输出，拿到 thought/action/observation</span></span>
+<span class="line"><span style="color:#ADBAC7">        trace.</span><span style="color:#DCBDFB">add</span><span style="color:#ADBAC7">(next);</span></span>
+<span class="line"><span style="color:#F47067">        if</span><span style="color:#ADBAC7"> (next.</span><span style="color:#DCBDFB">isFinal</span><span style="color:#ADBAC7">()) {</span></span>
+<span class="line"><span style="color:#F47067">            return</span><span style="color:#ADBAC7"> trace;                          </span><span style="color:#768390">// 审计轨迹：每一步推理、行动、观察都可查</span></span>
+<span class="line"><span style="color:#ADBAC7">        }</span></span>
+<span class="line"><span style="color:#ADBAC7">        String</span><span style="color:#ADBAC7"> observation</span><span style="color:#F47067"> =</span><span style="color:#DCBDFB"> executeToolByName</span><span style="color:#ADBAC7">(next.</span><span style="color:#DCBDFB">action</span><span style="color:#ADBAC7">(), next.</span><span style="color:#DCBDFB">actionInput</span><span style="color:#ADBAC7">());</span></span>
+<span class="line"><span style="color:#ADBAC7">        scratchpad.</span><span style="color:#DCBDFB">add</span><span style="color:#ADBAC7">(conversationId, </span><span style="color:#F47067">new</span><span style="color:#DCBDFB"> UserMessage</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">"Observation: "</span><span style="color:#F47067"> +</span><span style="color:#ADBAC7"> observation));</span></span>
+<span class="line"><span style="color:#ADBAC7">    }</span></span>
+<span class="line"><span style="color:#ADBAC7">    trace.</span><span style="color:#DCBDFB">add</span><span style="color:#ADBAC7">(</span><span style="color:#F47067">new</span><span style="color:#DCBDFB"> AgentStep</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">"Exceeded max steps"</span><span style="color:#ADBAC7">, </span><span style="color:#96D0FF">"FINAL_ANSWER"</span><span style="color:#ADBAC7">,</span></span>
+<span class="line"><span style="color:#96D0FF">            "I wasn't able to resolve this — escalating to a human agent."</span><span style="color:#ADBAC7">, </span><span style="color:#6CB6FF">true</span><span style="color:#ADBAC7">));</span></span>
+<span class="line"><span style="color:#F47067">    return</span><span style="color:#ADBAC7"> trace;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<p>指南还给了 <strong>Plan-and-Execute</strong>（先把整份计划结构化输出、验证后再执行）和 <strong>Reflection</strong>（让模型对自己的结果做一次批判）两个变体，覆盖了「手写 Agent 三件套」。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：这段代码最有价值的不是 ReAct 本身，而是<strong>两行容易被抄走漏掉的关键</strong>：<code>maxSteps</code> 硬上限 + 明确的「放弃并升级人工」分支。没有它，一个迟迟不产出最终答案的模型会一直烧预算烧到超时。这给所有在生产里用 Spring AI 做 Agent 的人一个可复用的骨架：<strong>把循环从框架手里拿回来，你才能记日志、打断、审计</strong>。而这也正是 Embabel 这类「把 Agent 当工程系统来做」的框架想解决的问题——两者一轻一重，适合不同阶段。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 Spring AI 做 tool-calling / Agent 的 Java 后端，尤其是需要合规审计、成本控制或多步推理的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://codefarm.in/guides/spring-ai/04-tool-calling-mcp-agent-evaluation/agentic-patterns">Agentic Patterns: ReAct, Plan-and-Execute &#x26; Reflection by Hand — Spring AI Guides</a> · <a href="https://spring.io/blog/2026/08/25/this-week-in-spring-august-25">This Week in Spring — August 25th, 2026</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="4-虚拟线程-pocket-guidejava-24-之后pinning-修好了gc-的坑还在">4. 虚拟线程 Pocket Guide：Java 24 之后，pinning 修好了，GC 的坑还在</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：一篇被多个渠道转推的深度文《Virtual Threads: A Pocket Guide》（omatheusmesmo.dev），把虚拟线程从「概念」讲到「生产上线前的五个动作」。它的价值在于跳出了「虚拟线程很便宜，所以闭眼用」的叙事，讲了两个容易被忽略的硬问题：</p>
+<ul>
+<li><strong>pinning 已经在 Java 24 修好了</strong>：早先 <code>synchronized</code> 块里做阻塞 I/O 会把虚拟线程钉在 carrier 线程上（JEP 444 时代的著名坑），<strong>JEP 491 在 Java 24 里已实现「synchronized 无 pinning」</strong>。所以如果你当初因为 pinning 放弃了虚拟线程，现在值得重新评估。</li>
+<li><strong>但 GC 层面有新坑</strong>：长寿命虚拟线程的 <code>StackChunk</code> 会被提升到老年代，JVM 每个周期都分配新 chunk 并丢弃旧的，导致「本该是 young-gen 的廉价垃圾，变成了 old-gen 的昂贵滞留」——实测在 1GB 堆上甚至出现 34% 的性能损失、461 次 Full GC（对比 4 次）。此外 G1 不支持超大 <code>StackChunk</code>，虚拟线程栈接近 region 一半时可能抛出一个<strong>和你的代码递归深度无关的 StackOverflowError</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：它把「虚拟线程」从一条特性讲成了一门<strong>决策纪律</strong>：什么时候该用（几千并发、I/O 密集、下游资源充裕）、什么时候别用（纯 CPU 密集、低并发、已有可用的响应式栈）、以及上线前必须做的五件事——<strong>每个稀缺资源前放 semaphore 或 sized pool、每个阻塞调用加超时、用 JFR 盯 <code>jdk.VirtualThreadPinned</code>、审计 ThreadLocal、故意降级资源做压测</strong>。最值得记的是那句判断：虚拟线程不会制造新问题，它只是<strong>拆掉了一层人工天花板，把资源瓶颈暴露出来</strong>——你得在上线前自己决定那个真正的上限在哪。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：在 Java 21+ 上做高并发 I/O 服务的后端，尤其是「曾经被虚拟线程坑过、想重新启用」的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://blog.omatheusmesmo.dev/en/posts/virtual-threads-pocket-guide">Virtual Threads: A Pocket Guide — omatheusmesmo.dev</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="5-spring-flashapi从-jpa-实体直接生成-rest-api连-repository-都省了">5. Spring FlashAPI：从 JPA 实体直接生成 REST API，连 Repository 都省了</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：8 月 18 日「This Week in Spring」介绍的一个社区工具 <strong>Spring FlashAPI</strong>——它能<strong>直接从 JPA 实体生成 REST API</strong>，据 Josh Long 的原话，你甚至不需要一个 Spring Data repository。对「先把领域实体定义出来、立刻要一套可用的 CRUD 接口」的场景，它把「实体 → 仓储 → 服务 → 控制器」这条链路压缩成了「实体 → API」。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这是「代码生成」里相对克制、可落地的一种：不做魔法，只做<strong>明确规则下的样板代码消除</strong>。对快速原型、内部工具、管理后台这类「实体即资源」的场景很实用；但要注意它本质是「约定优于配置」的捷径，一旦业务逻辑变复杂（复杂查询、鉴权、多实体关联），还是要回到手写控制器。</p>
+<p>需要提醒：该项目的 GitHub 仓库地址与维护状态，本周报道中未给出可直接核验的链接，<strong>详情待核实</strong>，建议以「This Week in Spring」原文为准。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：做内部管理系统、快速原型、CRUD 密集应用的后端，以及想减少样板代码的 Spring 开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://spring.io/blog/2026/08/18/this-week-in-spring-august-18-2026">This Week in Spring — August 18th, 2026（含 Spring FlashAPI 介绍）</a></p>
+</li>
+</ul>
+<h3 id="6-spring-ai-privacy-guardrails给-spring-ai-加一层-pii-隐私护栏">6. spring-ai-privacy-guardrails：给 Spring AI 加一层 PII 隐私护栏</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<strong>spring-ai-privacy-guardrails</strong>（<code>ultramancode/spring-ai-privacy-guardrails</code>，Apache-2.0，作者 Taewoong Kim）是一个面向 Spring AI 的隐私护栏库，以 <strong>Advisor 和 ToolCallback 包装器</strong>的形式，做<strong>请求级（request-scoped）的 PII 脱敏</strong>和<strong>最小权限披露（least-privilege disclosure）</strong>：在提示词和工具调用进出模型前，对邮箱、电话、证件号等敏感信息做 tokenization，模型只能看到「被替换后的占位符」，返回后再还原。底层支持 <strong>Microsoft Presidio</strong> 与 <strong>JVM 本地 OpenNLP</strong> 两种检测引擎。项目 8 月 10 日前后发布 0.1.0 到 Maven Central，8 月 26 日仍在更新。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：随着企业把 Spring AI 接进真实业务，「把什么发给云端 LLM」成了一个实打实的数据治理问题——一句粘贴进来的工单可能就带着邮箱、电话、身份证号。这类护栏的价值在于<strong>把隐私保护做成框架层默认，而不是每个调用点各写各的正则</strong>：通过 Advisor 统一拦截，开发者几乎不用改业务代码。当然它还很年轻（star 数很小、API 尚在 0.1.x），作为「给 AI 网关加隐私层」的参考实现和起点，比直接在生产里当成熟依赖更合适。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：在做 LLM 网关 / AI 应用、需要 GDPR 或内部合规要求 PII 脱敏的 Java 团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/ultramancode/spring-ai-privacy-guardrails">ultramancode/spring-ai-privacy-guardrails — GitHub</a> · <a href="https://central.sonatype.com/artifact/io.github.ultramancode/spring-ai-privacy-guardrails-core/0.1.0">spring-ai-privacy-guardrails-core 0.1.0 — Maven Central</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://github.com/embabel/embabel-agent">embabel/embabel-agent — GitHub</a></li>
+<li><a href="https://www.linkedin.com/posts/johnsonroda_release-embabel-agent-150-embabelembabel-agent-activity-7493126961373052928-Nj14">Rod Johnson：Embabel 1.5.0 Supports Spring Boot 4.x and Spring AI 2.x — LinkedIn</a></li>
+<li><a href="https://agihunt.info/en/p/19ff3c12ba26c2a6ac5d8d00336">Embabel Agent 1.5.0 GA Released — AGI Hunt</a></li>
+<li><a href="https://spring.io/blog/2026/08/25/this-week-in-spring-august-25">This Week in Spring — August 25th, 2026 — Spring Blog</a></li>
+<li><a href="https://spring.io/blog/2026/08/18/this-week-in-spring-august-18-2026">This Week in Spring — August 18th, 2026 — Spring Blog</a></li>
+<li><a href="https://codefarm.in/guides/spring-ai/04-tool-calling-mcp-agent-evaluation/agentic-patterns">Agentic Patterns: ReAct, Plan-and-Execute &#x26; Reflection by Hand — Spring AI Guides</a></li>
+<li><a href="https://blog.omatheusmesmo.dev/en/posts/virtual-threads-pocket-guide">Virtual Threads: A Pocket Guide — omatheusmesmo.dev</a></li>
+<li><a href="https://github.com/ultramancode/spring-ai-privacy-guardrails">ultramancode/spring-ai-privacy-guardrails — GitHub</a></li>
+<li><a href="https://central.sonatype.com/artifact/io.github.ultramancode/spring-ai-privacy-guardrails-core/0.1.0">spring-ai-privacy-guardrails-core 0.1.0 — Maven Central</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-08-28-curated-august-week4-picks">八月第四周技术精选：Java Agent 与虚拟线程</a> </li><li> <a href="/2026-08-27-curated-august-finale-picks">八月收官技术精选：Kafka 补 RC 与 Spring 发车</a> </li><li> <a href="/2026-08-26-curated-august-end-picks">八月末技术精选：Kafka 4.4 投票与 AI 安全</a> </li><li> <a href="/2026-08-21-curated-august-late-picks">八月下旬技术精选：ES 查询批处理与 Agent 沙箱新范式</a> </li><li> <a href="/2026-08-20-curated-august-tech-picks">八月技术精选：Elasticsearch 9.5 列存引擎与 Agent 降本提效</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
