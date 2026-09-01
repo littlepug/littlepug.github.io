@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="八月最后一天，后端圈最大的新闻是 Java 26 正式 GA：10 个 JEP 里藏着 G1 双 card table、AOT 缓存支持任意 GC、HTTP/3 和「final 真正 final」几记重拳。本期精选 5 条，覆盖 Java 26 性能深潜、Kafka 4.4 发布追踪，以及把工程纪律做成可组合 Skills 的 superpowers——帮你在发版洪流里挑出真正值得花时间的东西。"><title>九月第一周技术精选：Java 26 正式发布 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-08-31-curated-september-week1-picks/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="九月第一周技术精选：Java 26 正式发布 - littlepug's blog"><meta property="og:description" content="八月最后一天，后端圈最大的新闻是 Java 26 正式 GA：10 个 JEP 里藏着 G1 双 card table、AOT 缓存支持任意 GC、HTTP/3 和「final 真正 final」几记重拳。本期精选 5 条，覆盖 Java 26 性能深潜、Kafka 4.4 发布追踪，以及把工程纪律做成可组合 Skills 的 superpowers——帮你在发版洪流里挑出真正值得花时间的东西。"><meta property="og:url" content="https://littlepug.github.io/2026-08-31-curated-september-week1-picks/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-september-w1-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="九月第一周技术精选：Java 26 正式发布 - littlepug's blog"><meta name="twitter:description" content="八月最后一天，后端圈最大的新闻是 Java 26 正式 GA：10 个 JEP 里藏着 G1 双 card table、AOT 缓存支持任意 GC、HTTP/3 和「final 真正 final」几记重拳。本期精选 5 条，覆盖 Java 26 性能深潜、Kafka 4.4 发布追踪，以及把工程纪律做成可组合 Skills 的 superpowers——帮你在发版洪流里挑出真正值得花时间的东西。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-september-w1-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>九月第一周技术精选：Java 26 正式发布</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-september-w1-2026.svg" alt="九月第一周技术精选：Java 26 正式发布" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>九月第一周技术精选：Java 26 正式发布</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-08-31" data-astro-cid-fzx4jmue> 2026-08-31 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>8 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>八月底，后端技术圈的注意力被一条线串了起来：<strong>Java 26 正式发布</strong>。这不仅是「又一个半年版本」，而是一批为 Project Valhalla 与云原生/AI 负载铺路的底层改动集中落地——G1 的吞吐、AOT 缓存的通用性、HTTP/3 的接入、以及「final 真正 final」的安全收紧。</p>
+<p>本期精选 <strong>5 条</strong>，覆盖 Java 语言与 JVM、Spring Boot 代码技巧、Kafka 发布追踪与 AI 编程工具，全部附可验证链接。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-java-26-正式-ga10-个-jep-里藏着为-valhalla-铺路的重拳">1. Java 26 正式 GA：10 个 JEP 里藏着为 Valhalla 铺路的「重拳」</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Oracle 在 8 月 26 日前后正式发布 <strong>Java 26 / JDK 26</strong>，共落地 <strong>10 个 JEP</strong>。相比前几版，这一版特性数量偏少，但方向非常明确——官方作者 Hanno Embregts 的原话是「为『很快就要来的大家伙』打地基」，暗示 Project Valhalla 的首批 JEP 有望在年底前官宣。值得后端关注的几个硬改动：</p>
+<ul>
+<li><strong>JEP 522：G1 GC 通过减少同步提升吞吐</strong>——引入「双 card table」设计，削减写屏障与应用线程、GC 线程之间的同步开销，在引用密集负载下可带来 5–15% 的吞吐提升。</li>
+<li><strong>JEP 516：AOT 对象缓存支持任意 GC</strong>——把 Java 24 引入的 AOT class 缓存从「GC 特定格式」改为「GC 无关格式」，让低延迟的 ZGC 也能享受 AOT 带来的启动/预热提速。</li>
+<li><strong>JEP 517：HTTP Client API 支持 HTTP/3</strong>——对微服务与 API 驱动的 Java 应用，几乎不用改代码就能切到 HTTP/3，降低延迟、提升连接可靠性。</li>
+<li><strong>JEP 500：Prepare to Make Final Mean Final</strong>——JDK 26 开始对「用深反射修改 final 字段」发出警告，为未来「integrity by default」的默认安全约束做准备；可用 <code>--enable-final-field-mutation</code> 临时放行。</li>
+<li><strong>JEP 530：原始类型模式匹配（第四预览）</strong>——<code>instanceof</code> 与 <code>switch</code> 已能直接匹配 <code>int</code>/<code>long</code>/<code>double</code> 等原始类型。</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这版的价值不在「马上能用多少新语法」，而在<strong>提前看清未来 1–2 年的迁移方向</strong>。尤其 JEP 500 和 JEP 522，一个关乎「你的框架/库里那些靠反射改 final 字段的黑魔法会不会在未来炸掉」，一个关乎「升级后 GC 行为会不会变」。对还在 Java 17/21 上跑的团队，这是评估「何时升、升到哪一版」的关键输入。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：所有 Java 后端团队，尤其是负责 JDK 版本策略、对启动时间与 GC 吞吐敏感的架构/基础组件负责人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://javapro.io/2026/08/26/java-26-is-here-and-with-it-a-solid-foundation-for-the-future">Java 26 Is Here, And With It a Solid Foundation for the Future — JAVAPRO</a> · <a href="https://docs.oracle.com/en/java/javase/26/migrate/significant-changes-jdk-26-release.html">Significant Changes in JDK 26 — Oracle Docs</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="2-jdk-26-性能改进清单不升级也能偷师的四件事">2. JDK 26 性能改进清单：不升级也能偷师的四件事</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：一篇被 daily.dev 收录的《Performance Improvements in JDK 26》把这一版的性能收益拆成了四个可落地的维度，其中几个「纯库 API 改进」即使你不升 JDK 也值得先了解思路：</p>
+<ul>
+<li><strong><code>LazyConstant</code> API（原 StableValue）</strong>：提供「至多一次、线程安全」的惰性初始化，JVM 会把它当真正常量做常量折叠优化——比手写 <code>volatile</code> + 双检锁更省心也更省性能。</li>
+<li><strong><code>MemorySegment::getString</code></strong>：从 off-heap 内存提取字符串时减少中间分配，Panama/FFM 场景直接受益。</li>
+<li><strong><code>record.hashCode()</code> 提速</strong>：现在生成的 <code>hashCode</code> 已经快到和手写实现相当。</li>
+<li><strong>虚拟线程可在类初始化时让出（yield）</strong>：缓解 carrier 线程饥饿，配合 8 月 28 日那期聊过的虚拟线程 GC 坑一起看，是一套完整的「虚拟线程上线前检查」拼图。</li>
+</ul>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：它把「升 JDK」从一个笼统的决定，拆成了**「哪些收益是白捡的、哪些要改代码、哪些要换 GC」**三层。比如 <code>record.hashCode</code> 提速和虚拟线程让出是「无感白捡」，<code>LazyConstant</code> 需要小改代码，G1 双 card table 则是运行时行为变化——分开评估，比一刀切「升不升」理性得多。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：想从 JDK 26 里挑「性价比最高的优化」的 Java 后端，以及正在做 Panama/FFM 或虚拟线程改造的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://app.daily.dev/posts/4AS8hy8yL">Performance Improvements in JDK 26 — daily.dev</a> · <a href="https://jdk.java.net/26/release-notes">JDK 26 Release Notes — OpenJDK</a></p>
+</li>
+</ul>
+<h3 id="3-8-个-spring-boot-代码片段别再重复造轮子了">3. 8 个 Spring Boot 代码片段：别再重复造轮子了</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：一篇流传较广的《8 Must-Use Spring Boot Code Snippets to Stop Re-inventing the Wheel》整理了 8 段「每个 Spring Boot 项目都会重写一遍」的样板代码，覆盖：MapStruct 的 <code>String ↔ List</code> 类型转换（<code>@Named</code> 集中管理）、用 <code>@Embeddable</code> + <code>AttributeConverter</code> 把集合存进单列、i18n 消息助手、基于 <code>SecureRandom</code> 的随机串生成、自定义运行时异常、类型安全的 <code>@ConfigurationProperties</code>、JPA 审计（<code>@EnableJpaAuditing</code>）、自定义校验注解。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这类内容的价值不在「高级」，而在**「约定一致性」**——团队里每个人各写一套 <code>StringUtils.split</code> 转 List 的 helper，最后长得五花八门。把这几段抽成一个内部 <code>common</code> 模块，能立刻消除一批隐性的认知负担和重复代码。其中 <code>@Embeddable</code> 存集合、<code>@ConfigurationProperties</code> 类型安全绑定、<code>SecureRandom</code> 生成 token 这三段，是生产里最容易踩坑也最值得统一的地方。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在搭内部基础组件库、或想统一团队编码风格的 Spring Boot 后端。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://besthub.dev/articles/8-must-use-spring-boot-code-snippets-to-stop-re-inventing-the-wheel-e8de6dd45a48">8 Must-Use Spring Boot Code Snippets — besthub.dev</a></p>
+</li>
+</ul>
+<h2 id="大数据组件调优">大数据组件调优</h2>
+<h3 id="4-kafka-440-发布追踪rc0-之后再添两个-blockerrc1-仍未开启">4. Kafka 4.4.0 发布追踪：RC0 之后再添两个 blocker，RC1 仍未开启</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：Apache Kafka 4.4.0 的发布继续在 RC 阶段「打地鼠」。继上一期提到的 metadata.version 修正之后，本周 dev 邮件列表又出现两个新的 blocker：</p>
+<ul>
+<li><strong>KAFKA-20982</strong>（8/25 报出）：docker-compose 里的 SASL 配置有误，导致客户端无法连上 SASL listener。</li>
+<li><strong>KAFKA-20970</strong>（8/27 报出）：当 <code>auto.commit.interval.ms</code> 小于 <code>bootstrap.resolve.timeout.ms</code> 时会出现另一个 busy loop。</li>
+</ul>
+<p>发布经理 Omnia Ibrahim 在 8 月 27 日的邮件里追问「这是否就是最后一个 blocker，我该不该开始滚 RC1」，<strong>截至 8 月 31 日 RC1 仍未开启</strong>。按官方 Release Plan（Code Freeze 8/12，四周稳定期），最终发布<strong>不早于 9 月 9 日</strong>。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Kafka 4.4 是含 <strong>26 个 KIP</strong> 的大版本（share groups 死信队列 KIP-1191、tiered storage 延迟上传 KIP-1241、producer 动态内存分配 KIP-1332 等），值得「等正式版再上生产」。如果你在关注它，这条追踪的意义是：<strong>别急着在 RC 阶段就开始压测生产镜像</strong>——SASL 配置和 busy loop 这类 blocker 说明 RC 的成熟度仍在收敛，等 GA 或至少 RC1 投票通过后再动手更稳妥。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：计划升级到 Kafka 4.4 的运维与后端团队，以及关注 KRaft / share groups 生态进展的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.mail-archive.com/dev@kafka.apache.org/msg158296.html">Re: [VOTE] 4.4.0 RC0 — Kafka dev 邮件列表（8/27）</a> · <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=430408710">Release Plan 4.4.0 — Apache Kafka cwiki</a> · <a href="https://issues.apache.org/jira/browse/KAFKA-20970">KAFKA-20970 — Apache Jira</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="5-obrasuperpowers把工程纪律做成可组合的-agent-skills">5. obra/superpowers：把「工程纪律」做成可组合的 Agent Skills</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<strong>superpowers</strong>（<code>obra/superpowers</code>，MIT）是 Jesse Vincent（Keyboardio 联合创始人、K-9 Mail 与 Request Tracker 作者）打造的「agentic skills 框架 + 软件工程方法论」。它不卖「让模型更聪明」，而是卖「让模型更自律」：通过 14 个可组合的 skill，在编码 Agent 动手前强制走完「澄清需求 → 写计划 → 子代理执行 → 测试验证 → 代码审查」的流程。核心 skill 包括 <code>brainstorming</code>（先澄清再动手）、<code>writing-plans</code> / <code>executing-plans</code>、<code>subagent-driven-development</code>、<code>test-driven-development</code>（红绿重构）、<code>systematic-debugging</code>、<code>verification-before-completion</code>（拿证据说话）、<code>requesting-code-review</code>。</p>
+<p>8 月中旬发布的 <strong>v6.3.0</strong> 新增了 <strong>Devin CLI、Hermes Agent、Grok Build</strong> 三个 harness，加上已有的 Claude Code、Codex、Cursor、Gemini CLI、Copilot CLI、Pi、Kimi Code 等，支持面已经覆盖 14 个编码工具，并通过 Anthropic 官方插件市场分发。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这是「AI 编程工具」从「单次补全」走向「Agent 工程化」的一个清晰样本。几篇独立评测的结论高度一致：<strong>superpowers 不会让模型变聪明，但会让它变守纪律</strong>——一个没写需求、没写测试、没有 review 步骤就闷头写代码的 Agent，是最容易「十五分钟后发现它从一开始就理解错了需求」的。而 superpowers 用三个「approval gate」（先设计、分小步、拿证据）把这三个洞都堵上。对后端开发者尤其有价值的是它的 <code>systematic-debugging</code> 和 <code>verification-before-completion</code>：逼着 Agent 先做根因分析再改代码、先跑验证命令再宣称「完成」——这正是不想让 AI 把代码库越改越乱的人最需要的两道闸。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 Claude Code / Codex / Cursor 等做日常开发的工程师，尤其是想给 AI 编码加「工程纪律」约束、又不想自己从头搭一套 prompt 规范的人。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/obra/superpowers">obra/superpowers — GitHub</a> · <a href="https://mastodon.opencollective.com/@jesse@metasocial.com">Superpowers 6.3 发布说明 — Jesse Vincent Mastodon</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ol>
+<li><a href="https://javapro.io/2026/08/26/java-26-is-here-and-with-it-a-solid-foundation-for-the-future">Java 26 Is Here, And With It a Solid Foundation for the Future — JAVAPRO</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/26/migrate/significant-changes-jdk-26-release.html">Significant Changes in JDK 26 — Oracle Docs</a></li>
+<li><a href="https://app.daily.dev/posts/4AS8hy8yL">Performance Improvements in JDK 26 — daily.dev</a></li>
+<li><a href="https://jdk.java.net/26/release-notes">JDK 26 Release Notes — OpenJDK</a></li>
+<li><a href="https://besthub.dev/articles/8-must-use-spring-boot-code-snippets-to-stop-re-inventing-the-wheel-e8de6dd45a48">8 Must-Use Spring Boot Code Snippets — besthub.dev</a></li>
+<li><a href="https://www.mail-archive.com/dev@kafka.apache.org/msg158296.html">Re: [VOTE] 4.4.0 RC0 — Kafka dev 邮件列表</a></li>
+<li><a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=430408710">Release Plan 4.4.0 — Apache Kafka cwiki</a></li>
+<li><a href="https://issues.apache.org/jira/browse/KAFKA-20970">KAFKA-20970 — Apache Jira</a></li>
+<li><a href="https://github.com/obra/superpowers">obra/superpowers — GitHub</a></li>
+<li><a href="https://mastodon.opencollective.com/@jesse@metasocial.com">Superpowers 6.3 发布说明 — Jesse Vincent Mastodon</a></li>
+</ol> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-09-01-curated-september-tech-picks">九月技术精选：JDK 27 倒计时与 Agent 运行时开源</a> </li><li> <a href="/2026-08-31-curated-september-week1-picks">九月第一周技术精选：Java 26 正式发布</a> </li><li> <a href="/2026-08-28-curated-august-week4-picks">八月第四周技术精选：Java Agent 与虚拟线程</a> </li><li> <a href="/2026-08-27-curated-august-finale-picks">八月收官技术精选：Kafka 补 RC 与 Spring 发车</a> </li><li> <a href="/2026-08-26-curated-august-end-picks">八月末技术精选：Kafka 4.4 投票与 AI 安全</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
