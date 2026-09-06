@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1026"/>
+      <stop offset="50%" stop-color="#141b3a"/>
+      <stop offset="100%" stop-color="#1a254e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#7b61ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,212,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(0,212,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- stars -->
+  <g fill="#ffffff" opacity="0.6">
+    <circle cx="80" cy="60" r="1.2"/>
+    <circle cx="210" cy="40" r="1"/>
+    <circle cx="340" cy="90" r="0.8"/>
+    <circle cx="520" cy="50" r="1.1"/>
+    <circle cx="680" cy="80" r="0.9"/>
+    <circle cx="740" cy="130" r="1"/>
+    <circle cx="120" cy="140" r="0.7"/>
+    <circle cx="460" cy="120" r="0.9"/>
+    <circle cx="620" cy="110" r="0.8"/>
+    <circle cx="760" cy="200" r="0.7"/>
+  </g>
+
+  <!-- Astra orbit ring -->
+  <ellipse cx="400" cy="220" rx="260" ry="140" fill="none" stroke="url(#accent)" stroke-width="1.5" opacity="0.35"/>
+  <ellipse cx="400" cy="220" rx="200" ry="100" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.25"/>
+
+  <!-- glowing planet node -->
+  <circle cx="400" cy="220" r="48" fill="url(#glow)"/>
+  <circle cx="400" cy="220" r="24" fill="#0d132b" stroke="url(#accent)" stroke-width="2"/>
+  <text x="400" y="226" text-anchor="middle" fill="#00d4ff" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="600">Astra</text>
+
+  <!-- satellite dot -->
+  <circle cx="630" cy="150" r="5" fill="#7b61ff" opacity="0.9"/>
+
+  <!-- Lean code snippet on left -->
+  <g transform="translate(60, 160)" opacity="0.85">
+    <rect x="0" y="0" width="200" height="130" rx="8" fill="#0e142c" stroke="#1f2d5c" stroke-width="1"/>
+    <text x="14" y="26" fill="#00d4ff" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">theorem flt (n a b c : ℕ)</text>
+    <text x="14" y="44" fill="#7ee787" font-family="ui-monotonic, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">  (h : n &gt; 2) :</text>
+    <text x="14" y="62" fill="#dcdcaa" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">  a^n + b^n ≠ c^n := by</text>
+    <text x="14" y="88" fill="#6a9955" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">-- 11 days · 13M lines</text>
+    <text x="14" y="106" fill="#6a9955" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10">-- 29,500 theorems · Lean 4</text>
+  </g>
+
+  <!-- humanoid silhouette on right -->
+  <g transform="translate(600, 200)" opacity="0.9">
+    <circle cx="35" cy="15" r="12" fill="none" stroke="#7b61ff" stroke-width="2"/>
+    <line x1="35" y1="27" x2="35" y2="75" stroke="#7b61ff" stroke-width="2.5"/>
+    <line x1="35" y1="40" x2="10" y2="60" stroke="#7b61ff" stroke-width="2"/>
+    <line x1="35" y1="40" x2="60" y2="60" stroke="#7b61ff" stroke-width="2"/>
+    <line x1="35" y1="75" x2="18" y2="110" stroke="#7b61ff" stroke-width="2"/>
+    <line x1="35" y1="75" x2="52" y2="110" stroke="#7b61ff" stroke-width="2"/>
+  </g>
+
+  <!-- Atlas grid plane -->
+  <g transform="translate(0, 360)" opacity="0.4">
+    <path d="M0,60 L800,60" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M0,40 L800,40" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M0,20 L800,20" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M100,0 L60,90" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M300,0 L260,90" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M500,0 L460,90" stroke="#00d4ff" stroke-width="0.5"/>
+    <path d="M700,0 L660,90" stroke="#00d4ff" stroke-width="0.5"/>
+  </g>
+
+  <!-- title area -->
+  <text x="400" y="370" text-anchor="middle" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="700">GPT-6 Astra · 费马大定理 · 具身智能</text>
+  <text x="400" y="402" text-anchor="middle" fill="#8fa1c7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14">AI 行业快讯 · 2026-09-06</text>
+</svg>
