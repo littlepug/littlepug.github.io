@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#1e3a5f"/>
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#93c5fd"/>
+      <stop offset="100%" style="stop-color:#60a5fa"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <circle cx="680" cy="70" r="140" fill="#3b82f6" opacity="0.07"/>
+  <circle cx="720" cy="370" r="160" fill="#2563eb" opacity="0.05"/>
+  <circle cx="80" cy="380" r="110" fill="#60a5fa" opacity="0.04"/>
+  <circle cx="400" cy="430" r="50" fill="#3b82f6" opacity="0.03"/>
+  <circle cx="560" cy="160" r="80" fill="#8b5cf6" opacity="0.04"/>
+
+  <g opacity="0.06">
+    <circle cx="50" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="150" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="250" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="350" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="450" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="550" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="650" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="750" cy="50" r="1.5" fill="#60a5fa"/>
+    <circle cx="100" cy="200" r="1.5" fill="#60a5fa"/>
+    <circle cx="300" cy="200" r="1.5" fill="#60a5fa"/>
+    <circle cx="500" cy="200" r="1.5" fill="#60a5fa"/>
+    <circle cx="700" cy="200" r="1.5" fill="#60a5fa"/>
+    <circle cx="200" cy="350" r="1.5" fill="#60a5fa"/>
+    <circle cx="400" cy="350" r="1.5" fill="#60a5fa"/>
+    <circle cx="600" cy="350" r="1.5" fill="#60a5fa"/>
+  </g>
+
+  <g transform="translate(590, 170)" opacity="0.10">
+    <text font-family="monospace" font-size="90" fill="#93c5fd" font-weight="bold">&lt;/&gt;</text>
+  </g>
+
+  <text x="60" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="800" fill="url(#textGrad)" filter="url(#glow)">
+    九月技术精选
+  </text>
+
+  <text x="60" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="500" fill="#94a3b8">
+    多 Agent 协作 · Spring Boot 惰性连接
+  </text>
+
+  <text x="60" y="233" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#64748b">
+    Orca · agent-skills · TimesFM · Atlas · 结构并发
+  </text>
+
+  <line x1="60" y1="268" x2="300" y2="268" stroke="#3b82f6" stroke-width="2" opacity="0.4"/>
+
+  <rect x="60" y="290" width="140" height="36" rx="18" fill="#3b82f6" opacity="0.15"/>
+  <text x="130" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#93c5fd" text-anchor="middle" font-weight="600">
+    2026.09.06
+  </text>
+
+  <g transform="translate(60, 370)">
+    <rect x="0" y="0" width="64" height="24" rx="6" fill="#3b82f6" opacity="0.12"/>
+    <text x="32" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle">Orca</text>
+
+    <rect x="74" y="0" width="96" height="24" rx="6" fill="#8b5cf6" opacity="0.12"/>
+    <text x="122" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#a78bfa" text-anchor="middle">agent-skills</text>
+
+    <rect x="180" y="0" width="76" height="24" rx="6" fill="#3b82f6" opacity="0.12"/>
+    <text x="218" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle">TimesFM</text>
+
+    <rect x="266" y="0" width="70" height="24" rx="6" fill="#3b82f6" opacity="0.12"/>
+    <text x="301" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle">Atlas</text>
+  </g>
+
+  <text x="60" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#475569" font-weight="500">
+    littlepug 技术博客 · curated
+  </text>
+</svg>
