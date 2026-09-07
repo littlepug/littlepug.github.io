@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="9 月第一周 AI 编程与具身智能双线推进：微软 Project Zenith 为开发者 PC 预装本地大模型与 Agent 安全沙箱；OpenClaw 2.0 将 AI 编程推向多人协作；清华 GigaBrain-WBC-0.5 首创行为世界模型；吴恩达定义 Coding Agent 五大技能；特斯拉 Optimus V3 定型冲刺 9 月周产千台。"><title>微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-09-07-zenith-openclaw-wbc-ng-optimus-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台 - littlepug's blog"><meta property="og:description" content="9 月第一周 AI 编程与具身智能双线推进：微软 Project Zenith 为开发者 PC 预装本地大模型与 Agent 安全沙箱；OpenClaw 2.0 将 AI 编程推向多人协作；清华 GigaBrain-WBC-0.5 首创行为世界模型；吴恩达定义 Coding Agent 五大技能；特斯拉 Optimus V3 定型冲刺 9 月周产千台。"><meta property="og:url" content="https://littlepug.github.io/2026-09-07-zenith-openclaw-wbc-ng-optimus-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台 - littlepug's blog"><meta name="twitter:description" content="9 月第一周 AI 编程与具身智能双线推进：微软 Project Zenith 为开发者 PC 预装本地大模型与 Agent 安全沙箱；OpenClaw 2.0 将 AI 编程推向多人协作；清华 GigaBrain-WBC-0.5 首创行为世界模型；吴恩达定义 Coding Agent 五大技能；特斯拉 Optimus V3 定型冲刺 9 月周产千台。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>微软 Zenith 开箱即编码，Optimus V3 冲刺周产千台</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-09-07" data-astro-cid-fzx4jmue> 2026-09-07 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>11 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <h2 id="发生了什么">发生了什么</h2>
+<p>9 月第一周，AI 编程工具链与人形机器人量产同步进入新阶段。微软在 IFA 2026 前夕发布 Project Zenith，为开发者级 PC 预装完整工具链并支持本地运行 30B+ 参数模型，同时内置 MXC 隔离容器保障 Agent 安全。开源社区方面，OpenClaw 2.0 完成架构重写，从单用户 Agent 工具进化为多人协作的共享 Agent 基础设施。具身智能侧，清华大学联合 GigaAI 发布全球首个人形机器人全身控制「行为世界模型」GigaBrain-WBC-0.5，地形交互成功率 81.3%、跌倒恢复成功率 99.3%，均为基线的 4–17 倍。此外，吴恩达发布《AI Engineering Skills Map》系统性拆解 Coding Agent 的五大核心能力，特斯拉 Optimus V3 已完成定型、9 月目标周产 1000 台。</p>
+<p>这五条动态的共同信号是：AI 编程的竞争焦点已从「谁的模型更强」扩展到「谁的部署形态与协作模式更成熟」，而人形机器人正从展台炫技迈入产线量产与真实环境鲁棒性攻坚期。</p>
+<h2 id="微软-project-zenith开发者-pc-开箱即编码本地跑-30b-模型">微软 Project Zenith：开发者 PC 开箱即编码，本地跑 30B+ 模型</h2>
+<p>9 月 4 日，微软在 Windows 官方博客发布 Project Zenith——面向开发者级硬件的预配置 Windows 11 体验。首批搭载 AMD Ryzen AI Halo 平台，后续将扩展至更多 OEM 合作伙伴设备。</p>
+<p>硬件门槛与本地 AI 能力：</p>
+<ul>
+<li><strong>统一内存 64GB+，带宽 250GB/s+</strong>，支持本地运行 30B+ 参数编码模型且不计云 Token 费用</li>
+<li>预装 Windows Terminal、VS Code（任务栏默认固定）、GitHub Copilot、PowerToys、Git、Python 3.14+、Node 24+ 等</li>
+<li>文件管理器默认显示扩展名与隐藏文件、开启长路径支持；搜索与开始菜单关闭提示通知以减少干扰</li>
+<li>WSL 容器（Build 2026 公开预览）提供原生 Linux 容器创建与运行能力</li>
+</ul>
+<p>Agent 安全层：</p>
+<ul>
+<li><strong>Microsoft Execution Containers (MXC)</strong>：策略驱动的执行隔离层，开发者可声明 Agent 可访问的文件与网络资源，运行时强制执行边界</li>
+<li><strong>Agent 365</strong> 集成 Defender、Entra、Intune 与 Purview，提供企业级 Agent 治理</li>
+<li>OS 级身份认证与可管理性，为 Agent 原生应用提供安全基座</li>
+</ul>
+<p>值得关注的原因：Project Zenith 把「配置开发者环境」这件事从购买后的人工步骤前移到了出厂状态。64GB 统一内存让 30B 级模型可以在本地无 Token 费用运行，叠加 MXC 隔离容器，意味着 Windows 正在成为 Agent 原生应用的开发与运行平台。对 AI Coding 而言，本地模型 + 云端前沿模型的混合架构将成为常态——日常任务走本地、硬问题调云端——Token 经济学正在被重写。</p>
+<p>来源：<a href="https://blogs.windows.com/windowsdeveloper/2026/09/04/announcing-project-zenith-the-ready-to-code-windows-experience/">Windows 官方博客</a> / <a href="https://www.techrepublic.com/article/news-microsoft-project-zenith-windows-developer-pcs/">TechRepublic</a> / <a href="https://4sysops.com/archives/microsoft-project-zenith-ready-to-code-windows-11-for-developer-hardware/">4sysops</a>（2026-09-04 至 09-05）</p>
+<h2 id="openclaw-20ai-编程从单兵作战走向多人协作">OpenClaw 2.0：AI 编程从单兵作战走向多人协作</h2>
+<p>OpenClaw 创始人 Peter Steinberger（已加入 OpenAI，但 OpenClaw Foundation 独立运营）在 8 月 31 日发布 v2026.8.1，这是项目历史上最大规模更新：933 名贡献者（569 名首次参与）、16000+ 合并 PR（约占项目历史总 PR 的一半），历时近七周开发。</p>
+<p>核心架构变化：</p>
+<ul>
+<li><strong>Shared Cloud Sessions</strong>：多人可同时加入同一个 Agent 会话，支持实时协作、任务交接与状态同步，Agent 会话成为跨设备持久化工作区</li>
+<li><strong>多角色权限体系</strong>（Team Operator Roles）：管理员可为成员配置不同角色，控制创建与运行 Agent 的权限及访问范围</li>
+<li><strong>实验性 Swarm 模式</strong>：允许一次性启动多个子 Agent 并行执行任务</li>
+<li>底层存储从 JSON/Markdown 日志迁移至 <strong>SQLite</strong>，提供结构化 Schema、原子事务与全文检索</li>
+<li>安装体验：自动检测已有 ChatGPT/Claude 订阅、API 密钥或本地模型，免去大量手动配置</li>
+</ul>
+<p>安全与治理升级：</p>
+<ul>
+<li><strong>Private Credential Request</strong>：脱敏窗口输入密码与 API 密钥，避免敏感信息进入聊天记录或模型上下文</li>
+<li>可选出口代理（egress proxy）限制受保护凭证的替换，仅允许在经批准的目的地使用</li>
+<li><code>openclaw security audit</code> 命令检查入站访问、工具影响范围、网络暴露及插件白名单</li>
+<li>Gateway 默认绑定回环地址，多数聊天渠道对陌生私信返回配对码</li>
+</ul>
+<p>值得关注的原因：OpenClaw 2.0 标志着 AI 编程工具从「一个开发者 + 一个 Agent」转向「一个团队 + 共享 Agent 基础设施」。当 Agent 会话可以跨人交接、跨设备迁移、跨 Agent 协作时， procurement 决策从 per-seat 许可证变为共享基础设施部署。对企业落地而言，多用户审批流程与远程任务交接是 Agent 触达生产仓库前安全团队的基本要求。英伟达 Jensen Huang 在 GTC 上直言「每家公司都需要一个 OpenClaw 策略」，微软 Build 2026 已确认 OpenClaw 原生运行于 Windows MXC 容器。</p>
+<p>来源：<a href="https://saassentinel.com/2026/09/01/openclaw-2-0-brings-multiplayer-ai-coding-to-enterprise-teams">SaaS Sentinel</a> / <a href="https://techstrong.ai/articles/openclaw-2-0-introduces-shared-workspaces-for-collaboration-multi-machine-work">Techstrong.ai</a> / <a href="https://aidailypost.com/news/openclaw-20-aims-make-ai-coding">AI Daily Post</a>（2026-09-01）</p>
+<h2 id="gigabrain-wbc-05全球首个行为世界模型让机器人小脑理解环境">GigaBrain-WBC-0.5：全球首个行为世界模型，让机器人「小脑」理解环境</h2>
+<p>清华大学智能视觉实验室联合 GigaAI、上海理工大学、北京交通大学与中科院自动化所发布 GigaBrain-WBC-0.5（arXiv: 2608.18234），这是全球首个面向人形机器人全身控制的<strong>行为世界模型</strong>（Behavior World Model, BWM）。</p>
+<p>要解决的问题：现有全身运动追踪器（如英伟达 SONIC）只在平地上好使。一旦踩上台阶、坐到椅子、抱起重物，动力学全变了，传统方法只会一味扩大训练动作库来硬扛——在地形依赖场景下根本走不通。</p>
+<p>核心方法：</p>
+<ul>
+<li><strong>因果 Transformer</strong>（6 层，50Hz 驱动 Unitree G1 的 29 个自由度），每一步同时输出：29 维 PD 关节目标（策略本身）、67 维下一帧本体状态预测、4 分量混合高斯分布（描述下一帧潜在行为命令的分布）</li>
+<li>网络在行动的同时建模「环境如何塑造我下一步能做什么」——预测自身未来的网络，也正是干活的网络</li>
+<li><strong>自动空间地形标注管线</strong>：从重定向动作的运动学回放中恢复 3D 接触几何，无需场景捕捉会话，地形标注正确率 92%</li>
+<li><strong>部署时命令体检</strong>：用马氏距离检测不可行命令，沿射线径向回缩至安全椭球边界——机器人不冻结、不急停，而是做出「最接近要求」的动作</li>
+</ul>
+<p>评测结果（vs 三个大规模追踪器基线）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>成功率</th><th>vs 最强基线</th></tr></thead><tbody><tr><td>地形交互</td><td>81.3%</td><td>4.3 倍</td></tr><tr><td>不可行命令</td><td>83.1%</td><td>—</td></tr><tr><td>跌倒恢复</td><td>99.3%</td><td>16.8 倍</td></tr></tbody></table>
+<p>硬件验证：Unitree G1 在缺失支撑与外力扰动下仍稳健交互；检查点可简单微调迁移至 Maker L01 机器人。</p>
+<p>值得关注的原因：这项工作第一次把「全身运动追踪」「地形/物体交互」「不可行命令鲁棒性」「跌倒自主恢复」四件以往分属不同专家系统的事合并进了一个统一的因果策略。更关键的是，它没有走「堆数据、堆模块」的老路，而是用「让控制器预测自身未来」这一条主线，让环境交互与鲁棒执行从同一个模型中自然涌现。当底层执行器具备了「理解环境 + 自我管理」的能力，上层的 VLA 和任务规划器才能真正放心地把粗略意图交出去。</p>
+<p>来源：<a href="https://arxiv.org/abs/2608.18234">arXiv 2608.18234</a> / <a href="https://shepherd1226.github.io/gigabrain-wbc-0.5/">项目主页</a> / <a href="https://theneuralfeed.com/article/gigabrain-wbc-0-5-a-behavior-world-model-for-robust-whole-body-control-with-envi/t5zXcuyB">The Neural Feed</a>（2026-09）</p>
+<h2 id="吴恩达定义-coding-agent-五大技能从-coder-到-agent-orchestrator">吴恩达定义 Coding Agent 五大技能：从 Coder 到 Agent Orchestrator</h2>
+<p>9 月 4 日，吴恩达在 LinkedIn 发布《AI Engineering Skills Map: Using coding agents》，系统性拆解使用 Coding Agent 的五项核心能力，并指出「超长自主运行的实际效用常被夸大」。</p>
+<p>三阶段工作流：Planning（研究 → 规格编写 → 执行计划 → 安全与过度工程审查）→ Execution（Agent 自主权衡 + 验证）→ Deployment &#x26; Monitoring（CI/CD 部署 + 日志监控 + 改进迭代）。</p>
+<p>五大核心技能：</p>
+<ol>
+<li><strong>Directing the Workflow</strong>：驾驭整个 Agent 开发工作流——判断何时研究、何时构建、架构怎么设计、Spec 写多细、任务怎么拆分、何时人必须介入</li>
+<li><strong>Enabling Agent Autonomy</strong>：根据任务选择自主程度（人机交互 vs 目标循环）、上下文管理（项目架构、历史决策、编码规范）、多 Agent 协作（Planner/Coder/Tester/Reviewer/Monitor 分工）</li>
+<li><strong>Reviewing the Work</strong>：验证（单元测试、集成测试、功能测试、人工审查）+ LLM-as-a-Judge + Human-in-the-Loop。核心判断标准不是「Agent 能不能做」，而是「Agent 做完以后我们能不能判断它做对了」</li>
+<li><strong>Customizing the Agent and Its Environment</strong>：集成 Tools/Skills/Plugin/MCP，用 AGENTS.md 和 CLAUDE.md 持久化项目上下文，用 Hooks 自动触发代码审查、测试、安全检查、CI/CD</li>
+<li><strong>Coding Agent Foundations</strong>：理解 Codebase Search、Retrieval、Context Window、Tool Calling、MCP、Sub-Agent、Agent Harness 等底层机制，以及常见失败模式（过度工程、缺乏验证、过早完成、上下文丢失、不安全操作）</li>
+</ol>
+<p>关键观点：吴恩达明确警告——不要迷信 Agent 长时间自主运行。如果一开始的目标或架构有问题，让 Agent 一直运行只会更高效地执行错误方向。真正有效的方式是「Agent Work → Human Review → Adjust → Agent Continue → Verify → Iterate」。工程师角色正在从 Coder → Architect → Agent Orchestrator 转变。</p>
+<p>值得关注的原因：当 Coding 越来越便宜，什么能力会越来越贵？吴恩达的答案是：业务理解、问题定义、系统设计、工程判断、验证能力与 Agent 编排。这份技能图谱为团队 Leader 招人、培训与能力评估提供了可直接参照的框架，也预示着软件工程师岗位定义正在发生结构性变化。</p>
+<p>来源：<a href="https://www.linkedin.com/pulse/ai-engineering-skills-map-using-coding-agents-andrew-ng-h8yxc/">Andrew Ng LinkedIn</a> / <a href="https://agihunt.info/en/e/1a06cfdc6fe045c395450ada75d">AGI Hunt</a> / <a href="https://www.explainx.ai/blog/andrew-ng-ai-engineering-skills-map-august-2026">explainx.ai</a>（2026-09-04）</p>
+<h2 id="特斯拉-optimus-v3-定型9-月冲刺周产千台产线已改造完成">特斯拉 Optimus V3 定型：9 月冲刺周产千台，产线已改造完成</h2>
+<p>特斯拉 Optimus Gen 3 于 2026 年 6 月底通过高管评审会正式定型，标志着研发三年多的第三代人形机器人走出实验室进入量产阶段。弗里蒙特工厂原 Model S/X 产线已拆除改建为 Optimus 专用生产线，夏季已启动极低速试产。</p>
+<p>硬件规格（V3）：</p>
+<ul>
+<li>身高约 173cm，体重约 57kg，身体 38 个自由度（22 旋转关节 + 16 直线关节）</li>
+<li>单只手 <strong>22 个自由度</strong>，驱动器从手掌前移至小臂，采用腱绳传动（更接近人手肌腱结构）</li>
+<li>第三代灵巧手采用「行星齿轮箱 + 丝杠 + 腱绳」混合传动方案，加装触觉传感器和手套</li>
+<li>关键执行器体积比上一代缩小约 10%，整体体型更纤细</li>
+</ul>
+<p>产能爬坡路径：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>时间节点</th><th>周产目标</th></tr></thead><tbody><tr><td>6 月</td><td>几十台</td></tr><tr><td>7 月</td><td>100–150 台</td></tr><tr><td>8 月</td><td>约 300 台</td></tr><tr><td><strong>9 月</strong></td><td><strong>1000 台</strong>（年化 5 万台）</td></tr><tr><td>年底</td><td>2000–2500 台/周</td></tr></tbody></table>
+<p>弗里蒙特产线设计年产能 100 万台，规划约 40 条子产线。得州第二座专属工厂已开工，规划产能为弗里蒙特的 10 倍。马斯克在高管会上明确要求年底前达成产能目标，否则更换整个 Optimus 采购团队。马斯克形容 V3 为「穿着机器人外套的人」，长期目标价 2–3 万美元/台。</p>
+<p>值得关注的原因：V3 选择延迟发布、试产先行，是吸取了早期演示「看起来很惊艳、实际还要人遥操」的教训。9 月周产 1000 台若能实现，将是人形机器人从「百台级试产」跨入「万台级量产」的质变拐点。行业落地的关键不再是「能不能跳舞」，而是「手部精细操作能不能跑通」——这对全球供应链（减速器、腱绳、空心杯电机、触觉传感）将形成新一轮拉动。马斯克将 Optimus + FSD + Grok 组合视为「可能成为有史以来最大产品」的载体。</p>
+<p>来源：[百度百科](<a href="https://baike.baidu.com/item/%E7%89%B9%E6%96%AF%E6%8B%89Optimus">https://baike.baidu.com/item/特斯拉Optimus</a> V3/67212836) / <a href="https://m.ofweek.com/auto/2026-08/ART-70109-8460-30700085.html">OFweek</a> / <a href="https://aiqicha.baidu.com/details/rankList?query=7d8298bd69d82652">爱企查</a>（2026-08 至 09）</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://blogs.windows.com/windowsdeveloper/2026/09/04/announcing-project-zenith-the-ready-to-code-windows-experience/">Windows 官方博客：Project Zenith</a></li>
+<li><a href="https://www.techrepublic.com/article/news-microsoft-project-zenith-windows-developer-pcs/">TechRepublic：Microsoft Project Zenith</a></li>
+<li><a href="https://4sysops.com/archives/microsoft-project-zenith-ready-to-code-windows-11-for-developer-hardware/">4sysops：Project Zenith</a></li>
+<li><a href="https://saassentinel.com/2026/09/01/openclaw-2-0-brings-multiplayer-ai-coding-to-enterprise-teams">SaaS Sentinel：OpenClaw 2.0</a></li>
+<li><a href="https://techstrong.ai/articles/openclaw-2-0-introduces-shared-workspaces-for-collaboration-multi-machine-work">Techstrong.ai：OpenClaw 2.0</a></li>
+<li><a href="https://aidailypost.com/news/openclaw-20-aims-make-ai-coding">AI Daily Post：OpenClaw 2.0</a></li>
+<li><a href="https://arxiv.org/abs/2608.18234">arXiv 2608.18234：GigaBrain-WBC-0.5</a></li>
+<li><a href="https://shepherd1226.github.io/gigabrain-wbc-0.5/">GigaBrain-WBC-0.5 项目主页</a></li>
+<li><a href="https://theneuralfeed.com/article/gigabrain-wbc-0-5-a-behavior-world-model-for-robust-whole-body-control-with-envi/t5zXcuyB">The Neural Feed：GigaBrain-WBC-0.5</a></li>
+<li><a href="https://www.linkedin.com/pulse/ai-engineering-skills-map-using-coding-agents-andrew-ng-h8yxc/">Andrew Ng LinkedIn：AI Engineering Skills Map</a></li>
+<li><a href="https://agihunt.info/en/e/1a06cfdc6fe045c395450ada75d">AGI Hunt：Andrew Ng Coding Agents</a></li>
+<li><a href="https://www.explainx.ai/blog/andrew-ng-ai-engineering-skills-map-august-2026">explainx.ai：Andrew Ng Skills Map</a></li>
+<li>[百度百科：特斯拉 Optimus V3](<a href="https://baike.baidu.com/item/%E7%89%B9%E6%96%AF%E6%8B%89Optimus">https://baike.baidu.com/item/特斯拉Optimus</a> V3/67212836)</li>
+<li><a href="https://m.ofweek.com/auto/2026-08/ART-70109-8460-30700085.html">OFweek：特斯拉 Cybercab 与 Optimus V3</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-09-06-curated-september-multiagent-spring">九月技术精选：多 Agent 协作与 Spring Boot 惰性连接</a> </li><li> <a href="/2026-09-04-curated-september-week2-picks">九月技术精选：Agent 工具链下沉与 Spring Boot 提速</a> </li><li> <a href="/2026-09-02-curated-september-agent-kafka">九月技术精选：终端 Agent 爆火与 Kafka 调优</a> </li><li> <a href="/2026-09-01-curated-september-tech-picks">九月技术精选：JDK 27 倒计时与 Agent 运行时开源</a> </li><li> <a href="/2026-08-31-curated-september-week1-picks">九月第一周技术精选：Java 26 正式发布</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
