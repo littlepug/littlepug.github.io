@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="OpenAI 将 Codex 底层执行框架以 Agents API 公测开放，开发者零额外费用即可获得托管会话与多子代理编排；Cognition 发布 SWE-2 编程模型，基于开源 Kimi K3 后训练逼近 Fable 5.1 但成本降 64%；DeepSeek V4.1 Flash 采用 Causal-Encoder-Decoder 新架构，KV Cache 压缩至 1/4；京东启动物理 AI 加速计划冲刺六项全球第一，5 年采购 300 万台机器人；服贸会机器人全链路进化，人社部新增具身智能机器人应用技术员职业。"><title>Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-09-11-agents-api-swe2-deepseek-flash-jd-physical-ai-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI - littlepug's blog"><meta property="og:description" content="OpenAI 将 Codex 底层执行框架以 Agents API 公测开放，开发者零额外费用即可获得托管会话与多子代理编排；Cognition 发布 SWE-2 编程模型，基于开源 Kimi K3 后训练逼近 Fable 5.1 但成本降 64%；DeepSeek V4.1 Flash 采用 Causal-Encoder-Decoder 新架构，KV Cache 压缩至 1/4；京东启动物理 AI 加速计划冲刺六项全球第一，5 年采购 300 万台机器人；服贸会机器人全链路进化，人社部新增具身智能机器人应用技术员职业。"><meta property="og:url" content="https://littlepug.github.io/2026-09-11-agents-api-swe2-deepseek-flash-jd-physical-ai-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI - littlepug's blog"><meta name="twitter:description" content="OpenAI 将 Codex 底层执行框架以 Agents API 公测开放，开发者零额外费用即可获得托管会话与多子代理编排；Cognition 发布 SWE-2 编程模型，基于开源 Kimi K3 后训练逼近 Fable 5.1 但成本降 64%；DeepSeek V4.1 Flash 采用 Causal-Encoder-Decoder 新架构，KV Cache 压缩至 1/4；京东启动物理 AI 加速计划冲刺六项全球第一，5 年采购 300 万台机器人；服贸会机器人全链路进化，人社部新增具身智能机器人应用技术员职业。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>Agents API 开放、SWE-2 逼近前沿，京东冲刺物理 AI</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-09-11" data-astro-cid-fzx4jmue> 2026-09-11 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>8 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>今天 AI 领域的两条主线同步刷新：<strong>AI coding</strong> 侧，OpenAI 将 Codex 执行框架以 Agents API 形式公测开放，Cognition 和 DeepSeek 分别发布编程新模型，将”逼近前沿 + 成本骤降”的帕累托前沿继续外推；<strong>具身智能</strong>侧，京东以真实供应链为训练场启动物理 AI 加速计划，服贸会上机器人从前端自主作业到后端数据采集全面进化，人社部正式将具身智能纳入新职业目录。</p>
+<h2 id="openai-agents-api-公测codex-执行框架即服务">OpenAI Agents API 公测：Codex 执行框架即服务</h2>
+<p>9 月 10 日，OpenAI 宣布 <strong>Agents API</strong> 进入公开测试，向所有开发者开放此前仅驱动 Codex 内部运行的托管执行框架。开发者通过一次 API 调用即可创建生产级智能体，OpenAI 负责会话编排、上下文压缩、故障恢复等基础设施，开发者只需提供工具和选择运行环境。</p>
+<h3 id="核心能力">核心能力</h3>
+<ul>
+<li><strong>持久会话（Durable Sessions）</strong>：会话状态由 OpenAI 侧保留，跨轮次工作无需应用重建对话上下文，支持持续数小时甚至数天的长任务</li>
+<li><strong>多子代理编排</strong>：内置子代理委托能力，支持可配置的并发上限，可拆分复杂任务并行执行</li>
+<li><strong>沙盒执行</strong>：提供 OpenAI 托管沙盒（与 Codex / ChatGPT 同一基础设施），也支持 Cloudflare、Daytona、DigitalOcean、E2B、Modal、Oracle、Vercel 等合作伙伴的自托管环境</li>
+<li><strong>MCP 集成</strong>：Agent 可通过 HTTP 连接 MCP 服务器，连接文档管理、CRM、日历等企业系统</li>
+<li><strong>技能与插件</strong>：支持向沙盒动态添加技能和插件，运行代码、编辑文件、生成产物</li>
+</ul>
+<h3 id="定价模型">定价模型</h3>
+<p>Agents API <strong>不收取额外平台费</strong>，开发者仅按模型 token 用量和工具调用费用计费。OpenAI 托管沙盒按标准容器费率收费。早期客户案例显示，单案处理成本降低约 60%，失败率降低约 86%。</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F69D50">pip</span><span style="color:#96D0FF"> install</span><span style="color:#6CB6FF"> --upgrade</span><span style="color:#96D0FF"> openai</span></span></code></pre>
+<p>请求需携带 <code>OpenAI-Beta: agents=v1</code> 头，端点为 <code>POST /v1/agents/sessions</code>。</p>
+<p><strong>值得关注的原因</strong>：这是首个由前沿实验室将”Agent 操作系统”层以 API 形式产品化。此前构建生产级 Agent 需要专门的工程团队处理会话管理、上下文溢出、重试逻辑和编排层——现在这些由 OpenAI 基础设施承担。限制方面，目前数据驻留仅限美国，不支持零数据保留（ZDR）。</p>
+<h2 id="cognition-swe-2开源权重--后训练逼近前沿但成本降-64">Cognition SWE-2：开源权重 + 后训练，逼近前沿但成本降 64%</h2>
+<p>9 月 10 日，Cognition（Devin 母公司）发布旗舰编程模型 <strong>SWE-2</strong>，在 FrontierCode 1.1 Main 上取得 50.0%，仅落后 Anthropic Fable 5.1（50.9%）不到 1 个百分点，但运行成本降低 64%。</p>
+<h3 id="基准表现">基准表现</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>基准</th><th>SWE-2</th><th>Fable 5.1</th><th>GPT-6 Astra</th><th>GPT-5.6 Sol</th><th>Grok 4.6</th></tr></thead><tbody><tr><td>FrontierCode 1.1 Main</td><td>50.0%</td><td>50.9%</td><td>53.3%</td><td>47.5%</td><td>48.0%</td></tr><tr><td>DeepSWE 1.1</td><td>73.0%</td><td>67.4%</td><td>74.1%</td><td>72.7%</td><td>67.5%</td></tr><tr><td>Terminal-Bench 2.1</td><td>92.8%</td><td>91.4%</td><td>89.9%</td><td>88.8%</td><td>88.4%</td></tr><tr><td>Terminal-Bench 4</td><td>27.3%</td><td>55.8%</td><td>57.9%</td><td>37.3%</td><td>20.3%</td></tr></tbody></table>
+<h3 id="技术亮点">技术亮点</h3>
+<p>SWE-2 基于 <strong>Kimi K3</strong>（月之暗面发布的 2.8 万亿参数开源权重模型）进行后训练。关键技术贡献包括：</p>
+<ul>
+<li><strong>单次 RL 训练多努力等级</strong>：引入线性成本惩罚函数 <code>R = S - λₑC</code>，其中 S 为任务成功率、C 为运行时和 API 成本组合、λₑ 按 Pareto 前沿局部斜率调整，使所有努力等级同步提升而非相互牺牲</li>
+<li><strong>聚焦探索</strong>：SWE-2 中等配置平均每轮 53 步（SWE-1.7 为 127 步，减少 58%），首次代码修改中位数 18 步（SWE-1.7 为 48 步），平均成本降低 81%</li>
+<li><strong>NVFP4/FP8 量化感知训练</strong>：降低内存使用，在 2.8T 参数基座上实现低于 SWE-1.7 的训练-推理失配</li>
+<li><strong>数据飞轮</strong>：训练环境数量增至三倍，前序 SWE-2 检查点迭代硬化验证器</li>
+</ul>
+<p>SWE-2 已在 Devin Desktop 和 CLI 上线，Pro / Max / Teams 订阅者享一个月免费期。</p>
+<p><strong>值得关注的原因</strong>：一家美国实验室以中国开源模型为基座，叠加自研大规模 RL 后训练，直接作为旗舰产品发布——这验证了”开源权重 + 后训练”路线在编程领域已具备与前沿闭源模型正面竞争的能力。核心竞争壁垒从预训练转向后训练与 Harness 工程。</p>
+<h2 id="deepseek-v41-flashcausal-encoder-decoder-新架构">DeepSeek V4.1 Flash：Causal-Encoder-Decoder 新架构</h2>
+<p>9 月 10 日，DeepSeek 发布 <strong>V4.1 Flash</strong>，作为全新模型结构系列中的最小尺寸型号，在性能、费用、速度和总用时上全面超越此前的 V4 Pro。</p>
+<h3 id="架构创新">架构创新</h3>
+<ul>
+<li><strong>552B 参数 MoE</strong>，采用 <strong>Causal-Encoder-Decoder</strong> 新结构，输入输出不对称：输入激活仅 8B，输出激活 16B，成本显著低于同尺寸模型</li>
+<li><strong>KV Cache 大幅压缩</strong>：HBM 需求降至上一代的 <strong>1/4</strong>，SSD 需求降至 <strong>1/8</strong>——在 Agent 场景中缓存命中费用占比高，压缩直接降低长任务成本</li>
+<li><strong>上下文从 4K 拉长至 1M</strong>，原生多模态视觉理解能力内置</li>
+<li>已在 Hugging Face 开源权重并发布技术报告</li>
+</ul>
+<h3 id="基准表现-1">基准表现</h3>
+<p>在 Agentic Benchmark 等评测中超越 GLM-5.3、Kimi K3 等前沿模型；GPQA Diamond、Codeforces 编程、MathArena Apex、Terminal-Bench 2.1 和 CyberGym 均有强劲表现。</p>
+<h3 id="定价调整">定价调整</h3>
+<p>采用峰谷定价，新价格 9 月 10 日 12:00 生效：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>时段</th><th>缓存命中输入</th><th>未命中输入</th><th>输出</th></tr></thead><tbody><tr><td>闲时</td><td>¥0.02/百万token</td><td>¥1.0</td><td>¥4.0</td></tr><tr><td>高峰</td><td>¥0.04/百万token</td><td>¥2.0</td><td>¥8.0</td></tr></tbody></table>
+<p>9 月 14 日 12:00 后，<code>deepseek-v4-pro</code> 请求全部路由至 V4.1 Flash 并按 Flash 单价计费，直至 V4.1 Pro 上线。消费端 App 将快速、专家、视觉三模式合并为单一智能模式。</p>
+<p><strong>值得关注的原因</strong>：Causal-Encoder-Decoder 是 MoE 架构的新变体，输入输出不对称激活设计直接切中 Agent 工作负载”大量输入阅读 + 短输出决策”的模式。KV Cache 压缩到 1/4 HBM 需求，对长会话 Agent 是实打实的成本优势。</p>
+<h2 id="京东物理-ai-加速计划冲刺六项全球第一">京东物理 AI 加速计划：冲刺六项”全球第一”</h2>
+<p>9 月 9 日，在 2026 京东全球科技探索者大会（JDD）上，京东发布”超级 AI 供应链”并启动”物理 AI 加速计划”，提出建设全球最大物理世界运营中心，在具身智能领域冲刺六项”全球第一”。</p>
+<h3 id="六大方向与量化目标">六大方向与量化目标</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方向</th><th>目标</th></tr></thead><tbody><tr><td>数据</td><td>两年内建成全球最大具身智能数据采集中心（1000 万小时级人类真实场景数据采集）</td></tr><tr><td>基地</td><td>5 年内全国布局 80+ 个 RoboBase 机器人产业基地</td></tr><tr><td>制造</td><td>3 年内助力 100 家机器人本体厂商降本、100 家零部件企业业绩倍增</td></tr><tr><td>销售</td><td>至 2028 年投入百亿资源扶持机器人品牌，产品走进百万终端场景</td></tr><tr><td>物流</td><td>5 年采购 <strong>300 万台机器人</strong>、100 万台无人车、10 万架无人机</td></tr><tr><td>服务</td><td>覆盖超 100 个国家售后网络，创造 10 万个机器人服务工程师岗位</td></tr></tbody></table>
+<h3 id="技术底座">技术底座</h3>
+<p>京东云已落地国产万卡算力集群，规划十万卡级国产物理 AI 算力中心；模型侧发布 JoyAI-Video 和 <strong>JoyAI-EchoWM</strong> 实时可交互世界模型，补齐多模态、世界模型、具身模型完整矩阵。终端侧通过 JoyInside 与 AIHome 生态，计划年内接入超千万台智能设备。</p>
+<p>物流方面，京东物流发布”超脑”大模型指挥的”狼族”九款机器人全阵容，覆盖仓储、分拣、运输、配送全链。</p>
+<p><strong>值得关注的原因</strong>：京东以自有供应链上千个仓库和数万个配送站为训练场，走”先场景后技术”路径，与实验室先研发再找场景的模式形成互补。“智能飞轮”（场景→数据→模型→终端→任务→新数据）的闭环设计值得关注，其实质是用真实产业数据驱动模型迭代。</p>
+<h2 id="服贸会机器人全链路进化--具身智能新职业">服贸会机器人全链路进化 + 具身智能新职业</h2>
+<h3 id="服贸会从前端自主到后端基建">服贸会：从前端自主到后端基建</h3>
+<p>9 月 11 日，2026 年服贸会电信、计算机和信息服务专题展上，机器人产业呈现从前端到后端的全链路进化趋势：</p>
+<ul>
+<li><strong>前端自主作业</strong>：具备具身 Agent 能力的机器狗无需预设路线和人工遥控，可在复杂开放环境中自主执行通用任务（导盲、园区巡检、快递配送）；春晚同款人形机器人已在超 50 个城市落地零售店，24 小时不间断营业</li>
+<li><strong>外骨骼机器人</strong>：动力前驱设计，最轻款仅 1.8 千克，AI 学习算法自动匹配用户行走习惯</li>
+<li><strong>后端管理平台</strong>：服务于世界人形机器人运动会的具身智能管理平台亮相，为机器人建立”电子档案”、配备”数字行车记录仪”，防止冒名顶替和设备干扰</li>
+<li><strong>数据采集</strong>：头戴式数据采集产品无需复杂场地部署和机器人本体，真人佩戴即可完成场景数据采集，“人去哪、数据采到哪”，大幅降低数据获取门槛</li>
+</ul>
+<h3 id="人社部新增具身智能机器人应用技术员">人社部新增”具身智能机器人应用技术员”</h3>
+<p>9 月 9 日，人社部等部门发布第八批新职业，“具身智能机器人应用技术员”被列入，数字职业占新增总数 45.5%。同日数据显示，2026 年上半年股权投资同比上升 31.9%，耐心资本从”财务回报”转向”产业主导”，机器人产业迎爆发式增长。</p>
+<p><strong>值得关注的原因</strong>：服贸会释放的信号清晰——机器人产业竞争焦点正从”机器人能做什么”转向”数据、场景和基础设施能否跟上”。新职业的设立标志着具身智能从研发走向应用部署阶段的人才需求已被制度层面认可。行业从”唯出货量论”转向关注真实应用与稳定泛化能力。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://developers.openai.com/api/docs/guides/agents-api/overview">OpenAI Agents API 官方文档</a></li>
+<li><a href="https://community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481">OpenAI 社区公告：Introducing the Agents API and hosted sandboxes</a></li>
+<li><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_6236aa33f5302252">IT之家：OpenAI Agents API 开放公测</a></li>
+<li><a href="https://www.worldprogramming.org/posts/cognition-launches-new-swe-2-model-rivaling-fable-51-and-gpt-astra-lme0vx">Cognition 官方博客：Introducing SWE-2</a></li>
+<li><a href="https://dev.to/breachprotocol/cognitions-swe-2-coding-model-is-built-on-top-of-an-open-chinese-model-59k3">dev.to：Cognition’s SWE-2 is built on top of an open Chinese model</a></li>
+<li><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/132940.html">中国证券报：DeepSeek 大模型上新</a></li>
+<li><a href="https://pandaily.com/deepseek-v41-flash-official-ga-replaces-v4-pro">Pandaily：DeepSeek V4.1 Flash GA</a></li>
+<li><a href="https://www.toutiao.com/article/7683829513305719350">今日头条：京东发布物理 AI 建设最新成果</a></li>
+<li><a href="https://ysxw.cctv.cn/article.html?toc_style_id=feeds_default&#x26;item_id=17808837193913744537&#x26;channelId=1119">CCTV 央视新闻：服贸会机器人前端+后台全链路进化</a></li>
+<li><a href="https://new.qq.com/rain/a/20260910A03K7200">腾讯新闻：机器人行业资讯（优地机器人上市 / 外滩大会 / 新职业）</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-09-08-curated-september-agent-perf-scopedvalue">九月技术精选：给 Agent 装上性能层，ScopedValue 转正</a> </li><li> <a href="/2026-09-07-curated-september-agent-skills-jdk27">九月技术精选：Agent 技能「少写与会写」，JDK 27 倒计时</a> </li><li> <a href="/2026-09-06-curated-september-multiagent-spring">九月技术精选：多 Agent 协作与 Spring Boot 惰性连接</a> </li><li> <a href="/2026-09-04-curated-september-week2-picks">九月技术精选：Agent 工具链下沉与 Spring Boot 提速</a> </li><li> <a href="/2026-09-02-curated-september-agent-kafka">九月技术精选：终端 Agent 爆火与 Kafka 调优</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
