@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="华为 openJiuwen 把 RSI 递归自改进框架落地 WorkSwarm，Harness 优化使 SWE-bench Lite Dev 通过率从 61% 提升至 87%；清华 DiffuTester 利用结构模式挖掘让扩散语言模型生成单元测试提速 2-3x，被 EMNLP 2026 接收；2026 外滩大会与杭州国际具身智能展同日收官，40 余家具身厂商落地药房、洗衣房、咖啡店等真实场景；PaperCut 攻击者用数百个 AI 智能体 26 秒攻陷 11 家组织，Anthropic 9 月威胁报告同步指出 AI 已从&#34;工具&#34;演化为&#34;行动基础设施&#34;。"><title>自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-09-12-rsi-diffutester-bund-papercut-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击 - littlepug's blog"><meta property="og:description" content="华为 openJiuwen 把 RSI 递归自改进框架落地 WorkSwarm，Harness 优化使 SWE-bench Lite Dev 通过率从 61% 提升至 87%；清华 DiffuTester 利用结构模式挖掘让扩散语言模型生成单元测试提速 2-3x，被 EMNLP 2026 接收；2026 外滩大会与杭州国际具身智能展同日收官，40 余家具身厂商落地药房、洗衣房、咖啡店等真实场景；PaperCut 攻击者用数百个 AI 智能体 26 秒攻陷 11 家组织，Anthropic 9 月威胁报告同步指出 AI 已从&#34;工具&#34;演化为&#34;行动基础设施&#34;。"><meta property="og:url" content="https://littlepug.github.io/2026-09-12-rsi-diffutester-bund-papercut-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击 - littlepug's blog"><meta name="twitter:description" content="华为 openJiuwen 把 RSI 递归自改进框架落地 WorkSwarm，Harness 优化使 SWE-bench Lite Dev 通过率从 61% 提升至 87%；清华 DiffuTester 利用结构模式挖掘让扩散语言模型生成单元测试提速 2-3x，被 EMNLP 2026 接收；2026 外滩大会与杭州国际具身智能展同日收官，40 余家具身厂商落地药房、洗衣房、咖啡店等真实场景；PaperCut 攻击者用数百个 AI 智能体 26 秒攻陷 11 家组织，Anthropic 9 月威胁报告同步指出 AI 已从&#34;工具&#34;演化为&#34;行动基础设施&#34;。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>自我迭代 Agent、扩散模型测提速、具身落地与 AI 编排攻击</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-09-12" data-astro-cid-fzx4jmue> 2026-09-12 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>9 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>今天 AI 领域出现了四股并行的力量：<strong>AI coding</strong> 侧，华为 openJiuwen 把”Agent 自我迭代”做成可观测的工程闭环，清华大学 DiffuTester 用结构模式挖掘把扩散语言模型测生成提速 2-3x；<strong>具身智能</strong>侧，外滩大会与杭州国际具身智能展同日收官，多家厂商在药房、洗衣房、咖啡店、工厂车间”真干活”；<strong>安全侧</strong>，PaperCut 攻击者用数百个 AI 智能体在 26 秒内攻陷 11 家组织，Anthropic 发布 9 月威胁报告，AI 已从”工具”演化为”行动基础设施”。</p>
+<h2 id="华为-openjiuwen-rsi-框架落地-workswarmharness-优化提点-26-个百分点">华为 openJiuwen RSI 框架落地 WorkSwarm，Harness 优化提点 26 个百分点</h2>
+<p>9 月 11 日，华为开源 Agent 平台 openJiuwen 宣布把完整的 <strong>RSI（Recursive Self-Improvement，递归自我改进）框架</strong>落地到蜂群办公智能体 WorkSwarm，支持 Harness 与 Artifacts 双维度优化，并在科研论文、算法程序两类交付物上验证可用性。</p>
+<h3 id="核心能力">核心能力</h3>
+<ul>
+<li><strong>双维度优化</strong>：Harness 优化面向 Prompt、Skill、Tool、Rail 等”工作装备”，Artifacts 优化面向科研论文和算法程序等交付产物</li>
+<li><strong>算力亲和</strong>：依托昇腾 NPU，把 Agent Hint 传给推理引擎，主动调度 KV Cache（等待时卸载低成本存储、恢复前预取），优化多轮迭代的时延与资源占用</li>
+<li><strong>可观测实验</strong>：WorkSwarm 内新增”实验”模式，用户可像创建普通任务一样发起 Harness 或产物优化，全程展示 RSI 树搜索、得分曲线、用量与版本差异</li>
+</ul>
+<h3 id="实战效果">实战效果</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>实验</th><th>基准</th><th>优化前</th><th>优化后</th><th>提升</th></tr></thead><tbody><tr><td>Harness 优化（DeepSeek-V4-Flash，5 Epoch）</td><td>SWE-bench Lite Dev（23 题）</td><td>61.0%</td><td>87.0%</td><td>+26.0pp</td></tr><tr><td>Harness 优化（冻结后）</td><td>Evo-Bench General 64（独立题）</td><td>60.9%</td><td>71.9%</td><td>+11.0pp</td></tr><tr><td>算力亲和（科研程序优化场景）</td><td>TTFT P90</td><td>基准</td><td>-19.16%</td><td>↓</td></tr><tr><td>算力亲和</td><td>KV Cache 命中率</td><td>7.53%</td><td>14.36%</td><td>+6.83pp</td></tr></tbody></table>
+<p>需要说明的是，RSI 的本质是”拿算力换智力”——一次完整实验动辄成千上万次模型调用。openJiuwen 通过算力亲和把 HBM 与 DDR 峰值使用率分别降低 22.82% 与 30.74%，让持续迭代的成本可控。</p>
+<p><strong>值得关注的原因</strong>：今年 6 月 openJiuwen 已发布 Auto Harness，让 Agent 自动优化自己的工作装备；本次 RSI 框架补齐了”Artifacts 优化”维度，让科研论文、算法程序这些交付物也能持续打磨。这是首个将 Harness 与 Artifacts 双维度同时优化并向普通用户产品化的开源框架。开发者可在鸿蒙/Windows/Mac 一键下载 WorkSwarm 体验。</p>
+<h2 id="清华-diffutester扩散语言模型单元测试提速-2-3xemnlp-2026">清华 DiffuTester：扩散语言模型单元测试提速 2-3x（EMNLP 2026）</h2>
+<p>清华大学人工智能学院 AIAgent 课题组提出的 <strong>DiffuTester</strong> 被 EMNLP 2026 接收。该框架针对扩散语言模型（dLLM）在单元测试生成场景中的速度-质量权衡问题，通过挖掘同一被测方法多个测试用例之间的共享结构模式，让模型在每一步去噪过程中解码更多 token，在不损失测试覆盖率的前提下实现 2-3x 加速。</p>
+<h3 id="核心思路">核心思路</h3>
+<p>单元测试存在天然的结构重复性：同一个被测方法通常需要多个用例覆盖不同分支，代码骨架高度相似。DiffuTester 的关键观察是：<strong>这些结构模式可以通过 AST 抽象语法树动态识别，并作为额外解码信号使用</strong>。</p>
+<h3 id="技术流程">技术流程</h3>
+<ol>
+<li>在每个去噪步骤中，先执行模型原本基于置信度的解码，保留最有把握的一部分 token</li>
+<li>对当前 batch 中尚未完全生成的测试用例构建 AST，合并不同 AST 识别共享结构</li>
+<li>与公共结构对应的 token 被额外保留，模型在一次推理中解码更多内容</li>
+<li>逐行解析 AST（避免早期语法错误干扰结构挖掘），且只保留置信度高于阈值的 token</li>
+</ol>
+<h3 id="兼容性与扩展">兼容性与扩展</h3>
+<p>DiffuTester 与基于 KV Cache 的加速方法天然兼容，可叠加。在 DiffuCoder 和 Dream 两个代表性 dLLM、Python/C/Java 三种语言、TestEval 基准上验证均有效——在保持峰值覆盖率的同时，可实现最高约 2-3x 生成加速。</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#768390"># 安装与运行（论文已开源）</span></span>
+<span class="line"><span style="color:#ADBAC7">pip install </span><span style="color:#F47067">-</span><span style="color:#ADBAC7">r requirements.txt</span></span>
+<span class="line"><span style="color:#ADBAC7">.</span><span style="color:#F47067">/</span><span style="color:#ADBAC7">run_all.sh  </span><span style="color:#768390"># 复现主实验结果</span></span></code></pre>
+<p>论文：<a href="https://arxiv.org/abs/2509.24975">arXiv:2509.24975</a> ｜ 代码：<a href="https://github.com/TsinghuaISE/DiffuTester">github.com/TsinghuaISE/DiffuTester</a></p>
+<p><strong>值得关注的原因</strong>：扩散语言模型是当前代码生成模型的并行加速方向之一，但 dLLM 的并行优势在单元测试生成场景中天然契合（同一被测方法需要多个用例）。DiffuTester 用”结构模式”而非”增加每步 token 数”的激进策略，避免了 quality collapse，体现了对 dLLM 解码机制的精细理解。</p>
+<h2 id="外滩大会与杭州具身智能展同日收官机器人从炫技走向真干活">外滩大会与杭州具身智能展同日收官：机器人从”炫技”走向”真干活”</h2>
+<p>9 月 9-12 日，2026 Inclusion·外滩大会与 2026 杭州国际具身智能与人形机器人展览会同期收官。两条主线同时指向一个判断：具身智能正处于”黎明前期”，关键能力开始出现，但从”能做”到”能用”还需要跨越系统工程、数据、算力和场景泛化等多重门槛。</p>
+<h3 id="外滩大会40-余家具身厂商落地真实场景">外滩大会：40 余家具身厂商落地真实场景</h3>
+<p>超过 40 家具身智能厂商在外滩大会集中亮相，机器人不再只展示”跳舞、弹琴”，而是进入药房、洗衣房、咖啡店、工厂车间等真实场景作业：</p>
+<ul>
+<li><strong>零售药房</strong>：搭载蚂蚁灵波通用大脑的机器人，在 80 厘米窄通道中自主完成订单接收、药品识别、分拣与交付，已在上海国大药房真实门店承担夜班分拣</li>
+<li><strong>制造业</strong>：复旦大学眸深具身大模型驱动的轮式双臂机器人，可识别洗衣机螺栓结构与装配孔位，自主完成抓取、定位、插入、拧紧</li>
+<li><strong>生活服务</strong>：擎朗人形机器人在洗衣房协同完成取衣、开关机、折叠等长程任务；开普勒机器人进入狭小咖啡店独立完成取杯、制饮与清洁</li>
+<li><strong>高危作业</strong>：辰行远略飞行智能体与机器狗进入核电、地铁、水厂等无 GPS、无光或强干扰受限空间，自主巡航、避障、识别缺陷</li>
+</ul>
+<p>蚂蚁阿宝同期展示”8 小时外生活圈”：将餐饮、出行、购物、家政等零散需求交给同一个智能体串接，覆盖万余项服务 AI 化适配，并已打通手机、车机、智能眼镜等终端。</p>
+<h3 id="杭州具身展全产业链-350-品牌亮相">杭州具身展：全产业链 350+ 品牌亮相</h3>
+<p>2026 杭州国际具身智能与人形机器人展览会落地杭州国际博览中心，规划展览面积 20000㎡，汇聚 350+ 参展品牌、5 万专业观众。作为全国首个为具身智能机器人产业立法的城市，杭州已出台《杭州市促进具身智能机器人产业发展条例》及”强链补链”三年行动方案，目标到 2027 年实现产业链工业总产值超 500 亿元。</p>
+<h3 id="业内研判">业内研判</h3>
+<p>在 9 月 11 日的”具身智能是否有泡沫”论坛上，多位嘉宾给出了各自的判断：</p>
+<ul>
+<li>至简动力贾鹏：当前”泡沫”更多是阶段与估值的错配；按模型能力看，已表现出部分 ICL（上下文学习）能力，但以”真正形成生产力”为标准可能还需要 <strong>3-4 年甚至 4-5 年</strong></li>
+<li>大晓机器人王晓刚：“我们处在黎明的前期”，最大卡点是数据能否推动机器人形成更强的泛化能力</li>
+<li>苏度科技韩铮：相比 LLM 2018-2019 阶段，关键技术框架已出现，更大的挑战是把不同技术整合成商业可用、高可靠、具有泛化能力的大系统</li>
+<li>22 岁创业者陈博远（逆矩阵科技）：物理 AI 基模最终必须进入真实世界，形成”端-边-云”一体化平台，“边缘情况不是长尾，而是常态”</li>
+</ul>
+<p><strong>值得关注的原因</strong>：当模型能力逐渐趋同，具身智能的下一个竞争维度已从”机器人能做什么”转向”场景、数据、基础设施能否跟上”。“一脑多机”、泛化能力、零样本部署成为高频词；行业不再比拼出货量，转向关注真实应用与稳定泛化能力。</p>
+<h2 id="papercut-全球-ai-编排攻击--anthropic-9-月威胁报告ai-从工具到行动基础设施">PaperCut 全球 AI 编排攻击 + Anthropic 9 月威胁报告：AI 从”工具”到”行动基础设施”</h2>
+<p>9 月 9 日，GreyNoise 与 Blackpoint 同步披露 <strong>PaperCut NG/MF 全球攻击行动</strong>：一个疑似俄语背景的攻击者借助数百个 AI 智能体，针对 CVE-2026-81578（认证绕过）与 CVE-2026-82078（不安全动态类加载）链式利用，至少攻陷 440 台 PaperCut 实例，涉及 48 个国家的 395 家组织。</p>
+<h3 id="攻击流水线">攻击流水线</h3>
+<p>支撑这套编排体系的并非单一模型，而是 <strong>OpenAI Codex 作为执行 harness + DeepSeek 模型作为执行模型</strong>，再配合 Mimikatz、Rubeus、Certipy、Impacket、Metasploit 等成熟攻击工具，以及 AionUI、Hindsight（智能体持久记忆）等编排工具。</p>
+<h3 id="关键时间线按-greynoise-还原">关键时间线（按 GreyNoise 还原）</h3>
+<ul>
+<li>8 月 31 日 14:44 UTC：创建工作区，开始用 AI 分析补丁差分</li>
+<li>16:35：搭建本地实验室（含 AD 域控 + PaperCut 服务器）</li>
+<li>16:09：构建多线程扫描工具，识别 462 个潜在漏洞目标</li>
+<li>9 月 1 日 08:30：战役正式启动，数百个 AI 智能体发起打击</li>
+<li>首小时：78 家组织沦陷，其中 8 家被拿下域控</li>
+<li>战役峰值：<strong>26 秒连续攻陷 11 家组织</strong></li>
+<li>最快单点突破（美国某高中）：初始访问 → 完全控制域控 <strong>7 分钟</strong></li>
+</ul>
+<p>12 起域控沦陷案例中，最快 5 分钟、最长 144 分钟；部分受害环境中初始访问与提权之间存在数天间隔——并非防御起了作用，而是 AI 流水线带来的”产能过剩”已经超出了攻击者自身”消化”战果的能力。</p>
+<h3 id="anthropic-9-月威胁情报报告">Anthropic 9 月威胁情报报告</h3>
+<p>同一天（9 月 10 日），Anthropic 发布《Detecting and countering misuse of AI: September 2026》，梳理 2025 年 12 月至 2026 年 8 月期间中断的七类滥用行为（网络作战、影响力行动、监控、诈骗与欺诈、生物滥用、常规武器开发、非法蒸馏）。报告核心结论：</p>
+<ul>
+<li><strong>“复杂攻击不再需要复杂攻击者”</strong>：AI 已显著缩小了高资源国家行为者与个体操作者之间的劳动力与工具鸿沟</li>
+<li><strong>从助手到编排者</strong>：多数网络作战案例中，AI 已贯穿侦察、工具开发、权限获取、维持访问、情报分析与外泄多个阶段</li>
+<li><strong>vibe hacking 模式兴起</strong>：ShinyHunters 相关攻击者只需给出宽泛目标，模型自主评估环境、写脚本、迭代执行，操作员甚至不必完全理解目标环境</li>
+<li><strong>机器速度的网络杀伤链</strong>：从拿到初始访问到云管理员控制的案例中，平均耗时已压缩到 <strong>3 小时左右</strong></li>
+<li><strong>AI 供应链成为战场</strong>：Anthropic 同步披露了 7 个中国实验室涉嫌对 Claude 进行”非法蒸馏”以提升自研模型的行动</li>
+</ul>
+<p><strong>值得关注的原因</strong>：两起事件从攻防两端印证同一趋势——AI 不再是攻击者的辅助工具，而是行动基础设施本身。值得注意的还有：在至少一次针对疑似漏洞实例的攻击中，<strong>Cloudflare WAF 成功挫败了攻击者</strong>；440 个受害实例中最终拿下域控的只有 12 个——基础性的环境加固、补丁管理、AD 纵深防御在 AI 时代依然有效。同时 Anthropic 报告引用的”封闭循环”风险（攻击者使用 AI 实时修改规避检测）将再次推高防御侧的响应要求。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://www.jiqizhixin.com/articles/openjiuwen-rsi">openJiuwen RSI 框架发布（机器之心）</a></li>
+<li><a href="https://openjiuwen.com/workswarm">WorkSwarm 产品官网</a></li>
+<li><a href="https://arxiv.org/abs/2509.24975">DiffuTester 论文 arXiv:2509.24975</a></li>
+<li><a href="https://github.com/TsinghuaISE/DiffuTester">DiffuTester 代码 GitHub: TsinghuaISE/DiffuTester</a></li>
+<li><a href="https://www.163.com/dy/article/L6K16KVN0514R9P4_pdya11y.html">澎湃新闻：具身智能是否有泡沫？CEO们等待从能做到能用</a></li>
+<li><a href="https://www.chinanews.com/cj/2026/09-11/10694623.shtml">中新网：2026 外滩大会在上海举行，40 余家具身厂商集中亮相</a></li>
+<li><a href="https://www.globalomp.com/expo/23863">杭州国际具身智能与人形机器人展览会官方介绍</a></li>
+<li><a href="https://d.youth.cn/newtech/202609/t20260911_16864228.htm">中国青年网：2026 外滩大会主论坛阵容发布</a></li>
+<li><a href="https://cypro.co.uk/insights/cyber-bulletins/papercut-flaws-exploited-by-hundreds-of-ai-agents">GreyNoise PaperCut 攻击报告 “Agents Gone Wild”</a></li>
+<li><a href="https://www.techrepublic.com/article/news-papercut-ai-agents-compromise-440-servers/">TechRepublic: AI Agents Help Hackers Compromise 440 PaperCut Servers</a></li>
+<li><a href="https://www.anthropic.com/threat-intelligence-report-september-2026">Anthropic 9 月威胁情报报告</a></li>
+<li><a href="https://www.ciol.com/tech/anthropic-ai-autonomous-cyberattacks-threat-intelligence-report-12520699">CIOL: Anthropic Report Warns AI Is Enabling More Autonomous Cyberattacks</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-09-11-curated-september-jdk27-openai-skills">九月技术精选：JDK 27 转正特性与 OpenAI 技能目录</a> </li><li> <a href="/2026-09-08-curated-september-agent-perf-scopedvalue">九月技术精选：给 Agent 装上性能层，ScopedValue 转正</a> </li><li> <a href="/2026-09-07-curated-september-agent-skills-jdk27">九月技术精选：Agent 技能「少写与会写」，JDK 27 倒计时</a> </li><li> <a href="/2026-09-06-curated-september-multiagent-spring">九月技术精选：多 Agent 协作与 Spring Boot 惰性连接</a> </li><li> <a href="/2026-09-04-curated-september-week2-picks">九月技术精选：Agent 工具链下沉与 Spring Boot 提速</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
