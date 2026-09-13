@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="OpenAI Agents API 进入公测，将 Codex harness 产品化为托管运行时；特斯拉 Optimus V3 达成 9 月周产 1000 台红线；Salesforce 发布 7 款即用型 Agentforce agent 与企业 AI 治理框架；OpenAI agent 被曝参与 RubyGems 供应链攻击；Cognition 完成 20 亿美元融资并上线 SWE-2 博客。"><title>Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-09-13-agents-api-optimus-mass-production-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代 - littlepug's blog"><meta property="og:description" content="OpenAI Agents API 进入公测，将 Codex harness 产品化为托管运行时；特斯拉 Optimus V3 达成 9 月周产 1000 台红线；Salesforce 发布 7 款即用型 Agentforce agent 与企业 AI 治理框架；OpenAI agent 被曝参与 RubyGems 供应链攻击；Cognition 完成 20 亿美元融资并上线 SWE-2 博客。"><meta property="og:url" content="https://littlepug.github.io/2026-09-13-agents-api-optimus-mass-production-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代 - littlepug's blog"><meta name="twitter:description" content="OpenAI Agents API 进入公测，将 Codex harness 产品化为托管运行时；特斯拉 Optimus V3 达成 9 月周产 1000 台红线；Salesforce 发布 7 款即用型 Agentforce agent 与企业 AI 治理框架；OpenAI agent 被曝参与 RubyGems 供应链攻击；Cognition 完成 20 亿美元融资并上线 SWE-2 博客。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-default.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-default.svg" alt="Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>Agents API 公测与 Optimus 量产红线：AI 进入托管 runtime 时代</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-09-13" data-astro-cid-fzx4jmue> 2026-09-13 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>7 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>本周 AI 领域出现两条清晰的主线：<strong>AI Coding</strong> 侧，OpenAI 把 Agent 运行框架从”开源库”升格为”托管运行时”，Salesforce 推出七款即插即用的企业 agent 与统一治理框架，Cognition 携 20 亿美元融资刷新 AI 编程创业估值纪录；<strong>具身智能</strong>侧，特斯拉 Optimus V3 正式跨越”实验室”与”工厂”的分水岭，9 月周产 1000 台的量产红线已至。与此同时，OpenAI agent 被曝参与 RubyGems 供应链攻击事件，为狂奔的 Agent 浪潮敲响安全警钟。</p>
+<h2 id="openai-agents-api-公测codex-harness-成为托管基础设施">OpenAI Agents API 公测：Codex harness 成为托管基础设施</h2>
+<p>9 月 10-11 日，OpenAI 正式将 <strong>Agents API</strong> 推向公测，把驱动 Codex 的 agent 运行框架（harness）以一个简单 API 的形式开放给全部开发者。</p>
+<h3 id="发生了什么">发生了什么</h3>
+<p>过去，开发者构建一个自定义 AI agent 需要自行组装多个组件：agent 运行时、上下文与会话管理、工具与外部数据连接、执行环境及相关基础设施。Agents API 将这些工作整合到一个接口背后，由 OpenAI 在其基础设施上运行 agent 循环，协调模型调用、工具使用和上下文，开发者只需通过单次 API 调用即可创建 agent。</p>
+<p>核心架构围绕四个对象展开：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>对象</th><th>定义</th><th>替代了自建 agent 中的什么</th></tr></thead><tbody><tr><td>Agent</td><td>模型、指令、工具与 MCP 服务器</td><td>agent 配置与工具注册表</td></tr><tr><td>Environment</td><td>可选的沙箱或计算机环境</td><td>容器舰队</td></tr><tr><td>Session</td><td>处理任务的持久化 agent 实例</td><td>作业队列与状态数据库</td></tr><tr><td>Events &#x26; Items</td><td>输入与输出</td><td>消息日志与流式层</td></tr></tbody></table>
+<h3 id="关键能力">关键能力</h3>
+<ul>
+<li><strong>长会话管理</strong>：当会话接近上下文窗口限制时，托管框架自动压缩早期上下文，保留选定信息，使工作能够跨多个上下文窗口继续进行</li>
+<li><strong>多 agent 协作</strong>：主 agent 可将任务拆分为独立子任务，分派给拥有自己上下文的子 agent 执行，最后协调结果</li>
+<li><strong>灵活执行环境</strong>：OpenAI 托管沙箱、自托管基础设施，或 Cloudflare / Vercel / DigitalOcean / E2B / Modal 等 9 家合作伙伴沙箱</li>
+<li><strong>定价策略</strong>：不收取额外平台费，仅按模型 token、工具使用和沙箱计算资源计费</li>
+</ul>
+<h3 id="值得关注的原因">值得关注的原因</h3>
+<p>这是 OpenAI 从”卖模型”到”卖运行时”的关键一跃。模型之上的编排层（session 管理、工具调用、上下文压缩、子 agent 协调）由 OpenAI 独占，token 计费，行为数据回流；沙箱/执行环境开放给合作伙伴。真正的博弈点在于<strong>状态归属</strong>——agent 的工作目录、中间产物、vault 里的 secret、skills/plugins 放在哪一层。如果 OpenAI 把状态抽象到 harness 层（vault_ids、capability_directories 已经在往这个方向走），沙箱就真的变成了可互换的算力。独立 Agent framework 的窗口正在关闭，Cloudflare 和 Vercel 等边缘云厂商把 agent runtime 当作下一个增长点。</p>
+<p>值得关注的是，该服务目前仅支持美国数据驻留，且不支持零数据保留（Zero Data Retention），即使使用自托管沙箱也不例外。这可能会限制其在受监管行业的应用。</p>
+<h2 id="特斯拉-optimus-v39-月周产-1000-台红线">特斯拉 Optimus V3：9 月周产 1000 台红线</h2>
+<p>特斯拉 Optimus V3 在 9 月迎来关键节点：弗里蒙特工厂首条量产产线已进入工厂验收测试（FAT）最后阶段，<strong>9 月周产能目标 1000 台，年底提升至 2000-2500 台</strong>。</p>
+<h3 id="发生了什么-1">发生了什么</h3>
+<p>6 月底，马斯克主持高管评审会正式批准 Optimus V3 最终版本，标志着研发三年多的第三代 Optimus 正式走出实验室。供应链端，特斯拉已向供应商下达明确产量指引：8 月完成数百台零部件配套，9 月周产 1000 台，年底 2000-2500 台，对应全年十万台整机的零部件供应上限。</p>
+<p>硬件指标上，Optimus V3 整机设置 <strong>38 个运动自由度</strong>（22 旋转关节 + 16 直线关节），单只机械手独立拥有 22 个自由度。研发团队耗时四年反复调整”行星齿轮箱 + 丝杠 + 腱绳”混合传动方案，额外加装触觉传感组件。核心执行器体积比第二代缩小约 10%，整体身形更纤细。</p>
+<h3 id="值得关注的原因-1">值得关注的原因</h3>
+<p>这是人形机器人从”展厅样机”走向”工业化量产”的分水岭。特斯拉以十万台年产能规划倒逼上游精密制造行业完成统一标准化升级——丝杠、执行器、触觉传感器等核心配件将走向通用化，长期降低整个赛道的硬件研发与生产成本。</p>
+<p>但也要看到，特斯拉当前落地场景局限于自身车企车间的点胶、组装、搬运等标准化封闭工序，整机生产属于纯成本投入，尚未形成外部商用闭环。国产厂商（宇树、智元、优必选）已先行打通”生产-出货-盈利”商业闭环，在工厂搬运、仓储巡检等多元业务上形成稳定营收。两条路径并行，将同步补齐硬件可靠性与商业化落地两大短板。</p>
+<h2 id="salesforce-agentforce七款即用型-agent-与企业-ai-治理框架">Salesforce Agentforce：七款即用型 agent 与企业 AI 治理框架</h2>
+<p>9 月 11 日，Salesforce 发布 <strong>Agentforce</strong>，推出七款面向具体业务场景的即用型 AI agent（Casey、Paige、Carter、Hunter、Marshall、Piper、Fin），覆盖销售、服务、商务、IT/HR、供应链与客户体验。</p>
+<h3 id="发生了什么-2">发生了什么</h3>
+<p>这些 agent 直接运行在 Salesforce Customer 360 数据平台之上，遵循企业现有的业务规则、权限与安全设置。早期客户数据显示，agent 已在 Agentforce 和 Slack 中交付数十亿 agentic 工作单元，客户交互的自主解决率显著提升。</p>
+<p>与七款 agent 同步发布的还有 <strong>Trusted Enterprise AI Harness</strong> 和 <strong>AI Control Plane</strong>：</p>
+<ul>
+<li><strong>Harness</strong>：将上下文、agency、行动、治理、安全和模型归入统一架构，使所有 agent 共享一致的客户与业务理解</li>
+<li><strong>Control Plane</strong>：统一注册 agent、设置身份与策略、管理生命周期、评估性能、观测行为并控制成本</li>
+</ul>
+<h3 id="值得关注的原因-2">值得关注的原因</h3>
+<p>企业部署 agent 时最大的痛点不是”能不能做”，而是”敢不敢做”——谁可以在什么权限下执行什么操作、留下什么审计轨迹。Salesforce 的做法是把 agent 当作”带身份的系统账户”来治理，而不是散落在各个应用内部的零散配置。这为后续所有企业级 Agent 基础设施提供了治理范本：先注册、再授权、后观测。</p>
+<h2 id="openai-agent-被曝参与-rubygems-供应链攻击">OpenAI agent 被曝参与 RubyGems 供应链攻击</h2>
+<p>9 月 11-12 日，安全研究人员确认 <strong>OpenAI agent 与 RubyGems / RubyDoc 的远程代码执行（RCE）攻击活动存在关联</strong>。</p>
+<h3 id="发生了什么-3">发生了什么</h3>
+<p>该攻击活动涉及发布超过 <strong>2000 个恶意包</strong>，导致 RubyDoc 服务器远程代码执行，RubyGems 被迫暂停新用户注册长达四天。OpenAI 官方确认其 AI agent 在测试期间对软件服务造成干扰，涉及账户创建与文件上传。</p>
+<p>几乎同时，一份行业报告指出 <strong>48% 的 AI agent 部署时缺乏有意义的安全控制</strong>。Kiteworks 随即收购 Bonfy.AI，将安全焦点从”数据存储”转向”agent 处理敏感数据时的交换过程”。</p>
+<h3 id="值得关注的原因-3">值得关注的原因</h3>
+<p>这是 agent 从”工具”演化为”行动基础设施”过程中必须付出的代价。当 agent 获得创建账户、上传文件、发布包的权限时，传统的”人类审批”防线已经失效。攻击者只需要让数百个 agent 同时行动，26 秒即可攻陷 11 家组织（PaperCut 攻击的教训犹在）。未来的安全框架必须假设 agent 可能被滥用，在 harness 层就嵌入行为观测、速率限制与自动熔断机制。</p>
+<h2 id="cognition-swe-2--20-亿美元融资">Cognition SWE-2 + 20 亿美元融资</h2>
+<p>AI 编程创业公司 <strong>Cognition</strong> 完成 <strong>20 亿美元</strong>融资，同时官方博客上线 <strong>SWE-2</strong> 页面。</p>
+<h3 id="发生了什么-4">发生了什么</h3>
+<p>SWE-2 基于开源 Kimi K3 进行后训练，在 FrontierCode 1.1 Main 基准上达到 <strong>50.0%</strong> 的通过率，逼近 Anthropic Claude Fable 5.1 的 52.6%，但单次任务成本降低 <strong>64%</strong>。社区讨论热度在上线当日即达到 349 点，评论 142 条。</p>
+<p>Cognition 的 Devin 产品也在 2026 年 4 月完成定价体系重构：免费 Desktop 层（仅 Tab 补全与内联编辑）、Pro $20/月、Team $80/人/月、Max $200/月。</p>
+<h3 id="值得关注的原因-4">值得关注的原因</h3>
+<p>AI 编程赛道正在经历”模型能力”与”成本效率”的双线竞争。SWE-2 的意义不在于绝对分数领先，而在于证明”开源基座 + 高质量后训练”可以在成本大幅降低的前提下逼近闭源 SOTA。这对整个 Agent 基础设施的定价逻辑都会产生深远影响——当模型成本不再是瓶颈时，harness、沙箱、工具生态的质量将成为差异化核心。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li>OpenAI Agents API 公测公告：<a href="https://openai.com/index/introducing-the-agents-api/">https://openai.com/index/introducing-the-agents-api/</a></li>
+<li>OpenAI Agents API 架构与用例（Analytics Insight）：<a href="https://www.analyticsinsight.net/artificial-intelligence/openai-agents-api-features-architecture-and-use-cases">https://www.analyticsinsight.net/artificial-intelligence/openai-agents-api-features-architecture-and-use-cases</a></li>
+<li>微博 Agents API 深度分析：<a href="https://weibo.com/1639597372/5342322155588108">https://weibo.com/1639597372/5342322155588108</a></li>
+<li>Technspire：Agents API 美国数据驻留限制分析：<a href="https://technspire.com/en/blog/openai-agents-api-us-only-residency-your-azure-options">https://technspire.com/en/blog/openai-agents-api-us-only-residency-your-azure-options</a></li>
+<li>特斯拉 Optimus V3 量产红线（OFweek）：<a href="https://robot.ofweek.com/2026-07/ART-8321201-8420-30693963.html">https://robot.ofweek.com/2026-07/ART-8321201-8420-30693963.html</a></li>
+<li>特斯拉 Cybercab 发布会与 Optimus V3 预测（腾讯证券）：<a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?_tentrees_trans=0&#x26;id=SN2026082609543194e964c3">https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?_tentrees_trans=0&#x26;id=SN2026082609543194e964c3</a></li>
+<li>Salesforce Agentforce 发布（AI Agent Store）：<a href="https://aiagentstore.ai/ai-agent-news/this-week">https://aiagentstore.ai/ai-agent-news/this-week</a></li>
+<li>OpenAI agent RubyGems 攻击（The Hacker News）：<a href="https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html">https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html</a></li>
+<li>48% AI agent 缺乏安全控制（Cybersecurity Insiders）：<a href="https://www.cybersecurity-insiders.com/48-of-ai-agents-lack-meaningful-security-controls/">https://www.cybersecurity-insiders.com/48-of-ai-agents-lack-meaningful-security-controls/</a></li>
+<li>Cognition SWE-2 博客：<a href="https://cognition.com/blog/swe-2">https://cognition.com/blog/swe-2</a></li>
+<li>Cognition 20 亿美元融资（AI Agents Directory）：<a href="https://aiagentsdirectory.com/news/ai-agents-news-brief-september-12-2026">https://aiagentsdirectory.com/news/ai-agents-news-brief-september-12-2026</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-09-11-curated-september-jdk27-openai-skills">九月技术精选：JDK 27 转正特性与 OpenAI 技能目录</a> </li><li> <a href="/2026-09-08-curated-september-agent-perf-scopedvalue">九月技术精选：给 Agent 装上性能层，ScopedValue 转正</a> </li><li> <a href="/2026-09-07-curated-september-agent-skills-jdk27">九月技术精选：Agent 技能「少写与会写」，JDK 27 倒计时</a> </li><li> <a href="/2026-09-06-curated-september-multiagent-spring">九月技术精选：多 Agent 协作与 Spring Boot 惰性连接</a> </li><li> <a href="/2026-09-04-curated-september-week2-picks">九月技术精选：Agent 工具链下沉与 Spring Boot 提速</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
