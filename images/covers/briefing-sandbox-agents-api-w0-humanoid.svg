@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1023"/>
+      <stop offset="100%" stop-color="#1a1a3a"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e2442"/>
+      <stop offset="100%" stop-color="#14182e"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff5e5e"/>
+      <stop offset="100%" stop-color="#c92727"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5ee0ff"/>
+      <stop offset="100%" stop-color="#3aa8ff"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffc857"/>
+      <stop offset="100%" stop-color="#ff8a3d"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5ee0a3"/>
+      <stop offset="100%" stop-color="#2bb673"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- subtle grid -->
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="90" x2="800" y2="90"/>
+    <line x1="0" y1="180" x2="800" y2="180"/>
+    <line x1="0" y1="270" x2="800" y2="270"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+  </g>
+
+  <!-- title -->
+  <g font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" fill="#ffffff">
+    <text x="40" y="58" font-size="24" font-weight="700">编码 Agent 沙箱失守 · Agents API · 书生 W0</text>
+    <text x="40" y="84" font-size="14" fill="#9aa3c7">2026-09-14 · AI 编程与具身智能双线推进</text>
+  </g>
+
+  <!-- Card 1: Sandbox escape -->
+  <g transform="translate(40,120)" filter="url(#glow)">
+    <rect width="170" height="150" rx="10" fill="url(#panel)" stroke="#2a2f4a" stroke-width="1"/>
+    <rect x="15" y="15" width="140" height="80" rx="6" fill="none" stroke="#3a3f5e" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M45 70 L65 55 L85 70 L105 55 L125 70" stroke="url(#red)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="130" cy="32" r="12" fill="url(#red)"/>
+    <path d="M124 26 L136 38 M136 26 L124 38" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="85" y="120" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#ffffff">CBSE 沙箱绕过</text>
+    <text x="85" y="138" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#9aa3c7">Claude / Codex / Cursor</text>
+  </g>
+
+  <!-- Card 2: Agents API cloud -->
+  <g transform="translate(230,120)" filter="url(#glow)">
+    <rect width="170" height="150" rx="10" fill="url(#panel)" stroke="#2a2f4a" stroke-width="1"/>
+    <path d="M60 45 Q60 30 75 30 Q82 22 95 24 Q108 18 118 30 Q132 30 132 45 Q138 45 138 56 L60 56 Q54 56 60 45 Z" fill="url(#cyan)" opacity="0.9"/>
+    <rect x="85" y="60" width="30" height="22" rx="2" fill="#ffffff"/>
+    <path d="M90 70 L100 75 L110 70" stroke="#1a1a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="85" y="120" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#ffffff">Agents API 公测</text>
+    <text x="85" y="138" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#9aa3c7">托管 runtime · 多沙箱</text>
+  </g>
+
+  <!-- Card 3: W0 robot hand -->
+  <g transform="translate(420,120)" filter="url(#glow)">
+    <rect width="170" height="150" rx="10" fill="url(#panel)" stroke="#2a2f4a" stroke-width="1"/>
+    <path d="M55 85 C55 70 65 60 75 60 C85 60 95 70 95 85 L95 95 L85 95 L85 70 L80 70 L80 95 L70 95 L70 70 L65 70 L65 95 L55 95 Z" fill="url(#amber)"/>
+    <circle cx="75" cy="45" r="8" fill="url(#green)" opacity="0.8"/>
+    <circle cx="105" cy="55" r="5" fill="url(#green)" opacity="0.6"/>
+    <text x="85" y="120" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#ffffff">书生 W0</text>
+    <text x="85" y="138" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#9aa3c7">视-力-触三态融合</text>
+  </g>
+
+  <!-- Card 4: Humanoid production -->
+  <g transform="translate(610,120)" filter="url(#glow)">
+    <rect width="150" height="150" rx="10" fill="url(#panel)" stroke="#2a2f4a" stroke-width="1"/>
+    <circle cx="75" cy="45" r="12" fill="url(#green)"/>
+    <rect x="63" y="60" width="24" height="38" rx="4" fill="url(#green)"/>
+    <line x1="52" y1="68" x2="40" y2="92" stroke="url(#green)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="98" y1="68" x2="110" y2="92" stroke="url(#green)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="70" y1="98" x2="66" y2="128" stroke="url(#green)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="80" y1="98" x2="84" y2="128" stroke="url(#green)" stroke-width="5" stroke-linecap="round"/>
+    <text x="75" y="120" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" fill="#ffffff">量产提速</text>
+    <text x="75" y="138" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#9aa3c7">H1 出货 1.91 万台</text>
+  </g>
+
+  <!-- bottom accent line -->
+  <line x1="40" y1="380" x2="760" y2="380" stroke="#3a3f5e" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="40" y="405" font-family="-apple-system, sans-serif" font-size="12" fill="#9aa3c7">littlepug · AI Coding &amp; Embodied Intelligence Briefing</text>
+</svg>
