@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1026"/>
+      <stop offset="0.55" stop-color="#101a3d"/>
+      <stop offset="1" stop-color="#0a1f2e"/>
+    </linearGradient>
+    <linearGradient id="agentLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#37e6c3"/>
+    </linearGradient>
+    <linearGradient id="simCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd166"/>
+      <stop offset="1" stop-color="#f4a261"/>
+    </linearGradient>
+    <radialGradient id="glowBlue" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4f8cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4f8cff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowTeal" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#37e6c3" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#37e6c3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- grid -->
+  <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="1">
+    <path d="M0 90 H800 M0 180 H800 M0 270 H800 M0 360 H800"/>
+    <path d="M100 0 V450 M200 0 V450 M300 0 V450 M400 0 V450 M500 0 V450 M600 0 V450 M700 0 V450"/>
+  </g>
+
+  <!-- glows -->
+  <circle cx="230" cy="170" r="150" fill="url(#glowBlue)"/>
+  <circle cx="610" cy="300" r="160" fill="url(#glowTeal)"/>
+
+  <!-- header -->
+  <text x="48" y="72" font-family="'PingFang SC','Hiragino Sans GB',sans-serif" font-size="30" font-weight="700" fill="#ffffff">AI 行业快讯 · 2026-09-15</text>
+  <text x="48" y="104" font-family="'PingFang SC','Hiragino Sans GB',sans-serif" font-size="15" fill="#9fb3d9">能力上限 × 可控性 × 成本：Agent、真实代码库与机器人新基建</text>
+
+  <!-- left: agent swarm solving math problem -->
+  <g>
+    <rect x="48" y="140" width="330" height="200" rx="14" fill="#141c3a" stroke="#2a3a6a" stroke-width="1.5"/>
+    <text x="68" y="172" font-family="'PingFang SC',sans-serif" font-size="16" font-weight="600" fill="#ffffff">≈10000 并发 Agent × 88h</text>
+    <text x="68" y="194" font-family="'PingFang SC',sans-serif" font-size="12.5" fill="#8fa8d8">攻克千禧年难题 · 过程不可审计</text>
+    <!-- swarm nodes -->
+    <g fill="url(#agentLine)">
+      <circle cx="88" cy="240" r="4"/><circle cx="112" cy="222" r="3.5"/><circle cx="136" cy="248" r="4"/>
+      <circle cx="160" cy="228" r="3"/><circle cx="184" cy="252" r="4"/><circle cx="208" cy="232" r="3.5"/>
+      <circle cx="232" cy="256" r="3"/><circle cx="256" cy="236" r="4"/><circle cx="280" cy="260" r="3.5"/>
+      <circle cx="304" cy="240" r="3"/><circle cx="328" cy="264" r="4"/><circle cx="352" cy="244" r="3"/>
+    </g>
+    <g stroke="#4f8cff" stroke-opacity="0.45" stroke-width="1">
+      <path d="M88 240 L112 222 L136 248 L160 228 L184 252 L208 232 L232 256 L256 236 L280 260 L304 240 L328 264 L352 244" fill="none"/>
+    </g>
+    <!-- equation hint -->
+    <text x="68" y="310" font-family="'Times New Roman',serif" font-style="italic" font-size="20" fill="#37e6c3">∂u/∂t + (u·∇)u = −∇p/ρ + ν∇²u</text>
+    <rect x="308" y="292" width="56" height="26" rx="13" fill="#37e6c3" fill-opacity="0.15" stroke="#37e6c3" stroke-width="1"/>
+    <text x="336" y="310" text-anchor="middle" font-family="'PingFang SC',sans-serif" font-size="12" fill="#37e6c3">88h</text>
+  </g>
+
+  <!-- right: real repo drop -->
+  <g>
+    <rect x="422" y="140" width="330" height="200" rx="14" fill="#141c3a" stroke="#2a3a6a" stroke-width="1.5"/>
+    <text x="442" y="172" font-family="'PingFang SC',sans-serif" font-size="16" font-weight="600" fill="#ffffff">Real-SWE：真实企业代码库</text>
+    <text x="442" y="194" font-family="'PingFang SC',sans-serif" font-size="12.5" fill="#8fa8d8">最强编程 Agent 成功率不足四成</text>
+    <!-- bars -->
+    <g>
+      <rect x="452" y="220" width="100" height="18" rx="4" fill="#ff6b6b"/>
+      <text x="560" y="234" font-family="'SF Mono',monospace" font-size="12" fill="#ffb3b3">38.8%</text>
+      <rect x="452" y="248" width="85" height="18" rx="4" fill="#ffa94d"/>
+      <text x="545" y="262" font-family="'SF Mono',monospace" font-size="12" fill="#ffd8a8">33.8%</text>
+      <rect x="452" y="276" width="78" height="18" rx="4" fill="#ffd43b"/>
+      <text x="538" y="290" font-family="'SF Mono',monospace" font-size="12" fill="#ffe999">31.2%</text>
+      <rect x="452" y="304" width="40" height="18" rx="4" fill="#845ef7"/>
+      <text x="500" y="318" font-family="'SF Mono',monospace" font-size="12" fill="#d0bfff">16.2%</text>
+    </g>
+    <text x="700" y="330" text-anchor="end" font-family="'PingFang SC',sans-serif" font-size="11" fill="#7b8fc4">SWE-bench 70–90% → 私有库 16–39%</text>
+  </g>
+
+  <!-- bottom: robot + sim card -->
+  <g>
+    <!-- robot silhouette -->
+    <g transform="translate(96,368)" fill="#37e6c3">
+      <rect x="0" y="18" width="10" height="26" rx="3"/>
+      <rect x="16" y="18" width="10" height="26" rx="3"/>
+      <rect x="-2" y="-14" width="30" height="34" rx="8" fill-opacity="0.9"/>
+      <rect x="4" y="-7" width="18" height="7" rx="3.5" fill="#0a1f2e"/>
+      <rect x="7" y="-5" width="4" height="3" rx="1" fill="#37e6c3"/>
+      <rect x="13" y="-5" width="4" height="3" rx="1" fill="#37e6c3"/>
+    </g>
+    <!-- signal waves -->
+    <g stroke="#37e6c3" stroke-opacity="0.7" stroke-width="2" fill="none">
+      <path d="M96 352 a 26 26 0 0 1 36 0"/>
+      <path d="M88 342 a 38 38 0 0 1 52 0"/>
+    </g>
+    <!-- SIM card -->
+    <g transform="translate(150,344)">
+      <rect x="0" y="0" width="56" height="42" rx="7" fill="url(#simCard)"/>
+      <rect x="12" y="14" width="16" height="14" rx="3" fill="#0a1f2e"/>
+      <path d="M16 14 v14 M24 14 v14 M12 21 h16" stroke="#ffd166" stroke-width="1.5"/>
+      <text x="66" y="28" font-family="'PingFang SC',sans-serif" font-size="15" font-weight="600" fill="#ffffff">全球首张机器人专用 SIM 卡</text>
+    </g>
+    <!-- price tag -->
+    <g transform="translate(560,344)">
+      <rect x="0" y="0" width="192" height="42" rx="21" fill="#141c3a" stroke="#2a3a6a" stroke-width="1.5"/>
+      <text x="96" y="27" text-anchor="middle" font-family="'PingFang SC',sans-serif" font-size="15" fill="#ffffff">G1+ ¥9.5万 · 小白 <tspan fill="#37e6c3" font-weight="700">¥9800</tspan></text>
+    </g>
+  </g>
+
+  <!-- footer strip -->
+  <rect x="0" y="432" width="800" height="18" fill="#37e6c3" fill-opacity="0.12"/>
+  <text x="752" y="424" text-anchor="end" font-family="'SF Mono',monospace" font-size="11" fill="#5c6f9e">littlepug · briefing</text>
+</svg>
