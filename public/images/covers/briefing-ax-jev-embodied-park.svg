@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1c33"/>
+      <stop offset="0.55" stop-color="#12294a"/>
+      <stop offset="1" stop-color="#1a3a5c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4fc3f7"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4fc3f7" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4fc3f7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <ellipse cx="620" cy="110" rx="260" ry="160" fill="url(#glow)"/>
+
+  <!-- grid dots -->
+  <g fill="#7dd3fc" opacity="0.25">
+    <circle cx="60" cy="60" r="2"/><circle cx="120" cy="60" r="2"/><circle cx="180" cy="60" r="2"/>
+    <circle cx="60" cy="110" r="2"/><circle cx="120" cy="110" r="2"/><circle cx="180" cy="110" r="2"/>
+    <circle cx="60" cy="160" r="2"/><circle cx="120" cy="160" r="2"/><circle cx="180" cy="160" r="2"/>
+  </g>
+
+  <!-- title -->
+  <text x="56" y="98" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="44" font-weight="700" fill="#ffffff">AI 行业快讯</text>
+  <text x="56" y="140" font-family="'SF Mono','Menlo',monospace" font-size="20" fill="#7dd3fc">2026-09-21 · AI Coding × 具身智能</text>
+
+  <!-- left card: AX orchestration -->
+  <g transform="translate(56,180)">
+    <rect width="300" height="100" rx="12" fill="#0d2340" stroke="#2b4a73"/>
+    <circle cx="34" cy="50" r="16" fill="none" stroke="#4fc3f7" stroke-width="2.5"/>
+    <circle cx="34" cy="50" r="6" fill="#4fc3f7"/>
+    <line x1="60" y1="38" x2="96" y2="26" stroke="#4fc3f7" stroke-width="2"/>
+    <line x1="60" y1="50" x2="96" y2="50" stroke="#4fc3f7" stroke-width="2"/>
+    <line x1="60" y1="62" x2="96" y2="74" stroke="#4fc3f7" stroke-width="2"/>
+    <circle cx="106" cy="24" r="7" fill="#34d399"/>
+    <circle cx="106" cy="50" r="7" fill="#34d399"/>
+    <circle cx="106" cy="76" r="7" fill="#34d399"/>
+    <text x="132" y="42" font-family="'SF Mono',monospace" font-size="17" font-weight="700" fill="#ffffff">google/ax</text>
+    <text x="132" y="66" font-family="'PingFang SC',sans-serif" font-size="13" fill="#9fb8d4">Agent 编排进入 K8s 时代</text>
+  </g>
+
+  <!-- right card: Jev decision -->
+  <g transform="translate(386,180)">
+    <rect width="300" height="100" rx="12" fill="#0d2340" stroke="#2b4a73"/>
+    <rect x="26" y="30" width="82" height="40" rx="8" fill="#123257"/>
+    <text x="67" y="55" font-family="'SF Mono',monospace" font-size="15" font-weight="700" fill="#4fc3f7" text-anchor="middle">Jev</text>
+    <path d="M118 50 h44" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <rect x="172" y="22" width="46" height="26" rx="6" fill="#0f2c1f" stroke="#34d399"/>
+    <text x="195" y="40" font-family="'SF Mono',monospace" font-size="12" fill="#34d399" text-anchor="middle">PASS</text>
+    <rect x="172" y="54" width="46" height="26" rx="6" fill="#331b1b" stroke="#f87171"/>
+    <text x="195" y="72" font-family="'SF Mono',monospace" font-size="12" fill="#f87171" text-anchor="middle">ESC</text>
+    <text x="232" y="46" font-family="'PingFang SC',sans-serif" font-size="12" fill="#9fb8d4">亚秒裁定</text>
+    <text x="232" y="66" font-family="'PingFang SC',sans-serif" font-size="12" fill="#9fb8d4">校验回路</text>
+  </g>
+
+  <!-- bottom: embodied park -->
+  <g transform="translate(56,316)">
+    <rect width="630" height="90" rx="12" fill="#0d2340" stroke="#2b4a73"/>
+    <!-- ferris wheel -->
+    <g transform="translate(70,44)" stroke="#7dd3fc" fill="none" stroke-width="2">
+      <circle r="26"/>
+      <line x1="-26" y1="0" x2="26" y2="0"/><line x1="0" y1="-26" x2="0" y2="26"/>
+      <line x1="-18" y1="-18" x2="18" y2="18"/><line x1="-18" y1="18" x2="18" y2="-18"/>
+      <line x1="0" y1="26" x2="0" y2="40"/>
+    </g>
+    <!-- robot head -->
+    <g transform="translate(170,40)">
+      <rect x="-16" y="-18" width="32" height="26" rx="7" fill="none" stroke="#34d399" stroke-width="2.5"/>
+      <circle cx="-7" cy="-5" r="3.2" fill="#34d399"/>
+      <circle cx="7" cy="-5" r="3.2" fill="#34d399"/>
+      <line x1="0" y1="8" x2="0" y2="26" stroke="#34d399" stroke-width="2.5"/>
+    </g>
+    <text x="230" y="38" font-family="'PingFang SC',sans-serif" font-size="15" fill="#ffffff" font-weight="600">智元 × 长隆具身智能乐园 9/24 开园</text>
+    <text x="230" y="64" font-family="'SF Mono',monospace" font-size="12.5" fill="#7dd3fc">300 台机器人上岗 · AX · Jev · 安全审计 Skill</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/>
+    </marker>
+  </defs>
+</svg>
