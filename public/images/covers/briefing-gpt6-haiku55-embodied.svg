@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1026"/>
+      <stop offset="55%" stop-color="#141a3a"/>
+      <stop offset="100%" stop-color="#1c1440"/>
+    </linearGradient>
+    <linearGradient id="glow1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f8cff"/>
+      <stop offset="100%" stop-color="#7f5cff"/>
+    </linearGradient>
+    <linearGradient id="drop" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2dd4a7"/>
+      <stop offset="100%" stop-color="#4f8cff"/>
+    </linearGradient>
+    <radialGradient id="star" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- 星点背景 -->
+  <g fill="#ffffff" opacity="0.5">
+    <circle cx="90" cy="60" r="1.4"/><circle cx="210" cy="110" r="1"/>
+    <circle cx="330" cy="50" r="1.2"/><circle cx="470" cy="90" r="1"/>
+    <circle cx="610" cy="55" r="1.4"/><circle cx="720" cy="120" r="1"/>
+    <circle cx="140" cy="200" r="1"/><circle cx="680" cy="220" r="1.2"/>
+    <circle cx="60" cy="330" r="1.2"/><circle cx="740" cy="340" r="1"/>
+  </g>
+
+  <!-- 左侧标题区 -->
+  <text x="48" y="88" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="20" fill="#8fa8ff" letter-spacing="4">AI BRIEFING · 2026-10-08</text>
+  <text x="48" y="150" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="44" font-weight="700" fill="#ffffff">GPT-6 × Haiku 5.5</text>
+  <text x="48" y="196" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="24" fill="#c3cdf2">交互革新与价格战，具身智能走向服务</text>
+
+  <!-- GPT-6 节点 -->
+  <circle cx="150" cy="290" r="46" fill="none" stroke="url(#glow1)" stroke-width="3"/>
+  <circle cx="150" cy="290" r="60" fill="none" stroke="#4f8cff" stroke-opacity="0.25" stroke-width="1.5"/>
+  <text x="150" y="285" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="20" font-weight="700" fill="#ffffff">GPT-6</text>
+  <text x="150" y="308" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#9db4ff">Intelligent UI</text>
+
+  <!-- Haiku 5.5 价格下降 -->
+  <g transform="translate(300,240)">
+    <polyline points="0,20 30,34 60,26 90,52" fill="none" stroke="url(#drop)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="90,52 78,44 76,58" fill="#2dd4a7"/>
+    <text x="0" y="80" font-family="-apple-system, sans-serif" font-size="15" fill="#2dd4a7" font-weight="600">-75% 成本 · -90% 低价档</text>
+    <text x="0" y="0" font-family="-apple-system, sans-serif" font-size="15" fill="#c3cdf2">Haiku 5.5</text>
+  </g>
+
+  <!-- 人形机器人剪影 -->
+  <g transform="translate(660,190)" fill="#7f5cff" opacity="0.9">
+    <circle cx="0" cy="0" r="16"/>
+    <rect x="-13" y="20" width="26" height="46" rx="10"/>
+    <rect x="-30" y="26" width="12" height="40" rx="6" transform="rotate(12 -24 26)"/>
+    <rect x="18" y="26" width="12" height="40" rx="6" transform="rotate(-12 24 26)"/>
+    <rect x="-12" y="70" width="10" height="52" rx="5"/>
+    <rect x="2" y="70" width="10" height="52" rx="5"/>
+  </g>
+  <circle cx="660" cy="190" r="70" fill="none" stroke="#7f5cff" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="4 6"/>
+
+  <!-- 底部要点条 -->
+  <g font-family="-apple-system, 'PingFang SC', sans-serif" font-size="13" fill="#8fa8ff">
+    <text x="48" y="410">① GPT-6 Sol / Luna 全球推送</text>
+    <text x="48" y="432">② Haiku 5.5 价格战</text>
+    <text x="290" y="410">③ Surface Laptop Ultra 本地代码模型</text>
+    <text x="290" y="432">④ GitHub：1/3 PR 有 Agent 参与</text>
+    <text x="600" y="410">⑤ 优必选 · 智元</text>
+    <text x="600" y="432">具身智能上岗</text>
+  </g>
+</svg>
