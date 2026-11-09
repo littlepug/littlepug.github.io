@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="45%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#0369a1">BRIEFING · 2026-11-09</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="40" font-weight="700" fill="#1e1e2f">Agentic Coding &amp; HALO</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#075985">Rubicon / Co-Design Bench / Apple HALO</text>
+  <!-- Repo / agents decoration -->
+  <rect x="480" y="215" width="140" height="145" rx="8" fill="#ffffff" opacity="0.75"/>
+  <text x="500" y="248" font-family="monospace" font-size="14" font-weight="700" fill="#0284c7">Rubicon</text>
+  <text x="500" y="274" font-family="monospace" font-size="12" fill="#0369a1">5000 agents</text>
+  <text x="500" y="296" font-family="monospace" font-size="12" fill="#0369a1">7200 push/s</text>
+  <text x="500" y="318" font-family="monospace" font-size="12" fill="#0369a1">git infra</text>
+  <!-- Robot hint -->
+  <circle cx="690" cy="240" r="16" fill="#0284c7" opacity="0.6"/>
+  <rect x="672" y="262" width="36" height="52" rx="8" fill="#0369a1" opacity="0.45"/>
+  <rect x="662" y="320" width="120" height="12" rx="6" fill="#0284c7" opacity="0.35"/>
+</svg>
