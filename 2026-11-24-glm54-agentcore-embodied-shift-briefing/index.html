@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="智谱 GLM-5.4 首次用 Loop Transformer 让 750B 基座逼近 3T 级智能，并把 coding 推向&#34;泛 Coding&#34;；同周 Claude Code、Codex CLI、Gemini CLI 三家终端 agent 集体改默认权限与默认模型，微软 agent-framework 遭 PyPI 投毒；具身一侧 OpenAI 撤销独立机器人团队改由主模型直接出动作，至简动力获蚂蚁领投 1 亿美元，智元精灵 G2 进入芯片封测产线。"><title>GLM-5.4 发布：泛 Coding 与具身换挡 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-11-24-glm54-agentcore-embodied-shift-briefing/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="GLM-5.4 发布：泛 Coding 与具身换挡 - littlepug's blog"><meta property="og:description" content="智谱 GLM-5.4 首次用 Loop Transformer 让 750B 基座逼近 3T 级智能，并把 coding 推向&#34;泛 Coding&#34;；同周 Claude Code、Codex CLI、Gemini CLI 三家终端 agent 集体改默认权限与默认模型，微软 agent-framework 遭 PyPI 投毒；具身一侧 OpenAI 撤销独立机器人团队改由主模型直接出动作，至简动力获蚂蚁领投 1 亿美元，智元精灵 G2 进入芯片封测产线。"><meta property="og:url" content="https://littlepug.github.io/2026-11-24-glm54-agentcore-embodied-shift-briefing/"><meta property="og:image" content="https://littlepug.github.io/images/covers/briefing-loop-agentcore-embodied.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="GLM-5.4 发布：泛 Coding 与具身换挡 - littlepug's blog"><meta name="twitter:description" content="智谱 GLM-5.4 首次用 Loop Transformer 让 750B 基座逼近 3T 级智能，并把 coding 推向&#34;泛 Coding&#34;；同周 Claude Code、Codex CLI、Gemini CLI 三家终端 agent 集体改默认权限与默认模型，微软 agent-framework 遭 PyPI 投毒；具身一侧 OpenAI 撤销独立机器人团队改由主模型直接出动作，至简动力获蚂蚁领投 1 亿美元，智元精灵 G2 进入芯片封测产线。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/briefing-loop-agentcore-embodied.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>GLM-5.4 发布：泛 Coding 与具身换挡</span> </nav>   <img class="article-cover-banner" src="/images/covers/briefing-loop-agentcore-embodied.svg" alt="GLM-5.4 发布：泛 Coding 与具身换挡" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>行业快讯</span> <h1 class="article-title" data-astro-cid-fzx4jmue>GLM-5.4 发布：泛 Coding 与具身换挡</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-11-24" data-astro-cid-fzx4jmue> 2026-11-24 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>11 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>11 月 23 日至 24 日，AI 领域的两条主线同时出现了”结构级”的变化：<strong>coding 一侧的重心从”模型能不能写对”转向”运行时、权限与供应链能不能管住”</strong>，<strong>具身智能一侧则从”专用机器人堆栈”退回”主模型直接出动作”</strong>。本文筛出 5 条值得细读的动态，另有几条短讯附在文末。</p>
+<h2 id="智谱-glm-54用循环计算换推理深度">智谱 GLM-5.4：用循环计算换推理深度</h2>
+<h3 id="发生了什么">发生了什么</h3>
+<p>11 月 23 日晚，智谱发布新一代旗舰模型 <strong>GLM-5.4</strong>，首次采用 <strong>Loop Transformer 架构</strong>。做法是把已训好的 750B 级基座按 28 层一组做<strong>两轮循环推演</strong>——同一组共享权重的层在一次计算中执行两遍，第二轮在上一轮的隐状态上继续细化结果，从而在不增加参数量的前提下获得更深的网络。智谱称 GLM-5.4 的智能水平可对标 <strong>2 万亿至 3 万亿参数级</strong>模型。</p>
+<p>同时，新模型补上了<strong>视觉输入</strong>，并把 coding 能力外推到智谱所说的”泛 Coding”：Code to Video、Code to Game、Code to 3D、Code to Image，并支持与第三方建模软件联动。官方演示里有纯数学几何 + 自定义着色器从零生成 3D 微距场景、用前端代码实时画出视频短片这类用例。</p>
+<h3 id="开放节奏与硬指标">开放节奏与硬指标</h3>
+<ul>
+<li><strong>开放范围</strong>：即日起向 GLM Coding Plan 全量用户开放，同步上线 ZCode、Trae、WorkBuddy、Qoder 等编码平台；Coding Plan V2/V3 与团队版额度提升至 <strong>1.5 倍</strong></li>
+<li><strong>API</strong>：待安全评估后上线；<strong>模型权重计划以”负责任的方式”开源</strong></li>
+<li><strong>速度</strong>：官方口径为非高峰最高 200 token/s，高峰 70–80 token/s</li>
+<li><strong>评测</strong>：200 个真实场景的编程实战评测（官方内部数据，暂无第三方榜单验证）；智谱自评”仍是 Coding 体感最强的国产模型”，长程任务与视觉复刻表现突出</li>
+<li><strong>下一代</strong>：管理层预告第四季度推出约 3 万亿参数旗舰（市场推测为 GLM-5.5，时间点在 12 月前后），规模约为现有基座的 4 倍</li>
+</ul>
+<h3 id="值得关注的点">值得关注的点</h3>
+<ul>
+<li><strong>架构路线的第二次分岔</strong>。过去两年提升智能的主流做法是堆参数、堆数据、堆 RL；Loop Transformer 走的是”堆计算深度”，用更少的权重换更长的思考链。它和把基座直接改造成循环结构”复用已训权重”的做法，恰好绕开了重训的成本——这让”老基座再榨一轮”成为一条现实路径。</li>
+<li><strong>官方也在承认代价</strong>。智谱坦言新架构容易陷入过长的”雷霆大思考”，且没有回答”不同难度任务该怎么分配计算量""循环轮数继续加、规模继续扩收益如何变化”这两个关键问题。换句话说，<strong>Loop 目前更像一次对”计算深度”的可行性验证，而不是终局架构</strong>。</li>
+<li><strong>“泛 Coding”是对 coding agent 能力边界的一次重新划线</strong>。如果代码成为连接文本与空间、视频、3D 的通用接口，那么评测 coding 能力的标尺就不该只是 SWE-bench 式的修 bug，而要包含”用代码构建一个可运行的世界”。</li>
+<li>配套的国产算力进展也值得一提：摩根大通研报称智谱已实现 <strong>10 万卡级国产芯片规模化推理</strong>，GLM-5.3-Flash 在国产芯片上的推理毛利率已转正。</li>
+</ul>
+<h2 id="三家终端-coding-agent-同周改默认值agent-运行时成了新攻击面">三家终端 coding agent 同周改默认值，agent 运行时成了新攻击面</h2>
+<h3 id="发生了什么-1">发生了什么</h3>
+<p>11 月 19–20 日，三大终端 coding agent 在同一周内密集发版（截至 11 月 23 日仍为各自最新稳定版）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工具</th><th>版本</th><th>关键变化</th></tr></thead><tbody><tr><td>Claude Code</td><td>v2.1.328 / 329 / 330</td><td>三次共 <strong>416 条变更、280 处修复</strong>；<strong>Auto Mode 在 Bedrock / Vertex / Foundry 上默认开启</strong>；<code>/loop</code> 延长至 30 天；内置 easel 图表</td></tr><tr><td>OpenAI Codex CLI</td><td>rust-v0.171.0</td><td><strong>GPT-6.2 Sol 成为目录默认模型</strong>；TUI Workspace 默认开启</td></tr><tr><td>Gemini CLI</td><td>v0.69.0 / v0.70.0</td><td>修补 <strong>shell 审批、策略匹配、系统 MCP</strong> 三处安全缺口</td></tr></tbody></table>
+<p>同期还有一起直接影响 agent 运行时的供应链事件：微软 <strong>agent-framework</strong> 的 PyPI 包 1.26.1 / 1.26.2 两个版本被上传恶意代码，内含 Python <code>.pth</code> 启动钩子以窃取凭据，随后被 PyPI 隔离。</p>
+<h3 id="值得关注的点-1">值得关注的点</h3>
+<ul>
+<li><strong>默认值变更比新功能更危险</strong>。Code Mode 下不再对脚本输出执行 <code>UserPromptSubmit</code> hooks，<code>PreToolUse</code> hook 报错也不再自动阻断工具调用——这两条都会静默改变既有的安全护栏语义。企业如果要求人工审批，必须显式设 <code>disableAutoMode</code> 或把 <code>permissions.defaultMode</code> 钉回 <code>default</code>（注意：项目级 <code>.claude/settings.json</code> 里写 <code>auto</code> 会被静默忽略）。</li>
+<li><strong>别随手升 2.1.329</strong>：该版本移除了 <code>max_tokens</code> 超过上限时的自动重试，次日 2.1.330 又回滚了。升级路径直接跳 330；同时 Cowork v6.28899.6 要求远端 SSH 主机的 Claude Code ≥ 2.1.330，否则 SSH 会话起不来。</li>
+<li><strong>agent 运行时已进入”供应链攻击”射程</strong>。以前大家关心 prompt injection，现在要关心 <code>pip install</code> 装进来的启动钩子。CI 镜像、构建机、开发笔记本上的 agent 都持有凭据，一次投毒就可能横向扩散。实践中应该做的是：锁定 lockfile、在 CI 层封禁已知恶意版本、把 agent 的凭据换成短时效令牌。</li>
+</ul>
+<h2 id="aws-bedrock-agentcore-运行时升级把跑得起变成可算的账">AWS Bedrock AgentCore 运行时升级：把”跑得起”变成可算的账</h2>
+<h3 id="发生了什么-2">发生了什么</h3>
+<p>AWS 宣布升级 <strong>Amazon Bedrock AgentCore</strong> 的运行层：</p>
+<ul>
+<li><strong>算力</strong>：每会话最多 <strong>8 vCPU / 32 GB 内存</strong>（约为上一版的 4 倍），容器镜像上限 <strong>10 GB</strong></li>
+<li><strong>内存</strong>：agent 释放内存后几分钟内即可回收，空闲 agent 可<strong>缩容到零</strong>；交互之间存在自然停顿的多轮对话 agent，单会话内存消耗最高降低 <strong>68%</strong></li>
+<li><strong>计价</strong>：引入<strong>基线定价</strong>——为每个会话设定最低内存分配，工作负载可按需突增到基线的 4 倍</li>
+<li><strong>隔离范围扩展</strong>：从”计算隔离”延伸到 agent 执行过程中访问与生成的数据，支持 FUSE 动态挂载，把 agent 的工作内容落盘到文件系统（含 S3 桶）</li>
+</ul>
+<h3 id="值得关注的点-2">值得关注的点</h3>
+<p>HFS Research 的 Ashish Chaturvedi 给出的判断很准：<strong>“编译大型代码库的编程 agent、加载完整网页的浏览器 agent、在本地跑小模型的 agent，都已经超出了此前的会话规模限制”</strong>——开发者只能笨拙地拆任务或者把工作搬出隔离环境。这次升级直接对准的就是这三类场景。</p>
+<p>对做 agent 产品的团队来说，真正的信号在计价模型：<strong>基线 + 突增</strong>意味着”常驻但多数时间在等模型响应”的 agent 第一次可以被合理地定价。此前这类工作负载的云成本基本无法预估，是 agent 从 demo 走向生产的主要拦路石之一。空闲缩零 + 68% 内存下降，配合基线定价，实质上是把 agent 的运营成本从”按月租机器”改成”按会话算账”。</p>
+<h2 id="openai-撤销独立机器人团队让主模型直接出动作">OpenAI 撤销独立机器人团队：让主模型直接出动作</h2>
+<h3 id="发生了什么-3">发生了什么</h3>
+<ul>
+<li>OpenAI <strong>撤销了独立的机器人团队</strong>，相关研究并入主模型团队；官方口径是 <strong>GPT-6.2 Astra 已能直接承担部分机器人任务</strong></li>
+<li>XDOF 公布的 <strong>Ember-0</strong> 基准显示：GPT-6.2 Astra 在双臂机器人 16 项任务上综合成功率 <strong>41.2%</strong>（上一代 19.6%），可完成打结、展开 T 恤等柔性操作</li>
+<li>英伟达的内部测试更激进：Astra <strong>直接生成动作</strong>成功率 66.3%，接入 Codex 后升至 <strong>74.8%</strong>——但仍不足以支撑产线级部署</li>
+<li>资本侧同期出现海外今年最大单笔：<strong>Genesis AI 完成 5 亿美元 A 轮</strong>，投后估值 35 亿美元，英伟达与 AMD 风投参投，计划 2027 年量产</li>
+</ul>
+<h3 id="值得关注的点-3">值得关注的点</h3>
+<p>撤销独立机器人团队不是”放弃具身”，而是<strong>技术路线的收敛</strong>：过去两年主流的做法是”VLM 做感知 + 专用策略网络/VLA 做动作”，堆一套独立堆栈；OpenAI 的选择是把动作生成直接压进通用模型，赌 scaling 能覆盖机器人的特殊性。</p>
+<p>但这个赌注现在还差得很远。41.2% 与 74.8% 这两个数字放在产线语境里都不及格——物流分拣场景对成功率的要求通常在小数点后两位。<strong>这也解释了为什么 2026 年具身智能的资本热点集中在大脑、数据、灵巧手等上游环节，而不是本体</strong>：本体已经不是瓶颈，让模型可靠地出动作才是。</p>
+<p>对工程师的启示是：如果主模型真的能直接出动作，那么具身团队的核心资产会从”模型”迁移到”数据闭环 + 评测基准”。Ember-0 这类基准的出现，本身就是这个迁移的先兆。</p>
+<h2 id="国产具身蚂蚁首次领投本体人形进入半导体核心工序">国产具身：蚂蚁首次领投本体，人形进入半导体核心工序</h2>
+<h3 id="发生了什么-4">发生了什么</h3>
+<ul>
+<li><strong>至简动力（Simplexity Robotics）完成 1 亿美元 Pre-A 轮</strong>，蚂蚁集团领投，阿里、腾讯、红杉中国、蓝驰创投等老股东全部跟投，投后估值 <strong>16 亿美元</strong>（约 107 亿元）。公司 2025 年 7 月成立，创始班底来自理想汽车智驾核心团队，董事长王凯为前理想 CTO；押注”世界模型 + VLA 一体化”，已开源多模态时序世界动作模型 SimpleWAM。融资同日发布第二款轮式人形 <strong>iX</strong>，首款 i7 Pro 已于 7 月完成首批百台交付</li>
+<li><strong>智元精灵 G2 进入长电科技上海临港工厂</strong>，在芯片测试车间承担料盘上下料——国产人形机器人首次进入半导体制造的核心工序</li>
+</ul>
+<h3 id="值得关注的点-4">值得关注的点</h3>
+<p>这两件事放在一起看，指向同一个判断：<strong>具身的估值锚正在从”故事”换成”工程能力与真实工位”</strong>。</p>
+<p>至简动力的特殊性不在模型，而在”智驾班底整体平移”——量产工程能力（标定、可靠性、供应链、交付）在具身赛道是稀缺品，这也是 16 亿美元估值的真实依据。蚂蚁首次领投本体，意味着<strong>入口级平台开始下注硬件</strong>，而不只是做上层应用接入。</p>
+<p>智元进封测产线则是另一种验证：半导体车间对洁净度、节拍、稳定性的要求远高于仓储物流，能进去本身就是一次能力背书。后续该盯的不是”进了哪家厂”，而是<strong>良率影响、人工接管率、以及在多班次连续运行下的在线率</strong>。</p>
+<h2 id="其他值得一看">其他值得一看</h2>
+<ul>
+<li><strong>华为云 CloudRobo-WM1.2</strong>（11/16 发布并开源）：首款昇腾原生具身世界模型，采用共享世界模型骨干 + 原生 DualAct 架构，在 RoboTwin 2.0、Libero Pro 2.0 两项评测中均列第一，11/30 开放权重与后训练代码。更有信息量的是生态数据：<strong>80% 的中国具身智能企业已选择昇腾云</strong>，CloudRobo 平台聚集 1.65 万名开发者、230 多家企业与高校。</li>
+<li><strong>工信部 5 项人形机器人行业标准</strong> 11 月 16 日起实施，首次建立 <strong>L0–L5 分级</strong>，并统一零部件与训练数据口径——这是行业从”各说各话”走向可比的关键一步。</li>
+<li><strong>政策端</strong>：发改委、民政部、卫健委、教育部 11 月 23 日印发《“一老一小”服务体系建设实施方案》，明确鼓励养老场景的智能体、服务机器人、智能穿戴与外骨骼产品。</li>
+<li><strong>马斯克口径</strong>：Optimus 预计 <strong>12–18 个月</strong>内能完成倒垃圾、洗碗并把碗碟收进橱柜等多步骤家务，先重工业再家庭。同比之下，Y Combinator 系与国内厂商的公开时间表普遍更保守，这条信息建议当作”方向”而非”排期”看待。</li>
+<li><strong>资本市场</strong>：11 月 23 日人形机器人板块普涨，宇树科技-W、华阳智能 20% 涨停，埃斯顿、亿嘉和、北特科技、天奇股份等多股涨停。</li>
+<li><strong>Anthropic 上市后遇冷</strong>：11 月 19 日以 83 美元发行价登陆纳斯达克，含超额配售与 260 亿美元私募配售共募资约 1195 亿美元，创全球纪录；随后连续走弱逼近发行价，多位债券基金经理预计其信用评级落在 BB 区间。算力承诺约 9000 亿美元与融资结构的错配，是整个 AI 生态都要面对的隐忧。</li>
+</ul>
+<h2 id="小结">小结</h2>
+<p>这一天最值得记住的两个转向：<strong>一是 coding 的竞争重心从模型能力下沉到运行时治理</strong>——默认权限模式、hook 语义、供应链完整性，这些”不性感”的东西正在决定 agent 能不能进生产；<strong>二是具身智能开始向通用模型收敛</strong>——OpenAI 撤团队、Astra 直接出动作、资本涌向上游，都在说明本体不再是壁垒，“让模型可靠地在真实工位上干活”才是。至于 GLM-5.4 的 Loop Transformer，它提出的问题（计算量怎么分配、循环几轮最划算）可能比它给出的答案更有价值。</p>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://www.cnstock.com/commonDetail/832288">智谱发布 GLM-5.4，首次引入 Loop Transformer 架构（上海证券报·中国证券网）</a></li>
+<li><a href="https://www.cnstock.com/commonDetail/832502">智谱 GLM-5.4 上线：10 万卡国产芯片推理与 3T 级预告（中国证券网）</a></li>
+<li><a href="https://www.163.com/dy/article/LCFAJ8E00552GIEM.html">架构、RSI、商业化：读懂智谱 GLM-5.4 的三条线（光子星球）</a></li>
+<li><a href="https://www.nfnews.com/content/16VLn5xXyr.html">智谱最新模型新增视觉能力，小参数实现高智能水平（南方+）</a></li>
+<li><a href="https://digintoai.com/en/articles/weekly-ai-coding-cli-digest-upgrade-guide-claude-code-v2-1-328-330-codex-v0-171-54069477c655">Weekly AI Coding CLI Digest: Claude Code v2.1.328–330, Codex v0.171.0, Gemini CLI v0.70.0（DigIntoAI）</a></li>
+<li><a href="https://aiagentstore.ai/ai-agent-news/topic/agent-collaboration">Agent Collaboration Weekly AI News: AHP、Responses 多智能体与 agent-framework 投毒（AI Agent Store）</a></li>
+<li><a href="https://www.163.com/dy/article/LCF70HKE05118UGF.html">AWS 升级 Bedrock AgentCore 运行时，提速 AI 智能体开发（至顶科技）</a></li>
+<li><a href="https://news.qq.com/rain/a/20261124A02SY900">国泰海通：华为云发布具身世界模型 WM1.2 并开源（智通财经）</a></li>
+<li><a href="https://www.stcn.com/article/detail/4347685.html">具身智能落地加速，算力底座转向生态竞争（证券时报）</a></li>
+<li><a href="https://news.mysteel.com/a/26112408/2D6DB1B1A6D50192.html">至简动力完成 1 亿美元 Pre-A 轮，蚂蚁集团领投（我的钢铁网）</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzY0MDc5ODI2Ng==&#x26;mid=2247483737&#x26;idx=1&#x26;sn=c470f290e81a484cb916dc804632dab1">AI 行业资讯 · 2026 年 11 月 24 日（微信公众号）</a></li>
+<li><a href="https://www.163.com/dy/article/LCFS2C8J053469RG.html">人形机器人步入商业化关键期，多重利好共振板块走强（证券时报）</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/llm" class="tag" data-astro-cid-fzx4jmue> llm </a><a href="/tags/ai-coding" class="tag" data-astro-cid-fzx4jmue> ai-coding </a><a href="/tags/agent" class="tag" data-astro-cid-fzx4jmue> agent </a><a href="/tags/robotics" class="tag" data-astro-cid-fzx4jmue> robotics </a><a href="/tags/embodied-ai" class="tag" data-astro-cid-fzx4jmue> embodied-ai </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-11-11-curated-november-jdk28-doris-skills">十一月中旬技术精选：JDK 28 前瞻与向量搜索调优</a> </li><li> <a href="/2026-11-09-curated-november-kafka-cve-spring-rc2">十一月第二周技术精选：Kafka 安全修复与 Spring RC2</a> </li><li> <a href="/2026-10-23-curated-october-kafka44-agent-infra">十月第四周技术精选：Kafka 4.4 GA 与 Agent 基建</a> </li><li> <a href="/2026-10-08-curated-october-kafka-rc4-deepseek-v02">2026年10月8日技术精选：Kafka 滚向 RC4 与 DeepSeek 桌面端</a> </li><li> <a href="/2026-09-23-curated-september-jdk27-jvmci-agent-boundary">2026年9月23日技术精选：JDK 27 收尾与 Agent 身份边界</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
