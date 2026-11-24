@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfdf5"/>
+      <stop offset="45%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g1)"/>
+  <text x="48" y="64" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#115e59">BRIEFING · 2026-11-24</text>
+  <text x="48" y="130" font-family="system-ui,sans-serif" font-size="38" font-weight="700" fill="#1e1e2f">Loop Coding &amp; Embodied Shift</text>
+  <text x="48" y="175" font-family="system-ui,sans-serif" font-size="20" fill="#134e4a">GLM-5.4 · AgentCore · Agent CLI · Astra · Simplexity</text>
+
+  <!-- loop transformer: shared weights reused twice -->
+  <g opacity="0.9">
+    <path d="M120 250 a44 44 0 1 0 44 44" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+    <path d="M120 250 a44 44 0 1 1 44 -44" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+    <polygon points="164,206 178,198 172,216" fill="#0f766e"/>
+    <text x="104" y="262" font-family="monospace" font-size="13" font-weight="700" fill="#115e59">loop x2</text>
+  </g>
+
+  <!-- runtime stack: session capacity -->
+  <g opacity="0.92">
+    <rect x="300" y="212" width="120" height="16" rx="8" fill="#0f766e" opacity="0.85"/>
+    <rect x="300" y="238" width="96" height="16" rx="8" fill="#0f766e" opacity="0.62"/>
+    <rect x="300" y="264" width="72" height="16" rx="8" fill="#0f766e" opacity="0.44"/>
+    <rect x="300" y="290" width="48" height="16" rx="8" fill="#0f766e" opacity="0.3"/>
+    <text x="300" y="196" font-family="monospace" font-size="13" font-weight="700" fill="#115e59">8 vCPU / 32 GB / idle -&gt; 0</text>
+  </g>
+
+  <!-- humanoid hint -->
+  <g opacity="0.9" transform="translate(540,190)">
+    <circle cx="40" cy="18" r="14" fill="#115e59" opacity="0.85"/>
+    <rect x="28" y="38" width="24" height="46" rx="8" fill="#115e59" opacity="0.75"/>
+    <line x1="24" y1="50" x2="4" y2="76" stroke="#115e59" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="56" y1="50" x2="76" y2="76" stroke="#115e59" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="34" y1="84" x2="26" y2="116" stroke="#115e59" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="46" y1="84" x2="54" y2="116" stroke="#115e59" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- stat cards -->
+  <g opacity="0.86">
+    <rect x="640" y="200" width="126" height="128" rx="10" fill="#ffffff"/>
+    <text x="656" y="228" font-family="monospace" font-size="12" font-weight="700" fill="#115e59">750B -&gt; 3T</text>
+    <text x="656" y="250" font-family="monospace" font-size="12" fill="#0f766e">Astra 41.2%</text>
+    <text x="656" y="272" font-family="monospace" font-size="12" fill="#0f766e">1 亿美元 Pre-A</text>
+    <text x="656" y="294" font-family="monospace" font-size="12" fill="#0f766e">416 条 CLI 变更</text>
+    <text x="656" y="316" font-family="monospace" font-size="12" fill="#0f766e">agent 供应链风险</text>
+  </g>
+
+  <!-- baseline bars -->
+  <rect x="60" y="362" width="300" height="12" rx="6" fill="#115e59" opacity="0.26"/>
+  <rect x="60" y="386" width="180" height="12" rx="6" fill="#115e59" opacity="0.18"/>
+</svg>
