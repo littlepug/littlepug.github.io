@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="AI Briefing 2026-11-25">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="42%" stop-color="#c7d2fe"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" stop-opacity="0.88"/>
+      <stop offset="100%" stop-color="#312e81" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#4f46e5" fill-opacity="0.22"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#dots)"/>
+
+  <!-- left: PR pipeline abstraction -->
+  <g opacity="0.9">
+    <rect x="60" y="252" width="120" height="44" rx="10" fill="#ffffff" fill-opacity="0.72" stroke="#4338ca" stroke-opacity="0.45"/>
+    <text x="120" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" fill="#312e81" text-anchor="middle">code</text>
+
+    <rect x="208" y="252" width="120" height="44" rx="10" fill="#ffffff" fill-opacity="0.72" stroke="#4338ca" stroke-opacity="0.45"/>
+    <text x="268" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" fill="#312e81" text-anchor="middle">review</text>
+
+    <rect x="356" y="252" width="150" height="44" rx="10" fill="#312e81" fill-opacity="0.86"/>
+    <text x="431" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" fill="#e0e7ff" text-anchor="middle">approve</text>
+
+    <g stroke="#4338ca" stroke-opacity="0.55" stroke-width="2" fill="none">
+      <path d="M180 274 L206 274"/>
+      <path d="M328 274 L354 274"/>
+    </g>
+    <circle cx="206" cy="274" r="3" fill="#4338ca" fill-opacity="0.6"/>
+    <circle cx="354" cy="274" r="3" fill="#4338ca" fill-opacity="0.6"/>
+
+    <text x="60" y="330" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#3730a3" fill-opacity="0.85">policy-as-file · agent signs off</text>
+  </g>
+
+  <!-- right: hex grid = embodiment -->
+  <g stroke="#ffffff" stroke-opacity="0.5" fill="none" stroke-width="1.4">
+    <path d="M660 120 l26 15 v30 l-26 15 l-26 -15 v-30 z"/>
+    <path d="M712 150 l26 15 v30 l-26 15 l-26 -15 v-30 z"/>
+    <path d="M660 180 l26 15 v30 l-26 15 l-26 -15 v-30 z"/>
+    <path d="M608 150 l26 15 v30 l-26 15 l-26 -15 v-30 z"/>
+  </g>
+  <circle cx="686" cy="195" r="5" fill="#ffffff" fill-opacity="0.9"/>
+  <circle cx="634" cy="165" r="5" fill="#ffffff" fill-opacity="0.75"/>
+  <text x="700" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#eef2ff" fill-opacity="0.9" text-anchor="end">embodied × mass production</text>
+
+  <!-- title block -->
+  <rect x="0" y="0" width="800" height="180" fill="url(#fade)"/>
+  <text x="48" y="62" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="700" fill="#c7d2fe" letter-spacing="2">BRIEFING · 2026-11-25</text>
+  <text x="48" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="37" font-weight="800" fill="#ffffff">Claude 接管 PR 签字权</text>
+  <text x="48" y="156" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="600" fill="#e0e7ff">具身资本绕开整机，小鹏定档量产</text>
+</svg>
