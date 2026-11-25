@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="十一月最后一周，Elastic 9.6 官宣：用 ES|QL 原地查询 Amazon S3 数据、PromQL 覆盖 top 100 Grafana 面板 92% 查询、列式模式新增 columnar codec。Spring AI 2.1.0 GA 上线无状态 MCP 与 Session API，正式取代 ChatMemory。JDK 28 堆外内存分配提速 6-18 倍、顺手关闭反射绕过构造器的后门，Kafka 4.4 升级指南明确仅支持 KRaft。另附 JNum、NVIDIA SkillEvaluator 两个开源项目。"><title>2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-11-25-curated-november-elastic96-springai21/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1 - littlepug's blog"><meta property="og:description" content="十一月最后一周，Elastic 9.6 官宣：用 ES|QL 原地查询 Amazon S3 数据、PromQL 覆盖 top 100 Grafana 面板 92% 查询、列式模式新增 columnar codec。Spring AI 2.1.0 GA 上线无状态 MCP 与 Session API，正式取代 ChatMemory。JDK 28 堆外内存分配提速 6-18 倍、顺手关闭反射绕过构造器的后门，Kafka 4.4 升级指南明确仅支持 KRaft。另附 JNum、NVIDIA SkillEvaluator 两个开源项目。"><meta property="og:url" content="https://littlepug.github.io/2026-11-25-curated-november-elastic96-springai21/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-november-25-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1 - littlepug's blog"><meta name="twitter:description" content="十一月最后一周，Elastic 9.6 官宣：用 ES|QL 原地查询 Amazon S3 数据、PromQL 覆盖 top 100 Grafana 面板 92% 查询、列式模式新增 columnar codec。Spring AI 2.1.0 GA 上线无状态 MCP 与 Session API，正式取代 ChatMemory。JDK 28 堆外内存分配提速 6-18 倍、顺手关闭反射绕过构造器的后门，Kafka 4.4 升级指南明确仅支持 KRaft。另附 JNum、NVIDIA SkillEvaluator 两个开源项目。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-november-25-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-november-25-2026.svg" alt="2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-11-25" data-astro-cid-fzx4jmue> 2026-11-25 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>十一月最后一周，后端技术圈的关键词是「<strong>统一</strong>」：Elastic 想把数据湖查询、列式分析、监控查询收进一个集群；Spring AI 想把 Agent 的会话记忆、工具审批、无状态 MCP 收进一个版本；JDK 28 则在悄悄给运行时「提速 + 封后门」。本期精选 <strong>7 条</strong> 内容，每条附「是什么 / 为什么值得看 / 适合谁」。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-elastic-96esql-原地查询-s3promql-覆盖-92-监控面板">1. Elastic 9.6：ES|QL 原地查询 S3，PromQL 覆盖 92% 监控面板</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：11 月 24 日，Elastic 官方发布 <a href="https://www.elastic.co/blog/whats-new-elastic-9-6-0">What’s new in Elastic 9.6</a>，Serverless 已可用，ECH / Self-Managed 预计 12 月初上线。三大看点：<strong>ES|QL Data Federation（技术预览）</strong> 用注册数据源的方式，让 ES|QL 直接查询 Amazon S3 上的 Parquet / CSV / TSV / NDJSON 文件，全程无摄取、无重建索引，还带分区与目录剪枝跳过时间范围外的文件；<strong>PromQL 转 GA</strong>，覆盖 top 100 Grafana 面板约 <strong>92%</strong> 的查询（9.4 时仅 43.4%），新增 vector matching、<code>label_join</code>、<code>label_replace</code>、<code>topk</code> 等，存量监控面板无需改写即可对接；<strong>Columnar Mode</strong> 继续补强，新增高基数聚合与 columnar codec（对多值 keyword 字段做字典编码，加速分析并压缩存储），均处技术预览。另有 Logical Views（<code>FROM my_view</code>）、协调节点 LOOKUP JOIN、IN / NOT IN 子查询等 ES|QL 能力转 GA。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这是 Elastic「一个集群吃掉搜索、向量检索、日志、指标、数据湖分析」野心的集中体现。过去查 S3 冷数据要再起一套引擎（Presto / Spark），监控指标要单独接 Prometheus——现在都往 ES|QL 一条语法上收。对已经重度使用 ELK 的团队，意味着少维护一套查询引擎、少一套安全模型，也少一次数据搬家的成本。注意 ES|QL Data Federation 目前仅企业版、仅有状态部署、仅 S3，Columnar Mode 仍是技术预览，生产落地前要读清限制。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：正在用 Elastic 做日志/可观测/检索，又想统一分析数据湖冷数据与监控指标的后端与平台团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.elastic.co/blog/whats-new-elastic-9-6-0">What’s new in Elastic 9.6</a> · <a href="https://www.elastic.co/search-labs/blog/elasticsearch-9-6-whats-new">Search Labs：Elasticsearch 9.6 特性详解</a></p>
+</li>
+</ul>
+<h3 id="2-spring-ai-210-ga无状态-mcp--session-apichatmemory-退场">2. Spring AI 2.1.0 GA：无状态 MCP + Session API，ChatMemory 退场</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：11 月 20 日，Spring AI 2.1.0 正式发布到 Maven Central（同发 2.0.3 维护版），基于 Spring Boot 4.2，距 2.0.0 五个月，累计 <strong>430 个提交、86 位贡献者</strong>。重点：<strong>MCP 2026-07-28 无状态协议</strong>——去掉 initialize 握手与 session，每个请求自携带协议版本与客户端能力，服务端设 <code>spring.ai.mcp.server.protocol=MODERN</code> 即可，旧注解 <code>@McpTool</code> 等无需改动；<strong>DecisionModel API</strong> 把「是/否、多选、评分」变成带概率的强类型决策，已有 OpenAI、Ollama、System One 三个实现；<strong>Session API 取代 ChatMemory</strong>——append-only 事件日志 + 压缩 + 召回，裁剪发生在完整对话轮之间、裁剪内容仍可检索，ChatMemory 已弃用、计划在 3.0 移除；工具调用默认限流（每工具 40 次、每轮 150 次），并支持 <code>requiresConfirmation</code> 人工审批。同时修复 <strong>13 个 CVE</strong>。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：这一版把「Agent 框架该长什么样」的骨架搭全了：会话记忆有事件溯源、工具执行有审批与限流、MCP 接入无状态化，等于把此前散落在社区方案里的最佳实践做进了官方基线。对已经在 Java 里做 AI 功能的团队，是「少造轮子」的信号；官方还预告 <strong>Spring AI Agent</strong> 项目将于 12 月初孵化，做多 Agent 的编排与组合，值得持续关注。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 Spring 栈做 RAG / 工具调用 / Agent 的 Java 团队，以及正在评估「要不要从 LangChain 迁回 JVM 原生方案」的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.worldprogramming.org/posts/spring-ai-210-ga-and-203-ga-available-now-nyxqyo">Spring AI 2.1.0 GA 公告</a> · <a href="https://javarubberduck.com/java/news-2026-11-22-spring">JavaRubberDuck 解读</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="3-jdk-28堆外内存分配提速-618-倍代码零改动">3. JDK 28：堆外内存分配提速 6–18 倍，代码零改动</h3>
+<ul>
+<li><strong>是什么</strong>：Oracle 工程师 Per-Ake Minborg 在 11 月 21 日的 <a href="https://inside.java/2026/11/21/inside-java-newsletter">Inside Java 通讯</a> 中披露，JDK 28 里 Foreign Function &#x26; Memory API（JEP 454）的受限 Arena 小对象分配从「每次调 native 分配器」改为「每线程内存池」，<strong>无需改任何源码</strong>：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F47067">try</span><span style="color:#ADBAC7"> (Arena</span><span style="color:#ADBAC7"> arena</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> Arena.</span><span style="color:#DCBDFB">ofConfined</span><span style="color:#ADBAC7">()) {          </span><span style="color:#768390">// 单线程受限 Arena</span></span>
+<span class="line"><span style="color:#ADBAC7">    MemorySegment</span><span style="color:#ADBAC7"> seg</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> arena.</span><span style="color:#DCBDFB">allocate</span><span style="color:#ADBAC7">(ValueLayout.JAVA_INT);</span></span>
+<span class="line"><span style="color:#ADBAC7">    nativeFunction.</span><span style="color:#DCBDFB">invokeExact</span><span style="color:#ADBAC7">(seg);</span></span>
+<span class="line"><span style="color:#F47067">    int</span><span style="color:#ADBAC7"> v</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> seg.</span><span style="color:#DCBDFB">get</span><span style="color:#ADBAC7">(ValueLayout.JAVA_INT, </span><span style="color:#6CB6FF">0</span><span style="color:#ADBAC7">);</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<p>官方基准显示，典型小分配场景提速约 <strong>6–18 倍</strong>。注意：这是「分配」速度，不是所有堆外操作的提速，也不等于整个应用的加速倍数，落到自己负载上要单独压测。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：很多后端对「JNI / 堆外内存」还停留在「快但难写、还容易 SIGSEGV」的印象。这一改进让 FFM API 的分配开销进一步贴近原生，配合 JDK 28 的 AOT 编译（JEP 544）与 ZGC 启动提速（JEP 545），Java 在「低延迟、高吞吐、频繁进出原生内存」的场景里越来越有竞争力。无需改代码的收益，最值得在升级 JDK 28 时顺手验证。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 Netty / 原生内存 / FFM 做高性能服务，或对 JVM 内存拓扑、GC 停顿敏感的 Java 团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://inside.java/2026/11/21/inside-java-newsletter">Inside Java 11 月刊</a> · <a href="https://dev.to/protsenko/java-and-kotlin-news-value-classes-arrive-in-jdk-28-and-kotlin-25-2ol4">dev.to 摘录：堆外分配 6-18x</a></p>
+</li>
+</ul>
+<h3 id="4-jdk-28-关闭反射后门newconstructorforserialization-弃用">4. JDK 28 关闭反射后门：<code>newConstructorForSerialization</code> 弃用</h3>
+<ul>
+<li><strong>是什么</strong>：JDK 28 早期访问版（11 月 20 日更新）对 <code>sun.reflect.ReflectionFactory</code> 动刀：单参数的 <code>newConstructorForSerialization(Class)</code> 对非 <code>Serializable</code> 类直接返回 <code>null</code>；双参数版本<strong>弃用并计划移除，默认抛 <code>UnsupportedOperationException</code></strong>。历史上 Mockito、Objenesis、ByteBuddy 以及不少 JSON/二进制反序列化库都靠这个「关键内部 API」绕过构造器强造实例，JDK 28 默认封掉这条后门，受影响组件需加启动参数恢复：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#768390"># 临时恢复旧行为（尽快让依赖方升级）</span></span>
+<span class="line"><span style="color:#F69D50">-Djdk.reflect.allowNonSerializableConstruction</span><span style="color:#96D0FF">=</span><span style="color:#6CB6FF">true</span></span></code></pre>
+<p>官方建议相关框架迁移到 <code>sun.misc.Unsafe.allocateInstance</code>。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：这不是语法糖，而是一次会影响<strong>单元测试能否跑起来</strong>的运行时变更——升级 JDK 28 后，mock 框架、序列化库若未跟进，测试会直接抛异常。它提醒我们：语言升级的风险往往不在语言本身，而在底层依赖对「非标准 API」的依赖。把 JDK 28 的早期访问版纳入 CI，跑一遍完整测试套件，比等到 GA 再踩坑划算得多。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护共享库、字节码增强工具、序列化组件，或即将做 JDK 28 升级评估的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://jdk.java.net/28/release-notes">JDK 28 Early-Access Release Notes</a> · <a href="https://daily.steinslab.io/en/lang/2026-11-16-java-weekly-2026-w47">Java Weekly #7 解析</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="5-kafka-44-仅支持-kraft分层存储到底怎么工作">5. Kafka 4.4 仅支持 KRaft，分层存储到底怎么工作</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：11 月 17 日合入的 KAFKA-21388 给 Kafka 4.4 补上正式升级指南，明确「<strong>Kafka 4.4 仅支持 KRaft 模式，ZooKeeper 已移除</strong>」，且要求软件与 metadata 版本至少 3.3.x，ZooKeeper 集群须先迁到 KRaft 再升 4.4.x。同周，debtman.dev 的两篇深度长文 <a href="https://debtman.dev/blog/how-apache-kafka-actually-works">How Apache Kafka Actually Works</a> 与 <a href="https://debtman.dev/blog/how-kafka-tiered-storage-actually-works">How Kafka Tiered Storage Actually Works</a> 从「分区日志、ISR、高水位、leader epoch」讲到分层存储（KIP-405）的完整机制：热段留在 broker 磁盘、冷段上传到 S3/HDFS，只有「非 active segment、最后偏移低于 last stable offset、超过上传延迟」的段才会被搬运，且上传的是 <code>.log</code> / <code>.index</code> / <code>.timeindex</code> / <code>.snapshot</code> / <code>.leader_epoch_checkpoint</code> 五个文件，保证远端只含已提交数据。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Kafka 4.x 的 KRaft 化是过去两年最大的架构变更，而分层存储是「用对象存储换磁盘成本」的落地路径。这两篇把「消费者到底能看到日志的哪一段、ack 之后数据会不会丢、旧偏移读取要花多少代价、远端存储故障时会看到什么指标」讲得清清楚楚，是比官方文档更顺手的「机制速通」读物。升级 4.4 前先读懂 KRaft 迁移与 metadata 版本约束，能少踩很多坑。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护 Kafka 集群、规划从 ZooKeeper 迁 KRaft 或引入分层存储降本的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://mail-archive.com/commits@kafka.apache.org/msg35676.html">Kafka 4.4 升级指南提交记录</a> · <a href="https://debtman.dev/blog/how-kafka-tiered-storage-actually-works">How Kafka Tiered Storage Actually Works</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="6-jnum470kb-的纯-java-张量引擎无-jni无-c-依赖">6. JNum：470KB 的纯 Java 张量引擎，无 JNI、无 C++ 依赖</h3>
+<ul>
+<li><strong>是什么</strong>：<a href="https://github.com/CH-Abhinav/JNum">CH-Abhinav/JNum</a> 是一个面向 JDK 25+ / Kotlin 的纯 Java 数值计算与张量库，基于 Project Panama 的 FFM API（JEP 454）分配 64 字节对齐的堆外内存，配合 Vector API 调度原生 SIMD 指令。整个 JAR 仅约 <strong>470KB</strong>，对比 ND4J / Deeplearning4j 动辄 100MB+ 的本地库体积。它内置 4 层 GEMM 引擎（标量 → 寄存器分块 → 单线程 BLIS → ForkJoin 并行）、零拷贝切片、符号表达式求值、Safetensors 与 <code>.npy</code>/<code>.npz</code> 内存映射 I/O，还有一个 <code>jnum.nn</code> 推理模块。运行需加 JVM 参数：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F69D50">java</span><span style="color:#6CB6FF"> --add-modules</span><span style="color:#96D0FF"> jdk.incubator.vector</span><span style="color:#6CB6FF"> --enable-native-access=ALL-UNNAMED</span><span style="color:#96D0FF"> YourApp</span></span></code></pre>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：它代表了一种「把数值计算留在 JVM 进程内」的路线——不跨 JNI 边界（没有内存破坏 / SIGSEGV 风险）、不需要 C++ 工具链，直接在 Java 里做矩阵运算与本地模型推理。作者在 JMH 1.37 下自测小矩阵比 NumPy（OpenBLAS）快约 11 倍、比 ND4J 快约 100 倍——<strong>该数据为作者自测，待第三方复现</strong>，实际收益需按自己的负载验证。目前仍是早期项目，适合尝鲜与选型调研，不宜直接上生产。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：在 JVM 上做本地模型推理、张量变换、轻量科学计算，又不想引 Python / C++ 依赖的后端团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/CH-Abhinav/JNum">GitHub：CH-Abhinav/JNum</a> · <a href="https://wpnews.pro/news/show-hn-jnum-pure-java-25-numpy-blas-via-project-panama-ffm-and-vector-api">Show HN 讨论</a></p>
+</li>
+</ul>
+<h3 id="7-nvidia-skillevaluator给-agent-技能做质检--收益量化">7. NVIDIA SkillEvaluator：给 Agent 技能做「质检 + 收益量化」</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<a href="https://github.com/NVIDIA/SkillEvaluator">NVIDIA/SkillEvaluator</a>（Apache-2.0）是给 Agent Skills 做评估的三层框架：<strong>Tier 1 确定性校验</strong>（schema、PII、license、lint、安全扫描，内置 SkillSpector + Gitleaks，可无 API key 离线出 0–100 质量分）；<strong>Tier 2 语义去重</strong>（用 embedding 检测 skill 内部与 skill 之间的指导重叠）；<strong>Tier 3 真实执行评测</strong>——在 Harbor 沙箱里对同一批任务「装 skill」与「不装 skill」各跑一遍，报告差异为 <strong>Skill Lift</strong> 指标（配合 pass@k）。配套 <code>skillevaluator ci init</code> 一键接入 GitHub Actions / GitLab CI，仓库里改过的 skill 每次 PR 自动检查。0.9.0 于 11 月 13 日发布，本周在 GitHub Trending 上榜（star 各方口径不一，<strong>以仓库为准</strong>）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：过去一年「Agent Skills」呈爆发式增长，但几乎没有人回答「这个 skill 装上去到底有没有让 Agent 变强」。SkillEvaluator 把「验证器即产品」的思路带进了 Agent 技术栈里长得最快、却测得最少的那一层——从「写得好不好」升级到「装上之后分数高不高」，并用同一种方式反复度量。对已经开始囤技能包的团队，这是第一个能回答「技能是不是负担」的工具。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：发布、维护或内部管理 Agent Skills 的团队，以及想给自建 skill 上质量门禁的工程效能 / 平台团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/NVIDIA/SkillEvaluator">GitHub：NVIDIA/SkillEvaluator</a> · <a href="https://docs.nvidia.com/skills/skillevaluator/">文档</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://www.elastic.co/blog/whats-new-elastic-9-6-0">What’s new in Elastic 9.6 — Elastic 官方博客</a></li>
+<li><a href="https://www.elastic.co/search-labs/blog/elasticsearch-9-6-whats-new">Elasticsearch 9.6 — Search Labs</a></li>
+<li><a href="https://www.worldprogramming.org/posts/spring-ai-210-ga-and-203-ga-available-now-nyxqyo">Spring AI 2.1.0 GA and 2.0.3 GA Available Now</a></li>
+<li><a href="https://javarubberduck.com/java/news-2026-11-22-spring">JavaRubberDuck：Spring AI 2.1 GA 等</a></li>
+<li><a href="https://inside.java/2026/11/21/inside-java-newsletter">Inside Java 11 月刊</a></li>
+<li><a href="https://jdk.java.net/28/release-notes">JDK 28 Early-Access Release Notes</a></li>
+<li><a href="https://daily.steinslab.io/en/lang/2026-11-16-java-weekly-2026-w47">Java Weekly #7</a></li>
+<li><a href="https://mail-archive.com/commits@kafka.apache.org/msg35676.html">Kafka 4.4 升级指南提交记录（mail-archive）</a></li>
+<li><a href="https://debtman.dev/blog/how-kafka-tiered-storage-actually-works">How Kafka Tiered Storage Actually Works — debtman.dev</a></li>
+<li><a href="https://github.com/CH-Abhinav/JNum">CH-Abhinav/JNum — GitHub</a></li>
+<li><a href="https://github.com/NVIDIA/SkillEvaluator">NVIDIA/SkillEvaluator — GitHub</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-11-25-curated-november-elastic96-springai21">2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1</a> </li><li> <a href="/2026-11-24-curated-november-java4shell-spring42">十一月第四周技术精选：Java4Shell 漏洞与 Spring 4.2 GA</a> </li><li> <a href="/2026-11-11-curated-november-jdk28-doris-skills">十一月中旬技术精选：JDK 28 前瞻与向量搜索调优</a> </li><li> <a href="/2026-11-09-curated-november-kafka-cve-spring-rc2">十一月第二周技术精选：Kafka 安全修复与 Spring RC2</a> </li><li> <a href="/2026-10-23-curated-october-kafka44-agent-infra">十月第四周技术精选：Kafka 4.4 GA 与 Agent 基建</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
