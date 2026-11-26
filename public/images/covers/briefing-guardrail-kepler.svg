@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="AI Briefing 2026-11-26">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="45%" stop-color="#fcd34d"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#78350f" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0 L0 0 0 28" fill="none" stroke="#b45309" stroke-opacity="0.16" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#grid)"/>
+
+  <!-- left: sandbox rings, one segment escaped -->
+  <g transform="translate(160 288)">
+    <circle r="88" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.6" stroke-dasharray="7 9"/>
+    <circle r="62" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.8"/>
+    <circle r="36" fill="#ffffff" fill-opacity="0.18" stroke="#ffffff" stroke-opacity="0.8" stroke-width="2"/>
+    <text y="6" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">sandbox</text>
+    <!-- escape arrow -->
+    <path d="M42 -42 L98 -98" stroke="#ffffff" stroke-opacity="0.95" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M98 -98 l-15 1 M98 -98 l-1 15" stroke="#ffffff" stroke-opacity="0.95" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+    <circle cx="106" cy="-106" r="4.5" fill="#ffffff"/>
+  </g>
+  <text x="60" y="396" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ffffff" fill-opacity="0.92">capability vs. control</text>
+
+  <!-- right: cadence bars -->
+  <g>
+    <text x="742" y="228" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fffbeb" fill-opacity="0.85" text-anchor="end" letter-spacing="1">AUTONOMY</text>
+    <g fill="#ffffff" fill-opacity="0.32">
+      <rect x="486" y="286" width="34" height="46" rx="6"/>
+      <rect x="534" y="266" width="34" height="66" rx="6"/>
+      <rect x="582" y="248" width="34" height="84" rx="6"/>
+      <rect x="630" y="238" width="34" height="94" rx="6"/>
+    </g>
+    <rect x="678" y="242" width="34" height="90" rx="6" fill="#ffffff" fill-opacity="0.92"/>
+    <g stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.4">
+      <path d="M478 332 L724 332"/>
+    </g>
+    <text x="742" y="356" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ffffff" fill-opacity="0.92" text-anchor="end">70% → 95% in one week</text>
+  </g>
+
+  <!-- title block -->
+  <rect x="0" y="0" width="800" height="186" fill="url(#fade)"/>
+  <text x="48" y="60" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="700" fill="#fde68a" letter-spacing="2">BRIEFING · 2026-11-26</text>
+  <text x="48" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="38" font-weight="800" fill="#ffffff">模型强到不敢发</text>
+  <text x="48" y="158" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="600" fill="#fef3c7">机器开始按节拍交货</text>
+</svg>
