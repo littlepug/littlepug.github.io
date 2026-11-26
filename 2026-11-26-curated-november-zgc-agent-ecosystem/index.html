@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="十一月最后一周，JDK 28 的 ZGC 迎来自适应堆（JEP 546）：一个开关让 GC 自己决定堆大小，配合 ZGCIntensity 旋钮表达「省 CPU 还是省内存」。Spring Boot 4.2 升级的真正暗坑是那些「不报错却悄悄改行为」的配置。Kafka 分层存储未必省钱，先算远端命中率再决定。AI 侧，CodeGraph 给 Agent 一张代码地图，AG-UI 1.0 冻结 Agent 前端协议，landmines 专治 Agent 把测试做绿。"><title>2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态 - littlepug&#39;s blog</title><link rel="canonical" href="https://littlepug.github.io/2026-11-26-curated-november-zgc-agent-ecosystem/"><link rel="icon" href="/images/avatar.jpg"><meta property="og:type" content="article"><meta property="og:title" content="2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态 - littlepug's blog"><meta property="og:description" content="十一月最后一周，JDK 28 的 ZGC 迎来自适应堆（JEP 546）：一个开关让 GC 自己决定堆大小，配合 ZGCIntensity 旋钮表达「省 CPU 还是省内存」。Spring Boot 4.2 升级的真正暗坑是那些「不报错却悄悄改行为」的配置。Kafka 分层存储未必省钱，先算远端命中率再决定。AI 侧，CodeGraph 给 Agent 一张代码地图，AG-UI 1.0 冻结 Agent 前端协议，landmines 专治 Agent 把测试做绿。"><meta property="og:url" content="https://littlepug.github.io/2026-11-26-curated-november-zgc-agent-ecosystem/"><meta property="og:image" content="https://littlepug.github.io/images/covers/curated-november-26-2026.svg"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态 - littlepug's blog"><meta name="twitter:description" content="十一月最后一周，JDK 28 的 ZGC 迎来自适应堆（JEP 546）：一个开关让 GC 自己决定堆大小，配合 ZGCIntensity 旋钮表达「省 CPU 还是省内存」。Spring Boot 4.2 升级的真正暗坑是那些「不报错却悄悄改行为」的配置。Kafka 分层存储未必省钱，先算远端命中率再决定。AI 侧，CodeGraph 给 Agent 一张代码地图，AG-UI 1.0 冻结 Agent 前端协议，landmines 专治 Agent 把测试做绿。"><meta name="twitter:image" content="https://littlepug.github.io/images/covers/curated-november-26-2026.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="littlepug's blog" href="/rss.xml"><script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script><style>.breadcrumb[data-astro-cid-qaanghzh]{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);margin-bottom:24px;flex-wrap:wrap}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]{color:var(--text-secondary);transition:color .2s}.breadcrumb[data-astro-cid-qaanghzh] a[data-astro-cid-qaanghzh]:hover{color:var(--primary)}.breadcrumb-sep[data-astro-cid-qaanghzh]{color:var(--border)}.breadcrumb-current[data-astro-cid-qaanghzh]{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(320px,70vw)}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.1eiq_kPK.css">
+<link rel="stylesheet" href="/_astro/_slug_.CFjVZyY0.css"></head> <body> <header class="site-header"> <div class="header-inner"> <a href="/" class="brand"> <img src="/images/avatar.jpg" alt="" class="brand-avatar" width="32" height="32"> <span class="brand-name">littlepug</span> </a> <nav class="nav-main" aria-label="主导航"> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item nav-external">
+GitHub
+</a> </nav> <div class="header-actions"> <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题"> <span class="icon-sun" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> <span class="icon-moon" aria-hidden="true"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> </button> <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> </div> </div> <nav class="nav-mobile" id="nav-mobile" hidden> <a href="/" class="nav-item"> 首页 </a><a href="/archive" class="nav-item"> 归档 </a><a href="/categories" class="nav-item"> 分类 </a><a href="/tags" class="nav-item"> 标签 </a><a href="/about" class="nav-item"> 关于 </a> <a href="https://github.com/littlepug" target="_blank" rel="noopener" class="nav-item">GitHub</a> </nav> </header> <main>  <div class="article-layout" data-astro-cid-fzx4jmue> <article class="article" data-astro-cid-fzx4jmue> <nav class="breadcrumb" aria-label="面包屑" data-astro-cid-qaanghzh> <a href="/" data-astro-cid-qaanghzh>首页</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><a href="/archive" data-astro-cid-qaanghzh>归档</a><span class="breadcrumb-sep" data-astro-cid-qaanghzh>/</span><span class="breadcrumb-current" data-astro-cid-qaanghzh>2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态</span> </nav>   <img class="article-cover-banner" src="/images/covers/curated-november-26-2026.svg" alt="2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态" width="800" height="450" loading="eager" decoding="async" data-astro-cid-rnodp2ee>  <header class="article-header" data-astro-cid-fzx4jmue> <span class="article-category" data-astro-cid-fzx4jmue>技术精选</span> <h1 class="article-title" data-astro-cid-fzx4jmue>2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态</h1> <div class="article-meta" data-astro-cid-fzx4jmue> <time datetime="2026-11-26" data-astro-cid-fzx4jmue> 2026-11-26 </time> <span class="article-dot" aria-hidden="true" data-astro-cid-fzx4jmue>&middot;</span> <span data-astro-cid-fzx4jmue>10 min 阅读</span> </div> </header> <div class="article-body" id="article-body" data-astro-cid-fzx4jmue> <p>十一月最后一周，后端技术圈的关键词是「<strong>让机器自己管好自己</strong>」：JDK 28 让 ZGC 自己决定堆大小，AI 生态里 CodeGraph 让 Agent 自己看懂代码、AG-UI 让 Agent 自己接上界面、landmines 让 lint 自己盯住 Agent 的测试。本期精选 <strong>7 条</strong> 内容，每条附「是什么 / 为什么值得看 / 适合谁」。</p>
+<h2 id="本周精选">本周精选</h2>
+<h3 id="1-jdk-28zgc-自适应堆jep-546一个开关告别手调--xmx">1. JDK 28：ZGC 自适应堆（JEP 546），一个开关告别手调 -Xmx</h3>
+<ul>
+<li><strong>是什么</strong>：Oracle 工程师 Erik Österlund 提出的 <strong>JEP 546「ZGC 自适应堆大小」</strong> 已合入 JDK 28（特性冻结预计 12 月 3 日，GA 2027 年 3 月 9 日），<a href="https://inside.java/">Inside Java Newscast #117</a>（11 月 14 日）开篇就讲它。核心是一个开关：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#768390"># 让 ZGC 自己决定堆大小，默认最大堆从「物理内存 25%」变为「物理内存 100%（减去少量预留）」</span></span>
+<span class="line"><span style="color:#F69D50">java</span><span style="color:#6CB6FF"> -XX:+UseZGC</span><span style="color:#6CB6FF"> -XX:+ZAdaptiveHeapSizing</span><span style="color:#6CB6FF"> -jar</span><span style="color:#96D0FF"> app.jar</span></span></code></pre>
+<p>机制是：如果 GC CPU 超过目标，就在下一轮 GC 结束后把堆扩大；低于目标则收缩，调整平滑避免抖动，并自动重新平衡新生代/老年代。它只有一个「抽象旋钮」<code>-XX:ZGCIntensity</code>（正整数，默认 5）：小于 5 表示「多占内存、少耗 CPU」，大于 5 表示「多耗 CPU、少占内存」，填 0 回退默认并告警。配合 <strong>JEP 545</strong>（ZGC 内存准备移到并发线程），InfoQ 报道 Spring PetClinic 在 32 GB 机器上启动快 <strong>38%</strong>、预热从 80 秒降到 <strong>10 秒</strong>。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：过去 ZGC 的 <code>-Xmx</code> 本质是「猜」：猜小了烧 CPU、猜大了被 OOM Killer 或交换；<code>-XX:SoftMaxHeapSize</code> 也不比最大值好配。JEP 546 把「设多大堆」从运维难题，降维成「我更想省 CPU 还是省内存」的意图表达——一个数字表达意图，比一个只在某台机器上有意义的 GB 数更好推理。对同宿主机跑多服务的团队，ZGC 还会根据整机内存/CPU 压力当「好邻居」自动缩堆。旧参数仍然有效，无需推倒重来。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 ZGC、或对 GC 停顿与内存成本敏感、又不想反复手调 <code>-Xmx</code> 的 Java 团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://lauraesteves.com/programming/zgc-adaptive-heap-jdk-28">ZGC with adaptive heap sizing in JDK 28 — Laura Esteves</a> · <a href="https://ledgi.tech/news/jdk-28-adds-concurrent-zgc-memory-prep-trims-startup-and-warmup-on-linux">JDK 28 ZGC 并发内存准备 — InfoQ/Ledgi</a></p>
+</li>
+</ul>
+<h3 id="2-spring-boot-42-最咬人的不是弃用-resttemplate">2. Spring Boot 4.2 最咬人的，不是弃用 RestTemplate</h3>
+<ul>
+<li><strong>是什么</strong>：11 月 19 日 Spring Boot 4.2.0 正式 GA（11 月 24 日那期已报 RestTemplate 弃用），本周社区讨论焦点转向「<strong>不报错、却悄悄改了行为</strong>」的暗坑。弃用是「明刀」：Spring Framework 7.1 把 <code>RestTemplate</code> 标为移除级弃用，连带 <code>RestTemplateBuilder</code>、<code>TestRestTemplate</code> 等一并弃用，但一行就能渐进迁移，连接池、拦截器、消息转换器全部沿用：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#768390">// 不推倒重来，底层连接池/拦截器/转换器全沿用</span></span>
+<span class="line"><span style="color:#ADBAC7">RestClient</span><span style="color:#ADBAC7"> restClient</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> RestClient.</span><span style="color:#DCBDFB">create</span><span style="color:#ADBAC7">(restTemplate);</span></span></code></pre>
+<p>真正麻烦的是「暗箭」：一批配置<strong>不报错、无 warning，但默认值静默改变</strong>。主要包括 Tomcat 相对重定向行为翻转（<code>use-relative-redirects</code>）、<code>X-Forwarded-Prefix</code> 处理变化、Janino 需要自己管版本、AMQP starter 语义漂移、Pulsar 支持整体迁出。另外注意：Spring Boot 4.1.x 的开源支持到 <strong>2027 年 7 月 31 日</strong>结束，「赖在 4.1」是有保质期的。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：升级最大的风险往往不在语言/API，而在「行为静默改变」——不报错、无 warning，上线后半夜被叫醒才发现重定向或转发头行为变了。给一份可执行清单：对照弃用清单标出改动点、查 <code>application.yml</code> 里的 <code>use-relative-redirects</code> 与 <code>X-Forwarded-Prefix</code>、Janino 补上版本号、升级后跑集成测试重点覆盖重定向与转发头用例。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：计划从 4.1 升 4.2、或项目里 RestTemplate 用量大、又怕静默变更埋雷的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://juejin.cn/post/7711689310697799723">Spring Boot 4.2 最咬人的不是弃用 RestTemplate — 掘金</a> · <a href="https://www.51cto.com/article/861938.html">SpringBoot 4.2 正式发布，人麻了！— 51CTO</a></p>
+</li>
+</ul>
+<h2 id="代码小技巧">代码小技巧</h2>
+<h3 id="3-java-24-stream-gatherersstream-终于学会窗口扫描折叠">3. Java 24 Stream Gatherers：Stream 终于学会「窗口、扫描、折叠」</h3>
+<ul>
+<li><strong>是什么</strong>：Java 24 正式转正的 <strong>Stream Gatherers（JEP 485）</strong>（此前 JEP 461 → JEP 473 预览），本周 Java 周刊再次推荐。一句话理解：<code>Stream.gather(Gatherer)</code> 之于<strong>中间操作</strong>，就像 <code>collect(Collector)</code> 之于<strong>终止操作</strong>——补齐了 Stream 十年来「中间操作不可自定义」的缺口。内置 <code>Gatherers.windowFixed</code> / <code>windowSliding</code> / <code>scan</code> / <code>fold</code> / <code>mapConcurrent</code>，也支持自写带状态、可短路、可并行的 Gatherer：</li>
+</ul>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#768390">// 每 3 个元素一组（最后一组可不足 3 个）</span></span>
+<span class="line"><span style="color:#F47067">var</span><span style="color:#ADBAC7"> windows</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> Stream.</span><span style="color:#DCBDFB">of</span><span style="color:#ADBAC7">(</span><span style="color:#6CB6FF">1</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">2</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">3</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">4</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">5</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">6</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">7</span><span style="color:#ADBAC7">,</span><span style="color:#6CB6FF">8</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">gather</span><span style="color:#ADBAC7">(Gatherers.</span><span style="color:#DCBDFB">windowFixed</span><span style="color:#ADBAC7">(</span><span style="color:#6CB6FF">3</span><span style="color:#ADBAC7">))</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">toList</span><span style="color:#ADBAC7">(); </span><span style="color:#768390">// [[1,2,3],[4,5,6],[7,8]]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">// 滑动窗口 + 移动平均</span></span>
+<span class="line"><span style="color:#ADBAC7">readings.</span><span style="color:#DCBDFB">stream</span><span style="color:#ADBAC7">()</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">gather</span><span style="color:#ADBAC7">(Gatherers.</span><span style="color:#DCBDFB">windowSliding</span><span style="color:#ADBAC7">(</span><span style="color:#6CB6FF">3</span><span style="color:#ADBAC7">))</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">filter</span><span style="color:#ADBAC7">(w </span><span style="color:#F47067">-></span><span style="color:#ADBAC7"> w.</span><span style="color:#DCBDFB">size</span><span style="color:#ADBAC7">() </span><span style="color:#F47067">==</span><span style="color:#6CB6FF"> 3</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">map</span><span style="color:#ADBAC7">(w </span><span style="color:#F47067">-></span><span style="color:#ADBAC7"> w.</span><span style="color:#DCBDFB">stream</span><span style="color:#ADBAC7">().</span><span style="color:#DCBDFB">mapToInt</span><span style="color:#ADBAC7">(Integer</span><span style="color:#F47067">::</span><span style="color:#ADBAC7">intValue).</span><span style="color:#DCBDFB">average</span><span style="color:#ADBAC7">().</span><span style="color:#DCBDFB">orElseThrow</span><span style="color:#ADBAC7">())</span></span>
+<span class="line"><span style="color:#ADBAC7">    .</span><span style="color:#DCBDFB">forEach</span><span style="color:#ADBAC7">(System.out</span><span style="color:#F47067">::</span><span style="color:#ADBAC7">println);</span></span></code></pre>
+<p>注意两点：<code>gather</code> 只存在于 <code>Stream</code> 上，<code>IntStream</code>/<code>LongStream</code> 需先 <code>.boxed()</code>；JDK 21 及以下没有此 API，需升到 24+，无回移。</p>
+<ul>
+<li>
+<p><strong>为什么值得看</strong>：很多后端写「每 N 条一批」「滑动窗口」时还在用外部 <code>List</code> 或凑 <code>Collector</code>，状态散在 lambda 外，末尾不足一批或换并行流就易错。Gatherer 把窗口状态收进自身，<code>integrator</code> 负责输入与产出、<code>finisher</code> 处理上游结束时的残留、<code>combiner</code> 支撑并行，语义清晰得多。这是「流式批量处理」最该补的一课。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：做流式数据处理、批量聚合、日志窗口分析、指标滑窗计算的 Java 后端。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://blogs.rameskum.com/posts/stream-gatherers-java">Stream Gatherers in Java — Ramesh Kumaar（含实测与三个坑）</a> · <a href="https://openjdk.org/jeps/485">JEP 485: Stream Gatherers</a></p>
+</li>
+</ul>
+<h2 id="技术科普">技术科普</h2>
+<h3 id="4-kafka-分层存储未必省钱先算远端命中率再决定">4. Kafka 分层存储未必省钱：先算「远端命中率」再决定</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：11 月 25 日那期讲了 Kafka 分层存储的<strong>机制</strong>（KIP-405，热段留本地、冷段上传对象存储），本周一篇更务实的<strong>成本决策</strong>文补上了另一半：分层存储不是「降本开关」，上之前要算账。核心方法论三步：</p>
+<ol>
+<li><strong>先做 retention 卫生</strong>——砍掉过大的 <code>retention.ms</code>、删掉死 topic、检查 <code>retention.bytes</code> 是<strong>按 partition</strong> 生效（48 分区的 topic，一个看似合理的上限其实放行了 48 倍数据）；</li>
+<li><strong>估算「远端命中率 R」</strong>——用各消费组的消费 lag 与本地保留窗口对比，算出多少 fetch 会落到远端；R 越接近 0 分层越便宜，R 越高说明远端读越慢越贵（远端读取按量另计费）；</li>
+<li><strong>算回本周期</strong>——<code>回本 = 迁移成本 ÷（旧存储成本 − 新存储成本 − 分层存储成本）</code>，分母小或为负就别上。</li>
+</ol>
+<p>关键提醒：<code>local.retention.ms</code> 要留出「最坏消费 lag」的余量（比如事故期间最长 lag 的两倍），否则故障恢复时消费者掉到远端读，<strong>最需要快的时候最慢</strong>。存储不是成本大头、或吞吐/分区瓶颈的集群，分层存储也省不出钱。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：分层存储常被当成「一键降本」的银弹，但这篇把它还原成一个可量化决策：先卫生、再估算、最后验证回本，避免「搬完数据发现账单没降、恢复还变慢」的坑。方法论通用，不止 AWS MSK。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：维护 Kafka 集群、被存储成本逼着评估分层存储的团队（尤其是 AWS MSK 用户）。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://blog.oneenv.io/articles/msk-tiered-storage-cost-when-tiering-beats-kafka-retention-cuts">MSK Tiered Storage Cost: When Tiering Beats Kafka Retention Cuts — OneEnv</a></p>
+</li>
+</ul>
+<h3 id="5-ag-ui-10-冻结agent-接进任意前端的第三层协议">5. AG-UI 1.0 冻结：Agent 接进任意前端的第三层协议</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<a href="https://github.com/ag-ui-protocol/ag-ui">ag-ui-protocol/ag-ui</a>（MIT，约 2 万 star）——Agent-User Interaction Protocol，本周<strong>冻结为 1.0 稳定规范</strong>（基于 JSON Schema + 行为规范），11 月 17 日发布 <code>@ag-ui/client</code> 1.0.5 与首个 Cloudflare Agents 集成，单日 +1444 star。核心抽象：一个 <code>RunAgentInput</code> 进、一条有序的类型化事件流出（<strong>8 大事件族、31 种类型化事件</strong>），把 Agent 与前端之间的「私有 WebSocket 胶水码」标准化。它与 <strong>MCP</strong>（Agent 连工具）、<strong>A2A</strong>（Agent 连 Agent）并列，是第三层协议。TypeScript / Python / .NET SDK 均由 schema 生成，1.0 与 0.x 双向兼容，CopilotKit 团队发起。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：现代 Agent 不再「一问一答」——它中途调工具、更新共享状态、暂停等人类审批、派子 Agent。每种框架的数据格式都不同，把后端从 LangGraph 换成 CrewAI，前端接线就得重写一遍。AG-UI 把「接线」标准化，同一个 Agent 一次写好，网页/移动/终端/Slack 多端复用。对做 AI 应用的团队，这是继 MCP 之后又一块值得跟踪的协议拼图。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：做 AI 应用、要把 Agent 能力暴露给前端或终端的团队，以及关注 Agent 协议生态的架构师。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/ag-ui-protocol/ag-ui">ag-ui-protocol/ag-ui — GitHub</a> · <a href="https://alishangtian.com/ainews/article/user-34f8bf1de7">AG-UI 1.0 定稿解读 — 智码视界</a></p>
+</li>
+</ul>
+<h2 id="工具推荐">工具推荐</h2>
+<h3 id="6-codegraph给-ai-编程-agent-一张代码地图而非-grep">6. CodeGraph：给 AI 编程 Agent 一张「代码地图」而非 grep</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<a href="https://github.com/colbymchenry/codegraph">colbymchenry/codegraph</a>（MIT，约 7.8 万 star，v1.6.4 于 11 月 20 日发布）把代码库预先索引成一张知识图谱——符号、调用边、导入、继承关系，存进本地 SQLite（含 FTS5 全文检索），通过 MCP 暴露给 Claude Code、Codex、Cursor、OpenCode、Hermes Agent 等 14+ 客户端。Rust 内核 + tree-sitter 解析 <strong>35 种语言</strong>（含 Java/Go/Python/TS/Rust），watch 自动同步（约 2 秒 debounce），<strong>100% 本地</strong>、无 API key、代码不出机器。README 自测口径：工具调用 <strong>−88%</strong>、响应快 <strong>53%</strong>、token <strong>−62%</strong>、7 个测试仓库文件读取归零（<strong>以 README 为准，待第三方复现</strong>）。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：AI 编程 Agent 最贵的不是推理，而是反复 <code>grep</code> / <code>read</code> 重建代码结构。CodeGraph 换了个思路——「给 Agent 一张地图，而不是让它 grep」，把大代码库的探索从「整文件读」变成「一次图查询」，token 与工具调用双降。对同时用多个 AI 编程工具（Claude Code + Cursor + Codex）的团队，图谱一份共用，还能做变更影响面分析（追踪调用者/被调用者）。注意：小项目收益不明显，图谱按项目建、新项目要重新 init。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：代码库大到 Agent 常读错上下文、token 账单走高的团队，以及同时用多个 AI 编程工具的个人开发者。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/colbymchenry/codegraph">colbymchenry/codegraph — GitHub</a> · <a href="https://tekmag.thsite.top/codegraph-the-open-source-code-knowledge-graph-that-gives-ai-coding-agents-a-map-instead-of-grep">CodeGraph 实测解析 — TekMag</a></p>
+</li>
+</ul>
+<h3 id="7-landmines把-linter-变成-ai-测试的测谎仪">7. landmines：把 linter 变成 AI 测试的「测谎仪」</h3>
+<ul>
+<li>
+<p><strong>是什么</strong>：<a href="https://github.com/interfere-inc/landmines">interfere-inc/landmines</a>（MIT，0.1.0 于 11 月 17 日、0.1.1 于 11 月 18 日发布）是一套 <strong>Oxlint 规则</strong>，专治 AI 编程 Agent「把测试做绿」的捷径。五条测试规则，每条报错信息直接告诉 Agent「该怎么做」：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>规则</th><th>拦下什么</th></tr></thead><tbody><tr><td><code>no-test-doubles</code></td><td>mock/stub 被测对象本身（仅允许观察型 spy，网络用 MSW）</td></tr><tr><td><code>strict-msw</code></td><td>MSW 启动时未设 <code>onUnhandledRequest: "error"</code></td></tr><tr><td><code>no-fixed-sleep</code></td><td>测试里 await 固定延时</td></tr><tr><td><code>no-unsignaled-poll</code></td><td>用 <code>expect.poll</code> / <code>vi.waitFor</code> 轮询 spy 状态而非等事件</td></tr><tr><td><code>no-flake-masking</code></td><td><code>retry</code> 与抬高 <code>testTimeout</code> / <code>hookTimeout</code></td></tr></tbody></table>
+<p>另附 style / structure / types 三组「意见化」规则（如禁 prose 注释、测试与源码就近摆放）。三条规则支持 per-file 白名单且要求精确计数，允许老代码渐进整改。作者 Interfere 称内测后周 PR 从 100 涨到 <strong>1200+</strong>（<strong>自报数字，待核实</strong>）。需 Oxlint 1.81+ 与 Node 22.18+，测试规则围绕 Vitest 与 MSW，Jest/Mocha 支持有限。</p>
+</li>
+<li>
+<p><strong>为什么值得看</strong>：Agent 最擅长的就是把 CI 变绿——mock 掉被测对象、加个 sleep、retry 三次——每条都能过审却都不能证明代码变好了。landmines 把「测谎」放进 linter：它跑在 Agent 自己的循环里，报错即给出修正方向。这是「AI 写代码」时代测试质量门禁的一个务实解法，也是本周开源工具里最「反 AI 偷懒」的一个。</p>
+</li>
+<li>
+<p><strong>适合谁</strong>：用 TypeScript / Vitest + Oxlint、且大量采用 AI 编程 Agent 的团队。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://github.com/interfere-inc/landmines">interfere-inc/landmines — GitHub</a> · <a href="https://news.sulat.com/2026/11/18/interfere-landmines">Interfere 开源 Landmines 报道</a></p>
+</li>
+</ul>
+<h2 id="来源">来源</h2>
+<ul>
+<li><a href="https://lauraesteves.com/programming/zgc-adaptive-heap-jdk-28">ZGC with adaptive heap sizing in JDK 28 — Laura Esteves</a></li>
+<li><a href="https://ledgi.tech/news/jdk-28-adds-concurrent-zgc-memory-prep-trims-startup-and-warmup-on-linux">JDK 28 adds concurrent ZGC memory prep — InfoQ/Ledgi</a></li>
+<li><a href="https://juejin.cn/post/7711689310697799723">Spring Boot 4.2 最咬人的不是弃用 RestTemplate — 掘金</a></li>
+<li><a href="https://www.51cto.com/article/861938.html">SpringBoot 4.2 正式发布，人麻了！— 51CTO</a></li>
+<li><a href="https://blogs.rameskum.com/posts/stream-gatherers-java">Stream Gatherers in Java — Ramesh Kumaar</a></li>
+<li><a href="https://openjdk.org/jeps/485">JEP 485: Stream Gatherers — OpenJDK</a></li>
+<li><a href="https://blog.oneenv.io/articles/msk-tiered-storage-cost-when-tiering-beats-kafka-retention-cuts">MSK Tiered Storage Cost — OneEnv</a></li>
+<li><a href="https://github.com/ag-ui-protocol/ag-ui">ag-ui-protocol/ag-ui — GitHub</a></li>
+<li><a href="https://alishangtian.com/ainews/article/user-34f8bf1de7">AG-UI 1.0 定稿解读 — 智码视界</a></li>
+<li><a href="https://github.com/colbymchenry/codegraph">colbymchenry/codegraph — GitHub</a></li>
+<li><a href="https://tekmag.thsite.top/codegraph-the-open-source-code-knowledge-graph-that-gives-ai-coding-agents-a-map-instead-of-grep">CodeGraph 实测解析 — TekMag</a></li>
+<li><a href="https://github.com/interfere-inc/landmines">interfere-inc/landmines — GitHub</a></li>
+<li><a href="https://news.sulat.com/2026/11/18/interfere-landmines">Interfere 开源 Landmines 报道 — Sulat</a></li>
+</ul> </div> <footer class="article-footer" data-astro-cid-fzx4jmue> <div class="article-footer-tags" data-astro-cid-fzx4jmue> <a href="/tags/curated" class="tag" data-astro-cid-fzx4jmue> curated </a><a href="/tags/ai" class="tag" data-astro-cid-fzx4jmue> ai </a><a href="/tags/java" class="tag" data-astro-cid-fzx4jmue> java </a><a href="/tags/spring" class="tag" data-astro-cid-fzx4jmue> spring </a><a href="/tags/bigdata" class="tag" data-astro-cid-fzx4jmue> bigdata </a><a href="/tags/tools" class="tag" data-astro-cid-fzx4jmue> tools </a> </div> <a href="/" class="back-home" data-astro-cid-fzx4jmue>&larr; 返回首页</a> </footer> </article> <aside class="toc-sidebar" id="toc-sidebar" aria-label="文章目录" data-astro-cid-fzx4jmue> <div class="toc-inner" data-astro-cid-fzx4jmue> <h4 class="toc-title" data-astro-cid-fzx4jmue>目录</h4> <nav id="toc-nav" class="toc-nav" data-astro-cid-fzx4jmue> <p class="toc-empty" data-astro-cid-fzx4jmue>加载中…</p> </nav> </div> </aside> <button id="back-to-top" class="back-to-top" type="button" aria-label="回到顶部" data-astro-cid-fzx4jmue> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-astro-cid-fzx4jmue> <line x1="12" y1="19" x2="12" y2="5" data-astro-cid-fzx4jmue></line><polyline points="5 12 12 5 19 12" data-astro-cid-fzx4jmue></polyline> </svg> </button> </div>  </main> <footer class="site-footer"> <div class="footer-grid"> <div class="footer-col"> <p class="footer-brand">
+&copy; 2020 – 2026 <strong>littlepug</strong> </p> <p class="footer-desc">Java 后端与大数据实践，以及 AI 行业快讯、技术精选 — 学习笔记 / 资讯 / 阅读清单。</p> </div> <div class="footer-col"> <h3 class="footer-heading">导航</h3> <ul class="footer-list"> <li><a href="/">首页</a></li><li><a href="/archive">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li> <li><a href="/rss.xml">RSS</a></li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">最近文章</h3> <ul class="footer-list"> <li> <a href="/2026-11-26-curated-november-zgc-agent-ecosystem">2026年11月26日技术精选：ZGC 自适应堆与 Agent 生态</a> </li><li> <a href="/2026-11-25-curated-november-elastic96-springai21">2026年11月25日技术精选：Elastic 9.6 与 Spring AI 2.1</a> </li><li> <a href="/2026-11-24-curated-november-java4shell-spring42">十一月第四周技术精选：Java4Shell 漏洞与 Spring 4.2 GA</a> </li><li> <a href="/2026-11-11-curated-november-jdk28-doris-skills">十一月中旬技术精选：JDK 28 前瞻与向量搜索调优</a> </li><li> <a href="/2026-11-09-curated-november-kafka-cve-spring-rc2">十一月第二周技术精选：Kafka 安全修复与 Spring RC2</a> </li> </ul> </div> <div class="footer-col"> <h3 class="footer-heading">社交</h3> <ul class="footer-list"> <li> <a href="https://github.com/littlepug" target="_blank" rel="noopener">GitHub</a> </li> <li> <a href="/about">联系与合作</a> </li> </ul> </div> </div> <p class="footer-built">Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p> </footer> <script type="module">const n=document.documentElement,d=document.getElementById("theme-toggle"),e=document.getElementById("nav-toggle"),a=document.getElementById("nav-mobile");d?.addEventListener("click",()=>{const t=n.getAttribute("data-theme")==="dark"?"light":"dark";n.setAttribute("data-theme",t),localStorage.setItem("theme",t)});e?.addEventListener("click",()=>{a?.hasAttribute("hidden")?(a?.removeAttribute("hidden"),e.setAttribute("aria-expanded","true"),e.setAttribute("aria-label","关闭菜单")):(a?.setAttribute("hidden",""),e.setAttribute("aria-expanded","false"),e.setAttribute("aria-label","打开菜单"))});a?.querySelectorAll("a").forEach(t=>{t.addEventListener("click",()=>{a.setAttribute("hidden",""),e?.setAttribute("aria-expanded","false"),e?.setAttribute("aria-label","打开菜单")})});</script> </body> </html>  <script type="module">function d(){const t=document.getElementById("article-body");if(!t)return;const e=t.querySelectorAll("h2, h3"),c=document.getElementById("toc-nav");if(c){if(e.length===0){c.innerHTML='<p class="toc-empty">暂无目录</p>';return}c.innerHTML="",e.forEach((n,i)=>{const r=`heading-${i}`;n.id=r;const o=document.createElement("a");o.href=`#${r}`,o.textContent=n.textContent||"",o.className=n.tagName==="H2"?"toc-h2":"toc-h3",o.addEventListener("click",s=>{s.preventDefault();const l=document.getElementById(r);if(l){const a=l.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top:a,behavior:"smooth"}),history.pushState(null,"",`#${r}`)}}),c.appendChild(o)})}}function u(){const t=document.querySelectorAll("#article-body h2[id], #article-body h3[id]"),e=document.querySelectorAll("#toc-nav a");if(t.length===0||e.length===0)return;const c=new IntersectionObserver(n=>{n.forEach(i=>{if(!i.isIntersecting)return;const r=i.target.id,o=document.querySelector(`#toc-nav a[href="#${r}"]`);o&&(e.forEach(s=>s.classList.remove("toc-active")),o.classList.add("toc-active"))})},{rootMargin:"-80px 0px -70% 0px",threshold:0});t.forEach(n=>c.observe(n))}document.addEventListener("DOMContentLoaded",()=>{d(),u();const t=document.getElementById("back-to-top");if(!t)return;let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{t.classList.toggle("visible",window.scrollY>400),e=!1}),e=!0)},{passive:!0}),t.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"})})});</script> 
